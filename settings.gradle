@@ -1,4 +1,6 @@
 rootProject.name = 'clevertec-final-project'
+
+include 'logging-starter'
 include 'card-service'
 include 'customer-service'
 include 'account-service'
@@ -7,3 +9,4 @@ include 'deposit-service'
 include 'credit-service'
 include 'global-exception-starter'
 include 'cloud-config-service'
+
