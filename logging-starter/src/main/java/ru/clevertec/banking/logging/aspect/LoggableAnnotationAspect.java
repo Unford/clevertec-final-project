@@ -1,4 +1,4 @@
-package com.clevertec.starter.aspect;
+package ru.clevertec.banking.logging.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -9,8 +9,8 @@ import org.aspectj.lang.annotation.Pointcut;
 @Aspect
 @Slf4j
 public class LoggableAnnotationAspect extends MethodLoggingAspect {
-    @Pointcut("@within(com.clevertec.starter.annotation.Loggable) ||" +
-            " @annotation(com.clevertec.starter.annotation.Loggable)")
+    @Pointcut("@within(ru.clevertec.banking.logging.annotation.Loggable) ||" +
+            " @annotation(ru.clevertec.banking.logging.annotation.Loggable)")
     public void loggableClassOrMethod() {
     }
 
