@@ -3,7 +3,7 @@ services:
   backend:
     image: blabla:version #blabla:version TODO
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
