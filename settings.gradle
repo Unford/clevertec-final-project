@@ -1,1 +1,3 @@
 rootProject.name = 'clevertec-final-project'
+include 'logging-starter'
+
