@@ -6,6 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = "clevertec.logging")
 public class AutoLoggingProperty {
-    private final boolean enabled = true;
+    private boolean enabled = true;
 
 }
