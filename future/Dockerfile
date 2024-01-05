@@ -2,8 +2,8 @@ FROM eclipse-temurin:17 AS app-build
 ENV RELEASE=17
 
 WORKDIR /opt/build
-COPY ./infrastructure/db/1_create_db.sql ./infrastructure/db/1_create_db.sql
-COPY ./build/libs/mecom-api-0.0.1.jar ./application.jar
+COPY infrastructure/db/1_create_db.sql ./infrastructure/db/1_create_db.sql
+COPY ./build/libs/#----------.jar ./application.jar ##TODO------------------
 
 RUN java -Djarmode=layertools -jar application.jar extract
 RUN $JAVA_HOME/bin/jlink \
