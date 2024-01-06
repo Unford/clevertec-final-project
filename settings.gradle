@@ -12,4 +12,5 @@ include 'cloud-config-service'
 include 'auth-service'
 include 'eureka-server'
 include 'api-gateway'
+include 'cache-starter'
 
