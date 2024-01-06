@@ -9,4 +9,7 @@ include 'deposit-service'
 include 'credit-service'
 include 'global-exception-starter'
 include 'cloud-config-service'
+include 'auth-service'
+include 'eureka-server'
+include 'api-gateway'
 

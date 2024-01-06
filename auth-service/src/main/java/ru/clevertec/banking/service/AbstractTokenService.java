@@ -1,0 +1,55 @@
+package ru.clevertec.banking.service;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
+import ru.clevertec.banking.config.TokenConfig;
+
+import java.security.Key;
+import java.util.Date;
+import java.util.Map;
+import java.util.function.Function;
+
+@RequiredArgsConstructor
+public abstract class AbstractTokenService {
+
+    protected final TokenConfig tokenConfig;
+
+    protected String generateToken(Map<String, Object> extraClaims, Long userId, long expirationMs) {
+        return Jwts
+                .builder()
+                .setClaims(extraClaims)
+                .setSubject(String.valueOf(userId))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    protected Key getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(tokenConfig.getSecretKey());
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    protected Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
+    public Long extractId(String token) {
+        return Long.parseLong(extractClaim(token, Claims::getSubject));
+    }
+    protected  <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+    protected Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                   .setSigningKey(getSignInKey())
+                   .build()
+                   .parseClaimsJws(token)
+                   .getBody();
+    }
+}

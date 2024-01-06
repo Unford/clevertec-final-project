@@ -1,0 +1,15 @@
+spring:
+  liquibase:
+    change-log: classpath:db.changelog/db.changelog-master.xml
+  datasource:
+    url: jdbc:postgresql://localhost:5432/clevertec-banking
+    username: postgres
+    password: postgres
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 2000000
+      connection-timeout: 30000
+#logging:
+#  config: #мб уйдет в стартер

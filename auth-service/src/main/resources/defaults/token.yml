@@ -1,0 +1,4 @@
+token:
+  secret-key: jk6a9Lnyy7wWJZubVG9Cf8QtQnL3U/ArPMVcHchXiOaFaPPygc99sM2LC25kscbu
+  refresh-token-expiration-ms: 604800000 # 1 неделя в миллисекундах
+  token-expiration-ms: 604800000 # 2 минуты = 120000 в миллисекундах
