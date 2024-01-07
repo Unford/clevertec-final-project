@@ -1,4 +1,4 @@
-package ru.clevertec.banking.exception.exception;
+package ru.clevertec.banking.advice.exception;
 
 import org.springframework.http.HttpStatus;
 
