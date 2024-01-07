@@ -7,9 +7,11 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import ru.clevertec.banking.config.TokenConfig;
+import ru.clevertec.banking.entity.Role;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -36,6 +38,13 @@ public abstract class AbstractTokenService {
 
     protected Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
+    }
+
+    protected List<Role> extractAuthorities(String token) {
+        List<String> roles = extractClaim(token, claims -> claims.get("authorities", List.class));
+        return roles.stream()
+                    .map(Role::valueOf)
+                    .toList();
     }
 
     public Long extractId(String token) {
