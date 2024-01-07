@@ -1,4 +1,4 @@
-package ru.clevertec.banking.exception.model;
+package ru.clevertec.banking.advice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
