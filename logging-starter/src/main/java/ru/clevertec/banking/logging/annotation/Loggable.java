@@ -1,4 +1,4 @@
-package com.clevertec.starter.annotation;
+package ru.clevertec.banking.logging.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package com.clevertec.starter.aspect;
+package ru.clevertec.banking.logging.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

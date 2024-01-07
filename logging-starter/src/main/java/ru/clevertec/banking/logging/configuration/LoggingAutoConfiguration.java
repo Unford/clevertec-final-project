@@ -1,9 +1,9 @@
-package com.clevertec.starter.configuration;
+package ru.clevertec.banking.logging.configuration;
 
-import com.clevertec.starter.aspect.ControllerLoggingAspect;
-import com.clevertec.starter.aspect.LoggableAnnotationAspect;
-import com.clevertec.starter.property.AutoLoggingControllerProperty;
-import com.clevertec.starter.property.AutoLoggingProperty;
+import ru.clevertec.banking.logging.aspect.ControllerLoggingAspect;
+import ru.clevertec.banking.logging.aspect.LoggableAnnotationAspect;
+import ru.clevertec.banking.logging.property.AutoLoggingControllerProperty;
+import ru.clevertec.banking.logging.property.AutoLoggingProperty;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
