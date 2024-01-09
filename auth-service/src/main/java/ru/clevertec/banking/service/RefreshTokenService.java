@@ -9,7 +9,6 @@ import ru.clevertec.banking.repository.RefreshTokenRepository;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -33,11 +32,11 @@ public class RefreshTokenService extends AbstractTokenService{
 
     public boolean isRefreshTokenValid(String providedRefreshToken) {
         final Long id = extractId(providedRefreshToken);
-        return refreshTokenRepository.isRefreshTokenValid(id, providedRefreshToken);
+        return refreshTokenRepository.existsByIdAndRefreshToken(id, providedRefreshToken);
     }
 
     public boolean isRefreshTokenNotExpired(String refreshToken) {
-        return extractExpiration(refreshToken).before(new Date());
+        return extractExpiration(refreshToken).after(new Date());
     }
 
     public String generateRefreshToken(Long userId, List<Role> authorities) {

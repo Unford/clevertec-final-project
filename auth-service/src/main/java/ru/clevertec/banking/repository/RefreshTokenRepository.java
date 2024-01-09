@@ -14,9 +14,7 @@ public interface RefreshTokenRepository extends JpaRepository<UserCredentials, L
     @Query("UPDATE UserCredentials u SET u.refreshToken = :refreshToken WHERE u.id = :userId")
     void updateRefreshToken(@Param("userId") Long userId, @Param("refreshToken") String refreshToken);
 
-    @Query("SELECT CASE WHEN u.refreshToken = :providedRefreshToken " +
-            "THEN true ELSE false END " +
-            "FROM UserCredentials u WHERE u.id = :userId")
-    boolean isRefreshTokenValid(@Param("userId") Long userId, @Param("providedRefreshToken") String providedRefreshToken);
+    boolean existsByIdAndRefreshToken(Long userId, String providedRefreshToken);
+
 
 }

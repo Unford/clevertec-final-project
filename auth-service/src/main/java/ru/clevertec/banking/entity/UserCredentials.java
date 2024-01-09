@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -16,7 +15,7 @@ import java.util.UUID;
 public class UserCredentials {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // TODO make uuid
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // TODO make uuid if needed
     private Long id; // TODO uuid in migrations and UserCredentialsRepository
 
     @Column(nullable = false, unique = true)

@@ -15,13 +15,11 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 
     private final RouteValidator validator;
     private final JwtUtil jwtUtil;
-//    private final RestTemplate restTemplate;
 
     @Autowired
-    public AuthenticationFilter(RouteValidator validator, RestTemplate restTemplate, JwtUtil jwtUtil) {
+    public AuthenticationFilter(RouteValidator validator, JwtUtil jwtUtil) {
         super(Config.class);
         this.validator = validator;
-//        this.restTemplate = restTemplate;
         this.jwtUtil = jwtUtil;
     }
 
@@ -41,9 +39,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                     authHeader = authHeader.substring(7);
                 }
                 try {
-//                    restTemplate.getForObject("http://AUTH-SERVICE//token-validation?token" + authHeader, Void.class);
                     jwtUtil.validateToken(authHeader);
-
                 } catch (Exception e) {
                     System.out.println("invalid access...!");
                     throw new RuntimeException("un authorized access to application: ", e.getCause());

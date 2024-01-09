@@ -8,7 +8,6 @@ import ru.clevertec.banking.dto.request.AuthenticationRequest;
 import ru.clevertec.banking.dto.request.RefreshTokenRequest;
 import ru.clevertec.banking.dto.response.AuthenticationResponse;
 import ru.clevertec.banking.service.AuthenticationService;
-import ru.clevertec.banking.service.JwtTokenService;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -19,7 +18,6 @@ import java.util.concurrent.CompletableFuture;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
-//    private final JwtTokenService jwtTokenService;
 
     @PostMapping("/signing")
     @ResponseStatus(HttpStatus.OK)
@@ -36,12 +34,4 @@ public class AuthenticationController {
     ) {
         return authenticationService.refresh(refreshTokenRequest.getRefreshToken());
     }
-
-    // Как я понял не оч гуд ходить в этот сервис проверять токен...
-    // если решаем сюда не ходить - удалить коменты
-//    @GetMapping("/token-validation")
-//    @ResponseStatus(HttpStatus.OK)
-//    public void validateToken(@RequestParam("token") String token) {
-//       jwtTokenService.isTokenValid(token);
-//    }
 }

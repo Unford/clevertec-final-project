@@ -10,7 +10,7 @@ import ru.clevertec.banking.appYamlReader.YamlPropertySourceFactory;
 @Data
 @NoArgsConstructor
 @Configuration
-@ConfigurationProperties(prefix = "token") //TODO без кастомной фабрики как он может читать yaml файл отличный от application...
+@ConfigurationProperties(prefix = "token")
 @PropertySource(value = "classpath:defaults/token.yml", factory = YamlPropertySourceFactory.class)
 public class TokenConfig {
     private String secretKey;

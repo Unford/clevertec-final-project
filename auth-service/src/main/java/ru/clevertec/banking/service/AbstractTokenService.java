@@ -41,6 +41,7 @@ public abstract class AbstractTokenService {
     }
 
     protected List<Role> extractAuthorities(String token) {
+        @SuppressWarnings("unchecked")
         List<String> roles = extractClaim(token, claims -> claims.get("authorities", List.class));
         return roles.stream()
                     .map(Role::valueOf)

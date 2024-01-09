@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.banking.dto.UserCredentialsDto;
 import ru.clevertec.banking.dto.UserMapper;
-import ru.clevertec.banking.dto.response.SmallUserCredentialsReponse;
-import ru.clevertec.banking.exception.UserNotFoundException;
 import ru.clevertec.banking.exception.UserOperationException;
 import ru.clevertec.banking.repository.UserCredentialsRepository;
 
@@ -20,13 +18,6 @@ public class UserService {
 
     private final UserCredentialsRepository userRepository;
     private final UserMapper userMapper;
-
-    // Опять же если мы не идем сюда проверять токен, удалить
-//    public SmallUserCredentialsReponse getSmallUserFromContext() {
-//        return Optional.of(userRepository.getUserFromContext())
-//                       .map(userMapper::toSmallDto)
-//                       .orElseThrow(() -> new UserNotFoundException("User not found"));
-//    }
 
     public Optional<UserCredentialsDto> getOptionalByEmail(String email) {
         return userRepository.findByEmail(email)
