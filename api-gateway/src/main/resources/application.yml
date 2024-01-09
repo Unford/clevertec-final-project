@@ -9,6 +9,13 @@ spring:
           filters:
             - AuthenticationFilter  # Если оставляем фильтр в гэтвее, то для каждого секюрного сервиса
 
+        - id: customer-service
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=/api/v1/customer/**
+          filters:
+            - AuthenticationFilter  # Если оставляем фильтр в гэтвее, то для каждого секюрного сервиса
+
         - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
