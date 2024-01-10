@@ -2,8 +2,16 @@ spring:
   liquibase:
     change-log: classpath:db.changelog/db.changelog-master.xml
     default-schema: @defaultSchema@
+    liquibase-schema: @defaultSchema@
   datasource:
-    url: jdbc:postgresql://localhost:5432/clevertec-banking?currentSchema=@defaultSchema@
+    # TODO надо обсудить разделение на dev, prod, test и тп
+    # TODO если в build.gradle выносить динамическое определение
+    # TODO порта от профиля - многое можно вынести в application.yml
+    # TODO hikari и liquibase - тоже аналогичные, нужно ли по профилям делить?
+
+    # TODO Можно объединить build.gradle методы ИИ .env => мы в preliquibase схему
+    # TODO с градла подтянуть не можем как я понял
+    url: jdbc:postgresql://localhost:@databasePort@/clevertec-banking?currentSchema=@defaultSchema@
     username: postgres
     password: postgres
     hikari:

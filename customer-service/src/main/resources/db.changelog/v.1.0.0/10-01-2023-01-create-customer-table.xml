@@ -13,7 +13,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="unp" type="varchar(100)">
-                <constraints unique="true" nullable="false"/>
+                <constraints unique="true"/>
             </column>
             <column name="register_date" type="date">
                 <constraints nullable="false"/>

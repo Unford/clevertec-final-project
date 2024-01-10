@@ -28,6 +28,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'org.liquibase:liquibase-core'
+    implementation 'net.lbruun.springboot:preliquibase-spring-boot-starter:1.4.0'
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     implementation 'ru.clevertec.banking:global-exception-starter:0.0.1'
 
@@ -42,14 +43,29 @@ dependencies {
 
 def activeProfiles=project.properties['activeProfiles'] ?: "dev"
 def port=project.properties['port'] ?: "8082"
+def databasePort = getDatabasePort(activeProfiles as String)
 def defaultSchema=project.properties['currentSchema'] ?: "customer"
 
 processResources {
     filter ReplaceTokens, tokens: [
             activeProfiles: activeProfiles,
             port: port,
+            databasePort: databasePort,
             defaultSchema: defaultSchema
     ]
+}
+
+static String getDatabasePort(String profile) {
+    switch (profile) {
+        case 'dev':
+            return '5432'
+        case 'prod':
+            return '15432'
+        case 'test':
+            return '25432' // Можно настроить в зависимости от наших профилей, на каком порту БД поднимать
+        default:
+            return '5432'
+    }
 }
 
 test {

@@ -15,6 +15,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        default_schema: @defaultSchema@
     database: postgresql
 eureka:
   client:

@@ -1,19 +1,18 @@
 package ru.clevertec.banking.exception;
 
-
 import org.springframework.http.HttpStatus;
 import ru.clevertec.banking.advice.exception.ServiceException;
 
-public class CustomerOperationException extends ServiceException {
-    public CustomerOperationException(String message) {
+public class InvalidCustomerTypeException extends ServiceException {
+    public InvalidCustomerTypeException(String message) {
         super(message);
     }
 
-    public CustomerOperationException(String message, Throwable cause) {
+    public InvalidCustomerTypeException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public CustomerOperationException(Throwable cause) {
+    public InvalidCustomerTypeException(Throwable cause) {
         super(cause);
     }
 

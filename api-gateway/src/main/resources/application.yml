@@ -5,14 +5,14 @@ spring:
         - id: account-service
           uri: lb://ACCOUNT-SERVICE
           predicates:
-            - Path=/api/v1/account/**
+            - Path=/api/v1/accounts/**
           filters:
             - AuthenticationFilter  # Если оставляем фильтр в гэтвее, то для каждого секюрного сервиса
 
         - id: customer-service
           uri: lb://CUSTOMER-SERVICE
           predicates:
-            - Path=/api/v1/customer/**
+            - Path=/api/v1/customers/**
           filters:
             - AuthenticationFilter  # Если оставляем фильтр в гэтвее, то для каждого секюрного сервиса
 
