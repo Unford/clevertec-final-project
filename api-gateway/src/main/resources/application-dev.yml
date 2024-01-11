@@ -1,0 +1,4 @@
+eureka:
+  client:
+    service-url:
+      defaultZone : http://${DEV_EUREKA_HOST}:${EUREKA_PORT}/eureka/

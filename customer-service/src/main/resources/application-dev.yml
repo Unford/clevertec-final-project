@@ -1,24 +1,15 @@
 spring:
   liquibase:
     change-log: classpath:db.changelog/db.changelog-master.xml
-    default-schema: @defaultSchema@
-    liquibase-schema: @defaultSchema@
+    default-schema: ${DEFAULT_SCHEMA}
+    liquibase-schema: ${DEFAULT_SCHEMA}
   datasource:
-    # TODO надо обсудить разделение на dev, prod, test и тп
-    # TODO если в build.gradle выносить динамическое определение
-    # TODO порта от профиля - многое можно вынести в application.yml
-    # TODO hikari и liquibase - тоже аналогичные, нужно ли по профилям делить?
-
-    # TODO Можно объединить build.gradle методы ИИ .env => мы в preliquibase схему
-    # TODO с градла подтянуть не можем как я понял
-    url: jdbc:postgresql://localhost:@databasePort@/clevertec-banking?currentSchema=@defaultSchema@
-    username: postgres
-    password: postgres
-    hikari:
-      minimum-idle: 5
-      maximum-pool-size: 20
-      idle-timeout: 30000
-      max-lifetime: 2000000
-      connection-timeout: 30000
+    url: jdbc:postgresql://localhost:${DEV_DB_PORT}/${DB_NAME}?currentSchema=${DEFAULT_SCHEMA}
+    username: ${DEV_DB_USERNAME}
+    password: ${DEV_DB_PASSWORD}
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${DEV_EUREKA_HOST}:${EUREKA_PORT}/eureka/
 #logging:
 #  config: #мб уйдет в стартер

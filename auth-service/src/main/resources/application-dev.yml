@@ -1,15 +1,15 @@
 spring:
   liquibase:
     change-log: classpath:db.changelog/db.changelog-master.xml
+    default-schema: ${DEFAULT_SCHEMA}
+    liquibase-schema: ${DEFAULT_SCHEMA}
   datasource:
-    url: jdbc:postgresql://localhost:5432/clevertec-banking
-    username: postgres
-    password: postgres
-    hikari:
-      minimum-idle: 5
-      maximum-pool-size: 20
-      idle-timeout: 30000
-      max-lifetime: 2000000
-      connection-timeout: 30000
+    url: jdbc:postgresql://localhost:${DEV_DB_PORT}/${DB_NAME}?currentSchema=${DEFAULT_SCHEMA}
+    username: ${DEV_DB_USERNAME}
+    password: ${DEV_DB_PASSWORD}
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${DEV_EUREKA_HOST}:${EUREKA_PORT}/eureka/
 #logging:
 #  config: #мб уйдет в стартер
