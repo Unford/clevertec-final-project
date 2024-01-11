@@ -11,8 +11,8 @@ spring:
     liquibase-schema: @defaultSchema@
   datasource:
     url: jdbc:postgresql://localhost:@databasePort@/clevertec-banking?currentSchema=@defaultSchema@
-    username: postgres
-    password: postgres
+    username: clevertec
+    password: banking
     hikari:
       minimum-idle: 5
       maximum-pool-size: 20

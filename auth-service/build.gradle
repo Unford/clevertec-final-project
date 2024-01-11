@@ -44,12 +44,29 @@ dependencies {
 
 def activeProfiles=project.properties['activeProfiles'] ?: "dev"
 def port=project.properties['port'] ?: "9191"
+def databasePort = getDatabasePort(activeProfiles as String)
+def defaultSchema=project.properties['currentSchema'] ?: "auth"
 
 processResources {
     filter ReplaceTokens, tokens: [
             activeProfiles: activeProfiles,
-            port: port
+            port: port,
+            databasePort: databasePort,
+            defaultSchema: defaultSchema
     ]
+}
+
+static String getDatabasePort(String profile) {
+    switch (profile) {
+        case 'dev':
+            return '5432'
+        case 'prod':
+            return '15432'
+        case 'test':
+            return '25432' // Можно настроить в зависимости от наших профилей, на каком порту БД поднимать
+        default:
+            return '5432'
+    }
 }
 
 test {
