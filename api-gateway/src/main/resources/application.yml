@@ -24,10 +24,5 @@ spring:
   application:
     name: BANKING-GATEWAY
 
-eureka:
-  client:
-    service-url:
-      defaultZone : http://localhost:8761/eureka/
-
 token:
   secret-key: jk6a9Lnyy7wWJZubVG9Cf8QtQnL3U/ArPMVcHchXiOaFaPPygc99sM2LC25kscbu

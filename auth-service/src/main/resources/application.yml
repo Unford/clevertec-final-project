@@ -1,12 +1,10 @@
 server:
-  port: @port@
+  port: 9191
 spring:
   application:
     name: AUTH-SERVICE
   datasource:
     driver-class-name: org.postgresql.Driver
-  profiles:
-    active: @activeProfiles@
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -15,7 +13,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        default_schema: @defaultSchema@
+        default_schema: auth
     database: postgresql
 eureka:
   client:

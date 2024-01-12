@@ -1,5 +1,3 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.0'
@@ -18,7 +16,7 @@ repositories {
 }
 
 java {
-    sourceCompatibility = '17'
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
@@ -29,6 +27,7 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'org.liquibase:liquibase-core'
+    implementation 'net.lbruun.springboot:preliquibase-spring-boot-starter:1.4.0'
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 
     compileOnly 'org.projectlombok:lombok'
@@ -40,33 +39,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-}
-
-def activeProfiles=project.properties['activeProfiles'] ?: "dev"
-def port=project.properties['port'] ?: "9191"
-def databasePort = getDatabasePort(activeProfiles as String)
-def defaultSchema=project.properties['currentSchema'] ?: "auth"
-
-processResources {
-    filter ReplaceTokens, tokens: [
-            activeProfiles: activeProfiles,
-            port: port,
-            databasePort: databasePort,
-            defaultSchema: defaultSchema
-    ]
-}
-
-static String getDatabasePort(String profile) {
-    switch (profile) {
-        case 'dev':
-            return '5432'
-        case 'prod':
-            return '15432'
-        case 'test':
-            return '25432' // Можно настроить в зависимости от наших профилей, на каком порту БД поднимать
-        default:
-            return '5432'
-    }
 }
 
 test {

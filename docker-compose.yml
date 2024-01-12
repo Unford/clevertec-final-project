@@ -21,6 +21,7 @@ services:
       - eureka-server
     environment:
       eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+      SPRING_PROFILES_ACTIVE: prod
     ports:
       - "8080:8080"
     networks:
@@ -54,9 +55,28 @@ services:
     ports:
       - "9191:9191"
     environment:
-      - eureka.client.serviceUrl.defaultZone://eureka-server:8761/eureka/
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://service-db/clevertec-banking
-      - SPRING_PROFILES_ACTIVE=prod
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+      SPRING_DATASOURCE_URL: jdbc:postgresql://service-db/clevertec-banking
+      SPRING_PROFILES_ACTIVE: prod
+    networks:
+      - clevertec-banking-net
+
+  customer-service:
+    image: customer-service:0.0.1
+    build:
+      context: ./customer-service
+      dockerfile: /Dockerfile
+    restart: always
+    depends_on:
+      - service-db
+      - eureka-server
+      - api-gateway
+    ports:
+      - "8082:8082"
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+      SPRING_DATASOURCE_URL: jdbc:postgresql://service-db/clevertec-banking
+      SPRING_PROFILES_ACTIVE: prod
     networks:
       - clevertec-banking-net
 

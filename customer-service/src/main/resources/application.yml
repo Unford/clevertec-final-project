@@ -1,12 +1,10 @@
 server:
-  port: @port@
+  port: 8082
 spring:
   application:
     name: CUSTOMER-SERVICE
   datasource:
     driver-class-name: org.postgresql.Driver
-  profiles:
-    active: @activeProfiles@
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -15,9 +13,5 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        default_schema: @defaultSchema@
+        default_schema: customer
     database: postgresql
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
