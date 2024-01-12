@@ -8,10 +8,14 @@ group = 'ru.clevertec.banking.currency'
 
 
 
-dependencies {
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'//todo del
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+}
 
-    implementation project(":global-exception-starter")
+dependencies {
+
+    implementation 'ru.clevertec.banking:global-exception-starter:0.0.1'
+
     implementation project(":logging-starter")
 
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'

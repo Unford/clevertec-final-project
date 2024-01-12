@@ -1,3 +1,5 @@
+server:
+  port: 8083
 spring:
   application:
     name: CURRENCY-SERVICE
@@ -6,6 +8,12 @@ spring:
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}?currentSchema=${POSTGRES_SCHEMA}
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
   liquibase:
     default-schema: ${POSTGRES_SCHEMA}
     change-log: db/changelog/db.changelog.yaml
@@ -22,10 +30,5 @@ spring:
   jackson:
     deserialization:
       adjust-dates-to-context-time-zone: false
-  docker:
-    compose:
-      enabled: false
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+
+

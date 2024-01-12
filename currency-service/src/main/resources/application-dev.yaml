@@ -1,10 +1,4 @@
-server:
-  port: 8085
 spring:
-  docker:
-    compose:
-      file: currency-service/compose.yaml
-      enabled: true
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DATABASE:banking}?currentSchema=${POSTGRES_SCHEMA:currency}
@@ -22,6 +16,7 @@ spring:
       hibernate:
         default_schema: ${POSTGRES_SCHEMA:currency}
         format_sql: true
+
 clevertec:
   rabbit:
     queue:
@@ -34,4 +29,5 @@ logging:
         type: trace
 eureka:
   client:
-    enabled: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

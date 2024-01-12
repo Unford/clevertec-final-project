@@ -1,4 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:15432/clevertec-banking?currentSchema=currency
+    username: clevertec
+    password: banking
+  liquibase:
+    default-schema: currency
+    change-log: db/changelog/db.changelog.yaml
+    liquibase-schema: currency
+  jpa:
+    properties:
+      hibernate:
+        default_schema: currency
 clevertec:
   rabbit:
     queue:
       currency: currency
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
