@@ -1,10 +1,10 @@
 spring:
   liquibase:
     change-log: classpath:db.changelog/db.changelog-master.xml
-    default-schema: auth
-    liquibase-schema: auth
+    default-schema: customer
+    liquibase-schema: customer
   datasource:
-    url: jdbc:postgresql://localhost:5432/clevertec-banking?currentSchema=auth
+    url: jdbc:postgresql://localhost:5432/clevertec-banking?currentSchema=customer
     username: postgres
     password: postgres
     hikari:

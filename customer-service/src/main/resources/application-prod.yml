@@ -4,13 +4,13 @@ spring:
     properties:
       hibernate:
         format_sql: false
-        default_schema: auth
+        default_schema: customer
   liquibase:
     change-log: classpath:db.changelog/db.changelog-master.xml
-    default-schema: auth
-    liquibase-schema: auth
+    default-schema: customer
+    liquibase-schema: customer
   datasource:
-    url: jdbc:postgresql://localhost:15432/clevertec-banking?currentSchema=auth
+    url: jdbc:postgresql://localhost:15432/clevertec-banking?currentSchema=customer
     username: clevertec
     password: banking
     hikari:

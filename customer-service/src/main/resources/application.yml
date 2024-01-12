@@ -1,8 +1,10 @@
+server:
+  port: 8082
 spring:
+  application:
+    name: CUSTOMER-SERVICE
   datasource:
     driver-class-name: org.postgresql.Driver
-  profiles:
-    active: @activeProfiles@
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -11,4 +13,5 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        default_schema: customer
     database: postgresql
