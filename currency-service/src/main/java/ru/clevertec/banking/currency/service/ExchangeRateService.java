@@ -26,8 +26,8 @@ public class ExchangeRateService {
                 .ifPresent(exchangeDataRepository::save);
     }
 
-    public ExchangeRateResponse findLastExchangeData() {
-        return exchangeDataRepository.findFirstByStartDtIsLessThanEqualOrderByStartDtDescCreatedAtDesc(OffsetDateTime.now())
+    public ExchangeRateResponse findLastExchangesByDate(OffsetDateTime dateTime) {
+        return exchangeDataRepository.findFirstByStartDtIsLessThanEqualOrderByStartDtDescCreatedAtDesc(dateTime)
                 .map(exchangeDataMapper::toExchangeResponse)
                 .orElseThrow(() -> new ResourceNotFoundException("exchange rates are empty"));
     }
