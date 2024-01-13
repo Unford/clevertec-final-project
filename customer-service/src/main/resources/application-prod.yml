@@ -4,24 +4,18 @@ spring:
     properties:
       hibernate:
         format_sql: false
-        default_schema: customer
+        default_schema: ${DEFAULT_SCHEMA}
   liquibase:
     change-log: classpath:db.changelog/db.changelog-master.xml
-    default-schema: customer
-    liquibase-schema: customer
+    default-schema: ${DEFAULT_SCHEMA}
+    liquibase-schema: ${DEFAULT_SCHEMA}
   datasource:
-    url: jdbc:postgresql://localhost:15432/clevertec-banking?currentSchema=customer
-    username: clevertec
-    password: banking
-    hikari:
-      minimum-idle: 5
-      maximum-pool-size: 20
-      idle-timeout: 30000
-      max-lifetime: 1800000
-      connection-timeout: 30000
+    url: jdbc:postgresql://localhost:${PROD_DB_PORT}/${DB_NAME}?currentSchema=${DEFAULT_SCHEMA}
+    username: ${PROD_DB_USERNAME}
+    password: ${PROD_DB_PASSWORD}
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka-server:8761/eureka/
+      defaultZone: http://${PROD_EUREKA_HOST}:${EUREKA_PORT}/eureka/
 #logging:
 #  config: #мб уйдет в стартер

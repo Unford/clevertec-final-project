@@ -1,10 +1,16 @@
 server:
-  port: 8082
+  port: ${PORT}
 spring:
   application:
     name: CUSTOMER-SERVICE
   datasource:
     driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 2000000
+      connection-timeout: 30000
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -13,5 +19,5 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        default_schema: customer
+        default_schema: ${DEFAULT_SCHEMA}
     database: postgresql
