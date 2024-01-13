@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1705008887933-1
+      author: vladimir_feshenko
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_exchange_dates
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: start_dt
+                  type: timestamp
+              - column:
+                  name: created_at
+                  type: timestamp
+            tableName: exchange_dates
+  - changeSet:
+      id: 1705008887933-2
+      author: vladimir_feshenko
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_exchange_rates
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: src_curr
+                  type: VARCHAR(3)
+              - column:
+                  name: req_curr
+                  type: VARCHAR(3)
+              - column:
+                  name: buy_rate
+                  type: DECIMAL
+              - column:
+                  name: sell_rate
+                  type: DECIMAL
+              - column:
+                  constraints:
+                    nullable: false
+                  name: exchange_date_id
+                  type: BIGINT
+            tableName: exchange_rates
+  - changeSet:
+      id: 1705008887933-3
+      author: vladimir_feshenko (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: exchange_date_id
+            baseTableName: exchange_rates
+            constraintName: FK_EXCHANGE_RATES_ON_EXCHANGE_DATE
+            referencedColumnNames: id
+            referencedTableName: exchange_dates
+

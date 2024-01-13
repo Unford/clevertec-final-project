@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:${DEV_DB_PORT:5432}/${DB_NAME:banking}?currentSchema=${DEFAULT_SCHEMA:currency}
+    username: ${DEV_DB_USERNAME:antoha}
+    password: ${DEV_DB_USERNAME:antoha}
+  liquibase:
+    default-schema: ${DEFAULT_SCHEMA:currency}
+    change-log: db/changelog/db.changelog.yaml
+    liquibase-schema: ${DEFAULT_SCHEMA:currency}
+  rabbitmq:
+    port: ${DEV_RABBIT_PORT:5672}
+    host: ${DEV_RABBIT_HOST:localhost}
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: ${DEFAULT_SCHEMA:currency}
+        format_sql: true
+
+clevertec:
+  rabbit:
+    queue:
+      currency: ${RABBIT_CURRENCY_QUEUE:currency}
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

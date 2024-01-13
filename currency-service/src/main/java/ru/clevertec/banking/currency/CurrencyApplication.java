@@ -1,14 +1,17 @@
-package ru.clevertec.banking;
+package ru.clevertec.banking.currency;
 
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@SpringBootApplication
+@EnableRabbit
 @EnableDiscoveryClient
-public class AccountServiceApplication {
+@SpringBootApplication
+public class CurrencyApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AccountServiceApplication.class, args);
+        SpringApplication.run(CurrencyApplication.class, args);
     }
+
 }

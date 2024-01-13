@@ -16,6 +16,13 @@ spring:
           filters:
             - AuthenticationFilter
 
+        - id: currency-service
+          uri: lb://CURRENCY-SERVICE
+          predicates:
+            - Path=${CURRENCY_SERVICE_PATH}
+          filters:
+            - AuthenticationFilter
+
         - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
