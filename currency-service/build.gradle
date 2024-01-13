@@ -1,18 +1,66 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
 }
 
-group = 'ru.clevertec.banking'
-version = '0.0.1'
+group = 'ru.clevertec.banking.currency'
 
-repositories {
-    mavenCentral()
+
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation 'ru.clevertec.banking:global-exception-starter:0.0.1'
+
+    implementation project(":logging-starter")
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+    implementation 'org.liquibase:liquibase-core'
+    implementation "net.lbruun.springboot:preliquibase-spring-boot-starter:${preLiquibaseStarterVersion}"
+    runtimeOnly 'org.postgresql:postgresql'
+
+    implementation "org.springframework.boot:spring-boot-starter-amqp:${springBootVersion}"
+
+
+
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructVersion}"
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+
+
 }
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+    }
+}
+
+compileJava {
+    options.annotationProcessorPath = configurations.annotationProcessor
+    options.compilerArgs += [
+            '-Amapstruct.defaultComponentModel=spring',
+            '-Amapstruct.unmappedTargetPolicy=IGNORE'
+    ]
+}
+
+
 
 test {
     useJUnitPlatform()
