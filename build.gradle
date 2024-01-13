@@ -7,11 +7,15 @@ allprojects {
 subprojects {
     apply plugin: 'java'
 
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+}
+
     repositories {
         mavenCentral()
         mavenLocal()
     }
-
 
     ext {
         set('springBootVersion', "3.2.0")
@@ -21,4 +25,3 @@ subprojects {
     }
 
 }
-

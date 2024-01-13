@@ -5,22 +5,24 @@ spring:
         - id: account-service
           uri: lb://ACCOUNT-SERVICE
           predicates:
-            - Path=/api/v1/account/**
+            - Path=${ACCOUNT_SERVICE_PATH}
           filters:
-            - AuthenticationFilter  # Если оставляем фильтр в гэтвее, то для каждого секюрного сервиса
+            - AuthenticationFilter
+
+        - id: customer-service
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=${CUSTOMER_SERVICE_PATH}
+          filters:
+            - AuthenticationFilter
 
         - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
-            - Path=/api/v1/auth/**
+            - Path=${AUTH_SERVICE_PATH}
 
   application:
     name: BANKING-GATEWAY
 
-eureka:
-  client:
-    service-url:
-      defaultZone : http://localhost:8761/eureka/
-
 token:
-  secret-key: jk6a9Lnyy7wWJZubVG9Cf8QtQnL3U/ArPMVcHchXiOaFaPPygc99sM2LC25kscbu
+  secret-key: ${JWT_SECRET}

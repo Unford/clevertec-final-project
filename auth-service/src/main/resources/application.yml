@@ -1,12 +1,16 @@
 server:
-  port: @port@
+  port: ${PORT}
 spring:
   application:
     name: AUTH-SERVICE
   datasource:
     driver-class-name: org.postgresql.Driver
-  profiles:
-    active: @activeProfiles@
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 2000000
+      connection-timeout: 30000
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -15,8 +19,5 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        default_schema: ${DEFAULT_SCHEMA}
     database: postgresql
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/

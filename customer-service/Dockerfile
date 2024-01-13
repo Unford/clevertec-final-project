@@ -2,11 +2,10 @@ FROM eclipse-temurin:17 AS app-build
 ENV RELEASE=17
 
 WORKDIR /opt/build
-COPY infrastructure/db/1_create_db.sql ./infrastructure/db/1_create_db.sql
-COPY ./build/libs/#----------.jar ./application.jar ##TODO------------------
+COPY ./build/libs/customer-service-*.jar ./application.jar
 
 RUN java -Djarmode=layertools -jar application.jar extract
-RUN $JAVA_HOME/bin/jlink \
+RUN "$JAVA_HOME"/bin/jlink \
          --add-modules `jdeps --ignore-missing-deps -q -recursive --multi-release ${RELEASE} --print-module-deps -cp 'dependencies/BOOT-INF/lib/*' application.jar` \
          --strip-debug \
          --no-man-pages \
@@ -32,6 +31,6 @@ COPY --from=app-build $BUILD_PATH/dependencies/ ./
 COPY --from=app-build $BUILD_PATH/snapshot-dependencies/ ./
 COPY --from=app-build $BUILD_PATH/application/ ./
 
-EXPOSE 8080
+EXPOSE 8082
 ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
 

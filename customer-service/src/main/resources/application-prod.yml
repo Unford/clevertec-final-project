@@ -4,12 +4,13 @@ spring:
     properties:
       hibernate:
         format_sql: false
+        default_schema: ${DEFAULT_SCHEMA}
   liquibase:
     change-log: classpath:db.changelog/db.changelog-master.xml
     default-schema: ${DEFAULT_SCHEMA}
     liquibase-schema: ${DEFAULT_SCHEMA}
   datasource:
-    url: jdbc:postgresql://${PROD_EUREKA_HOST}:${PROD_DB_PORT}/${DB_NAME}?currentSchema=${DEFAULT_SCHEMA}
+    url: jdbc:postgresql://localhost:${PROD_DB_PORT}/${DB_NAME}?currentSchema=${DEFAULT_SCHEMA}
     username: ${PROD_DB_USERNAME}
     password: ${PROD_DB_PASSWORD}
 eureka:
