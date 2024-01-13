@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.lang.Nullable;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -97,6 +99,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
     }
 
+    @ExceptionHandler(value = {AccessDeniedException.class})
+    public ResponseEntity<ApiError> handleAccessDeniedException(AccessDeniedException ex) {
+        ApiError apiError = new ApiError(HttpStatus.FORBIDDEN.value(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(apiError);
+    }
+
+    @ExceptionHandler(value = {AuthenticationException.class})
+    public ResponseEntity<ApiError> handleAuthenticationException(AuthenticationException ex) {
+        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiError);
+    }
+
+
+
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<ApiError> handleOtherExceptions(Exception ex, WebRequest request) {
         String requestUri = ((ServletWebRequest) request)
@@ -104,8 +120,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .getRequestURI();
         ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Unhandled exception: " + ex.getMessage()
-                        + "\ncause: " + ex.getCause()
-                        + "\nrequestUri: " + requestUri);
+                        + " cause: " + ex.getCause()
+                        + " request-Uri: " + requestUri);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
     }
+
+
 }
