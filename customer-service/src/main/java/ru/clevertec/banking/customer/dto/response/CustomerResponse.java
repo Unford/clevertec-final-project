@@ -10,14 +10,12 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
-/**
- * DTO for {@link ru.clevertec.banking.entity.Customer}
- */
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerResponse implements Serializable  {
+public class CustomerResponse implements Serializable {
 
     @JsonProperty("customer_id")
     private UUID id;

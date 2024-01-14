@@ -8,13 +8,28 @@ spring:
     change-log: classpath:db.changelog/db.changelog-master.xml
     default-schema: ${DEFAULT_SCHEMA}
     liquibase-schema: ${DEFAULT_SCHEMA}
+  rabbitmq:
+    listener:
+      simple:
+        acknowledge-mode: auto
+        prefetch: 1
+    port: ${PROD_RABBIT_PORT}
+    host: ${PROD_RABBIT_HOST}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
   datasource:
     url: jdbc:postgresql://${PROD_EUREKA_HOST}:${PROD_DB_PORT}/${DB_NAME}?currentSchema=${DEFAULT_SCHEMA}
     username: ${PROD_DB_USERNAME}
     password: ${PROD_DB_PASSWORD}
+
 eureka:
   client:
     service-url:
       defaultZone: http://${PROD_EUREKA_HOST}:${EUREKA_PORT}/eureka/
+
+clevertec:
+  rabbit:
+    config:
+      queue-name: ${RABBIT_AUTH_QUEUE}
 #logging:
 #  config: #мб уйдет в стартер

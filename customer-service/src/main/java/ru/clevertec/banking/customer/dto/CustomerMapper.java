@@ -1,6 +1,7 @@
 package ru.clevertec.banking.customer.dto;
 
 import org.mapstruct.*;
+import ru.clevertec.banking.customer.dto.message.CustomerMessagePayload;
 import ru.clevertec.banking.customer.dto.request.CreateCustomerRequest;
 import ru.clevertec.banking.customer.dto.response.CustomerResponse;
 import ru.clevertec.banking.customer.entity.Customer;
@@ -14,6 +15,11 @@ public interface CustomerMapper {
     @Mapping(target = "customerType", qualifiedByName = "stringToCustomerType")
     Customer toEntity(CreateCustomerRequest createCustomerRequest);
 
+    @Mapping(target = "customerType", qualifiedByName = "stringToCustomerType")
+    Customer toEntityFromCustomerPayload(CustomerMessagePayload payload);
+
+    CustomerMessagePayload toCustomerPayloadFromResponse(CustomerResponse customerResponse);
+
     CustomerResponse toCustomerResponse(Customer customer);
 
     @Named("stringToCustomerType")
@@ -24,4 +30,7 @@ public interface CustomerMapper {
             default -> throw new InvalidCustomerTypeException(String.format("Invalid customer type: %s", customerType));
         };
     }
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Customer partialUpdate(CustomerMessagePayload source, @MappingTarget Customer target);
 }

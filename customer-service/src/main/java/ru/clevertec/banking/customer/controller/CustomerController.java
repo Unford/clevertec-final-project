@@ -1,10 +1,10 @@
 package ru.clevertec.banking.customer.controller;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.clevertec.banking.customer.dto.request.CreateCustomerRequest;
 import ru.clevertec.banking.customer.dto.request.GetCustomersPageableRequest;
@@ -31,11 +31,6 @@ public class CustomerController {
         return customerService.getCustomersById(id);
     }
 
-    @GetMapping("/by-email/{email}") // TODO: Good ли сувать конфиденциальную инфу для реквеста в path?
-    public CustomerResponse getCustomerByEmail(@PathVariable("email") @Valid @Email String email) {
-        return customerService.getCustomersByEmail(email);
-    }
-
     @GetMapping("/by-unp/{unp}")
     public CustomerResponse getCustomerByUnp(@PathVariable("unp") String unp) {
         return customerService.getCustomersByUnp(unp);
@@ -43,12 +38,14 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_USER', 'ROLE_ADMIN')")
     public CustomerResponse createCustomer(@RequestBody @Valid CreateCustomerRequest createCustomerRequest) {
-        return customerService.createCustomer(createCustomerRequest);
+        return customerService.saveCustomer(createCustomerRequest);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ROLE_SUPER_USER')")
     public void deleteCustomer(@PathVariable("id") UUID id) {
         customerService.deleteCustomer(id);
     }

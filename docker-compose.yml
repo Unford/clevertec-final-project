@@ -3,8 +3,8 @@ services:
   eureka-server:
     image: eureka-server:0.0.1
     build:
-      context: ./eureka-server/
-      dockerfile: /Dockerfile
+      context: ./eureka-server
+      dockerfile: Dockerfile
     restart: always
     ports:
       - "8761:8761"
@@ -14,8 +14,8 @@ services:
   api-gateway:
     image: api-gateway:0.0.1
     build:
-      context: ./api-gateway/
-      dockerfile: /Dockerfile
+      context: ./api-gateway
+      dockerfile: Dockerfile
     restart: always
     depends_on:
       - eureka-server
@@ -32,9 +32,9 @@ services:
   service-db:
     image: postgres:15.2-alpine
     environment:
-      POSTGRES_USER: clevertec
-      POSTGRES_PASSWORD: banking
-      POSTGRES_DB: clevertec-banking
+      POSTGRES_USER: clevertec #TODO hide
+      POSTGRES_PASSWORD: banking #TODO hide
+      POSTGRES_DB: clevertec-banking #TODO hide
     ports:
       - "15432:5432"
     volumes:
@@ -47,7 +47,7 @@ services:
     image: auth-service:0.0.1
     build:
       context: ./auth-service
-      dockerfile: /Dockerfile
+      dockerfile: Dockerfile
     restart: always
     depends_on:
       - service-db
@@ -68,7 +68,7 @@ services:
     image: customer-service:0.0.1
     build:
       context: ./customer-service
-      dockerfile: /Dockerfile
+      dockerfile: Dockerfile
     restart: always
     depends_on:
       - service-db
@@ -89,7 +89,7 @@ services:
     image: currency-service:0.0.1
     build:
       context: ./currency-service
-      dockerfile: /Dockerfile
+      dockerfile: Dockerfile
     restart: always
     depends_on:
       - service-db
@@ -111,12 +111,28 @@ services:
     image: dpage/pgadmin4:7
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com #TODO hide
+      PGADMIN_DEFAULT_PASSWORD: root #TODO hide
     ports:
       - "5050:80"
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - clevertec-banking-net
+
+  rabbitmq:
+    image: rabbitmq:3.10.7-management
+    hostname: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=clevertec #TODO hide
+      - RABBITMQ_DEFAULT_PASS=banking #TODO hide
+      - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit disk_free_limit 2147483648 # 2GB
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
     networks:
       - clevertec-banking-net
 
@@ -127,3 +143,4 @@ networks:
 volumes:
   db-data:
   pgadmin-data:
+  rabbitmq-data:

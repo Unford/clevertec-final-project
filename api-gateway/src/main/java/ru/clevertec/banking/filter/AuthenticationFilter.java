@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.stereotype.Component;
-import ru.clevertec.banking.util.JwtUtil;
+import ru.clevertec.banking.auth.util.JwtUtil;
 
 import java.util.Objects;
 

@@ -22,4 +22,30 @@ subprojects {
 
     }
 
+//    tasks.register('publishStarters') {
+//        doLast {
+//            subprojects.findAll { it.name.endsWith('-starter') }
+//                    .forEach { subproject ->
+//                        subproject.tasks.named('bootJar')
+//                    }
+//        }
+//        group 'custom_build'
+//    }
+//
+//    tasks.register('bootJarInServices') {
+//        doLast {
+//            subprojects.findAll { it.plugins.hasPlugin('java') && it.tasks.named('bootJar') != null }
+//                    .forEach { subproject ->
+//                        doLast {
+//                            subproject.tasks.named('bootJar')
+//                        }
+//                    }
+//        }
+//        group 'custom_build'
+//    }
 }
+//
+//tasks.register('publishStartersAndBootJarInServices') {
+//    dependsOn subprojects.tasks.'publishStarters', subprojects.tasks.'bootJarInServices'
+//    group 'custom_build'
+//}

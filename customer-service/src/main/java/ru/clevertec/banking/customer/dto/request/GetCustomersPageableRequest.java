@@ -17,7 +17,6 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetCustomersPageableRequest {
@@ -44,14 +43,14 @@ public class GetCustomersPageableRequest {
     @JsonSetter
     public void setCustomerType(String customerType) {
         this.customerType = Objects.nonNull(customerType) ?
-                            customerType.toUpperCase()
-                                        .trim() : null;
+                            customerType.toUpperCase().trim() :
+                            null;
 
         setCustomerTypeEnum(this.customerType);
     }
 
     public void setCustomerTypeEnum(String customerType) {
-         switch (customerType) {
+        switch (customerType) {
             case "LEGAL" -> this.customerTypeEnum = CustomerType.valueOf("LEGAL");
             case "PHYSIC" -> this.customerTypeEnum = CustomerType.valueOf("PHYSIC");
             default -> throw new InvalidCustomerTypeException(String.format("Invalid customer type: %s", customerType));
