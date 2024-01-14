@@ -8,14 +8,6 @@ public class InvalidCustomerTypeException extends ServiceException {
         super(message);
     }
 
-    public InvalidCustomerTypeException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public InvalidCustomerTypeException(Throwable cause) {
-        super(cause);
-    }
-
     @Override
     public HttpStatus getHttpStatus() {
         return HttpStatus.BAD_REQUEST;

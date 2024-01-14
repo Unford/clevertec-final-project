@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
     <changeSet id="10-01-2023-01-create-customer-table" author="vlad">
-        <createTable tableName="customers">
+        <createTable tableName="customer">
             <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -30,13 +30,22 @@
             <column name="customer_fullname" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="deleted" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
     </changeSet>
 
     <changeSet id="10-01-2023-01_02-createIndex-customer_email" author="vlad">
-        <createIndex tableName="customers" indexName="idx_customer_email_unq" unique="true">
+        <createIndex tableName="customer" indexName="idx_customer_email_unq" unique="true">
             <column name="email"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="10-01-2023-01_03-createIndex-customer_unp" author="vlad">
+        <createIndex tableName="customer" indexName="idx_customer_unp_unq" unique="true">
+            <column name="unp"/>
         </createIndex>
     </changeSet>
 

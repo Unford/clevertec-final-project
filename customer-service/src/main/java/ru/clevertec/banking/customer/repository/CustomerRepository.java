@@ -10,8 +10,13 @@ import java.util.UUID;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, UUID>, JpaSpecificationExecutor<Customer> {
-    Optional<Customer> findByEmail(String email);
     Optional<Customer> findByUnpAndUnpNotNull(String unp);
+
+    Optional<Customer> findByIdOrEmailOrUnp(UUID id, String email, String unp);
+
+    Optional<Customer> findByIdOrEmail(UUID id, String email);
+
     boolean existsByIdOrEmailOrUnp(UUID id, String email, String unp);
+
     boolean existsByIdOrEmail(UUID id, String email);
 }

@@ -30,7 +30,8 @@ public class CreateCustomerRequestValidator implements ConstraintValidator<Creat
             return false;
         }
 
-        if (Objects.equals(CustomerType.LEGAL.toString(), value.getCustomerType()) && (value.getUnp() == null || value.getUnp().isBlank())) {
+        if (Objects.equals(CustomerType.LEGAL.toString(), value.getCustomerType())
+            && (value.getUnp() == null || value.getUnp().isBlank())) {
             addValidationMessage(context, "Legal Customer must have UNP");
             return false;
         }
