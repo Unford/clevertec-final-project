@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.clevertec.banking.entity.SecurityUserDetails;
-import ru.clevertec.banking.repository.UserCredentialsRepository;
+import ru.clevertec.banking.customer.entity.SecurityUserDetails;
+import ru.clevertec.banking.customer.repository.UserCredentialsRepository;
 
 @Configuration
 @RequiredArgsConstructor

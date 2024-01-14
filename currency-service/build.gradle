@@ -14,9 +14,8 @@ java {
 
 dependencies {
 
-    implementation 'ru.clevertec.banking:global-exception-starter:0.0.1'
-
-    implementation project(":logging-starter")
+    implementation 'ru.clevertec.banking:global-exception-starter:1.0.0'
+    implementation 'ru.clevertec.banking:logging-starter:1.0.0'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
@@ -48,7 +47,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 

@@ -1,12 +1,9 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'org.springframework.boot' version '3.2.0'
-    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
 }
-
-group = 'ru.clevertec.banking'
-version = '0.0.1'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -18,19 +15,10 @@ configurations {
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
-ext {
-    set('springBootVersion', "3.2.0")
-    set('lombokVersion', "1.18.30")
-}
-
 dependencies {
-    implementation 'org.springframework.security:spring-security-core'
-    implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
-    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    api 'org.springframework.security:spring-security-core'
+    api "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+    api "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     api "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"

@@ -5,14 +5,8 @@ plugins {
     id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
 }
 
-group = 'ru.clevertec.banking.security'
-version = '1.0.0'
-
-
-
-
 java {
-    sourceCompatibility = '17'
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 configurations {
@@ -20,23 +14,19 @@ configurations {
         extendsFrom annotationProcessor
     }
 }
+
 ext {
     set('jwtVersion', "4.4.0")
 }
 
-
 dependencies {
-    implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+    api "org.springframework.boot:spring-boot-starter:${springBootVersion}"
     api "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     api "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
-
+    api "com.auth0:java-jwt:${jwtVersion}"
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
-
-    implementation "com.auth0:java-jwt:${jwtVersion}"
-
-
 }
 
 publishing {
@@ -45,8 +35,4 @@ publishing {
             from components.java
         }
     }
-}
-
-test {
-    useJUnitPlatform()
 }
