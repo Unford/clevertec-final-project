@@ -1,16 +1,10 @@
 allprojects {
     group = 'ru.clevertec.banking'
     version = '1.0.0'
-
 }
 
 subprojects {
     apply plugin: 'java'
-
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-}
 
     repositories {
         mavenCentral()
