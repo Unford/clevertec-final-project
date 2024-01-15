@@ -3,6 +3,7 @@ package ru.clevertec.banking.deposit.model.dto.request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
@@ -14,19 +15,16 @@ import java.time.LocalDate;
 
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class DepositInfoRequest {
+public class UpdateDepositRequest {
+    @Valid
     @NotNull
-    @Positive
-    private BigDecimal rate;
-    @NotNull
-    @Positive
-    private Integer termVal;
-    @NotNull
-    private TermScale termScale;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
-    private LocalDate expDate;
-    @NotNull
-    private DepositType depType;
-    @NotNull
-    private Boolean autoRenew;
+    private UpdateDepositInfoRequest depInfo;
+
+
+    @Data
+    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+    public static class UpdateDepositInfoRequest {
+        private DepositType depType;
+        private Boolean autoRenew;
+    }
 }

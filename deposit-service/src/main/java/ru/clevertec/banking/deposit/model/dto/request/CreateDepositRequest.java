@@ -22,9 +22,9 @@ public class CreateDepositRequest {
     private CustomerType customerType;
     @Valid
     @NotNull
-    private AccountInfoRequest accInfo;
+    private CreateAccountInfoRequest accInfo;
     @Valid
     @NotNull
-    private DepositInfoRequest depInfo;
+    private CreateDepositInfoRequest depInfo;
 
 }

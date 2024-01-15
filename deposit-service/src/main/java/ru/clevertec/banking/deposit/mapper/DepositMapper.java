@@ -1,12 +1,13 @@
 package ru.clevertec.banking.deposit.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 import ru.clevertec.banking.deposit.model.domain.Deposit;
 import ru.clevertec.banking.deposit.model.dto.message.DepositMessagePayload;
 import ru.clevertec.banking.deposit.model.dto.request.CreateDepositRequest;
+import ru.clevertec.banking.deposit.model.dto.request.UpdateDepositRequest;
 import ru.clevertec.banking.deposit.model.dto.response.DepositResponse;
+
+import java.util.Optional;
 
 @Mapper
 public interface DepositMapper {
@@ -17,4 +18,8 @@ public interface DepositMapper {
     DepositResponse toDepositResponse(Deposit deposit);
 
     Deposit toDeposit(CreateDepositRequest createDepositRequest);
+
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Deposit updateDeposit(UpdateDepositRequest updateDepositRequest, @MappingTarget Deposit deposit);
 }

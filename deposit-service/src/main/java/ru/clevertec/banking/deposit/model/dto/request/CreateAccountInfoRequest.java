@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.hibernate.validator.constraints.Currency;
 import ru.clevertec.banking.deposit.validation.CurrencyString;
 
 import java.math.BigDecimal;
@@ -16,7 +15,7 @@ import java.time.LocalDate;
 
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AccountInfoRequest {
+public class CreateAccountInfoRequest {
     @NotBlank
     @Size(max = 50)
     private String accIban;

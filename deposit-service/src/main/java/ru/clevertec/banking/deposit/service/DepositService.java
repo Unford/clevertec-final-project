@@ -6,10 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.banking.advice.exception.ResourceNotFoundException;
+import ru.clevertec.banking.deposit.client.CustomerClient;
 import ru.clevertec.banking.deposit.mapper.DepositMapper;
 import ru.clevertec.banking.deposit.model.domain.Deposit;
 import ru.clevertec.banking.deposit.model.dto.message.DepositMessagePayload;
 import ru.clevertec.banking.deposit.model.dto.request.CreateDepositRequest;
+import ru.clevertec.banking.deposit.model.dto.request.UpdateDepositRequest;
 import ru.clevertec.banking.deposit.model.dto.response.DepositResponse;
 import ru.clevertec.banking.deposit.repository.DepositRepository;
 
@@ -23,7 +25,20 @@ import java.util.UUID;
 public class DepositService {
     private final DepositRepository depositRepository;
     private final DepositMapper depositMapper;
+    private final CustomerClient customerClient;
 
+
+    @Transactional
+    public DepositResponse save(CreateDepositRequest createDepositRequest) {
+        return Optional.ofNullable(customerClient.findByCustomerId(createDepositRequest.getCustomerId()))
+                .map(c -> createDepositRequest)
+                .map(depositMapper::toDeposit)
+                .map(depositRepository::save)
+                .map(depositMapper::toDepositResponse)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer with id %s is not found"
+                        .formatted(createDepositRequest.getCustomerId().toString())));
+
+    }
 
     @Transactional
     public void saveFromMessage(DepositMessagePayload payload) {
@@ -57,17 +72,20 @@ public class DepositService {
                 .map(depositMapper::toDepositResponse);
     }
 
-    @Transactional
-    public DepositResponse save(CreateDepositRequest createDepositRequest) {
-        return Optional.of(createDepositRequest)
-                .map(depositMapper::toDeposit)
-                .map(depositRepository::save)
-                .map(depositMapper::toDepositResponse)
-                .get();
-
-    }
 
     public boolean isDepositExistByIban(String iban) {
         return depositRepository.existsByAccInfoAccIban(iban);
+    }
+
+
+    @Transactional
+    public DepositResponse update(String iban, UpdateDepositRequest updateDepositRequest) {
+        return depositRepository.findByAccInfoAccIban(iban)
+                .map(d -> depositMapper.updateDeposit(updateDepositRequest, d))
+                .map(depositRepository::save)
+                .map(depositMapper::toDepositResponse)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Deposit with iban '%s' is not found".formatted(iban)));
+
     }
 }

@@ -25,6 +25,11 @@ spring:
 
 
 clevertec:
+  feign:
+    client:
+      customer:
+        name: CUSTOMER-SERVICE
+        path: "/api/v1/customers"
   rabbit:
     queue:
       deposit: ${RABBIT_DEPOSIT_QUEUE:deposit}

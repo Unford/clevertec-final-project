@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.clevertec.banking.deposit.model.dto.request.CreateDepositRequest;
+import ru.clevertec.banking.deposit.model.dto.request.UpdateDepositRequest;
 import ru.clevertec.banking.deposit.model.dto.response.DepositResponse;
 import ru.clevertec.banking.deposit.service.DepositService;
 
@@ -44,6 +45,12 @@ public class DepositController {
     @ResponseStatus(HttpStatus.CREATED)
     public DepositResponse createDeposit(@RequestBody @Valid CreateDepositRequest createDepositRequest) {
         return depositService.save(createDepositRequest);
+    }
+
+    @PatchMapping("/{iban}")
+    public DepositResponse updateDeposit(@PathVariable String iban,
+                                         @RequestBody @Valid UpdateDepositRequest updateDepositRequest) {
+        return depositService.update(iban, updateDepositRequest);
     }
 
 }
