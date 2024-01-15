@@ -6,7 +6,11 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import ru.clevertec.banking.deposit.model.CustomerType;
+import ru.clevertec.banking.deposit.model.TermScale;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 
@@ -19,7 +23,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "deposits")
 @SQLRestriction("deleted = false")
-@SQLDelete(sql = "UPDATE deposit.deposits SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE {h-schema}deposits SET deleted = true WHERE id=?")
 public class Deposit {
 
     @Id
@@ -44,6 +48,17 @@ public class Deposit {
     @PrePersist
     public void onPrePersist() {
         this.deleted = false;
+        if (Objects.isNull(accInfo.getAccOpenDate())) {
+            accInfo.setAccOpenDate(LocalDate.now());
+        }
+        if (Objects.isNull(accInfo.getCurrAmount())){
+            accInfo.setCurrAmount(BigDecimal.ZERO);
+        }
+        if (Objects.isNull(depInfo.getExpDate())){
+            LocalDate openDate = accInfo.getAccOpenDate();
+            depInfo.setExpDate(openDate.plus(depInfo.getTermVal(),
+                    depInfo.getTermScale().getTemporalUnit()));
+        }
     }
 
 }
