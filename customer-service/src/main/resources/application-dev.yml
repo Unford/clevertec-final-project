@@ -27,5 +27,16 @@ clevertec:
     config:
       name-forward-exchange: ${RABBIT_AUTH_EXCHANGE}
       queue-name: ${RABBIT_CUSTOMER_QUEUE}
+  feign:
+    client:
+      account-card:
+        name: ACCOUNT-CARD-SERVICE
+        path: /api/v1/accounts
+      credit:
+        name: CREDIT-SERVICE
+        path: /api/v1/credits
+      deposit:
+        name: DEPOSIT-SERVICE
+        path: /api/v1/deposits
 #logging:
 #  config: #мб уйдет в стартер

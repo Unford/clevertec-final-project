@@ -2,12 +2,6 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: account-service
-          uri: lb://ACCOUNT-SERVICE
-          predicates:
-            - Path=${ACCOUNT_SERVICE_PATH}
-          filters:
-            - AuthenticationFilter
 
         - id: customer-service
           uri: lb://CUSTOMER-SERVICE
@@ -27,6 +21,27 @@ spring:
           uri: lb://AUTH-SERVICE
           predicates:
             - Path=${AUTH_SERVICE_PATH}
+
+        - id: account-card-service
+          uri: lb://ACCOUNT-CARD-SERVICE
+          predicates:
+            - Path=${ACCOUNT_CARD_SERVICE_ACCOUNTS_PATH}
+          filters:
+          - AuthenticationFilter
+
+        - id: account-card-service
+          uri: lb://ACCOUNT-CARD-SERVICE
+          predicates:
+            - Path=${ACCOUNT_CARD_SERVICE_CARDS_PATH}
+          filters:
+            - AuthenticationFilter
+
+        - id: credit-service
+          uri: lb://CREDIT-SERVICE
+          predicates:
+            - Path=${CREDIT_SERVICE_PATH}
+          filters:
+            - AuthenticationFilter
 
   application:
     name: BANKING-GATEWAY
