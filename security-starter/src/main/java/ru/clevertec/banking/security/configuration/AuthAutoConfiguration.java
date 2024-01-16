@@ -25,7 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-import ru.clevertec.banking.security.filter.FilterExceptionFilter;
+import ru.clevertec.banking.security.filter.ExceptionFilter;
 import ru.clevertec.banking.security.filter.JwtAuthorizationFilter;
 import ru.clevertec.banking.security.model.AuthTokenProvider;
 import ru.clevertec.banking.security.model.Role;
@@ -51,7 +51,7 @@ public class AuthAutoConfiguration {
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     SecurityFilterChain securityFilterChain(HttpSecurity http,
                                             JwtAuthorizationFilter jwtFilter,
-                                            FilterExceptionFilter exceptionFilter,
+                                            ExceptionFilter exceptionFilter,
                                             Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> registryCustomizer)
             throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
@@ -70,8 +70,8 @@ public class AuthAutoConfiguration {
     }
 
     @Bean
-    FilterExceptionFilter filterExceptionFilter(HandlerExceptionResolver handlerExceptionResolver) {
-        return new FilterExceptionFilter(handlerExceptionResolver);
+    ExceptionFilter exceptionFilter(HandlerExceptionResolver handlerExceptionResolver) {
+        return new ExceptionFilter(handlerExceptionResolver);
     }
 
 

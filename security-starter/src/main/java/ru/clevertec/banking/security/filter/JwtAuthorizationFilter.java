@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
@@ -32,12 +33,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         Optional<String> authHeader = authTokenProvider.getAuthorizationHeader();
-        Optional<String> optionalSub = Optional.empty();
+        Optional<UUID> optionalSub = Optional.empty();
         List<SimpleGrantedAuthority> authorities = List.of();
 
         if (authHeader.isPresent() && authHeader.get().startsWith(BEARER)) {
             String token = authTokenProvider.getToken().orElse("");
-            optionalSub = jwtService.extractSub(token);
+            optionalSub = jwtService.extractSub(token).map(UUID::fromString);
             authorities = jwtService.extractAuthorities(token)
                     .stream()
                     .map(Role::valueOf)
@@ -53,7 +54,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private void setAuthenticationWithToken(String sub, List<SimpleGrantedAuthority> authorities, String authHeader) {
+    private void setAuthenticationWithToken(UUID sub, List<SimpleGrantedAuthority> authorities, String authHeader) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 sub,
                 null,
