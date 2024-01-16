@@ -7,8 +7,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Role;
+
 import org.springframework.core.annotation.Order;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,11 +28,12 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import ru.clevertec.banking.security.filter.FilterExceptionFilter;
 import ru.clevertec.banking.security.filter.JwtAuthorizationFilter;
 import ru.clevertec.banking.security.model.AuthTokenProvider;
+import ru.clevertec.banking.security.model.Role;
 import ru.clevertec.banking.security.service.JwtTokenService;
 
 
 @AutoConfiguration(before = {SecurityAutoConfiguration.class})
-@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+@org.springframework.context.annotation.Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 @EnableWebSecurity
 @EnableMethodSecurity
 @ConditionalOnMissingBean(SecurityFilterChain.class)
@@ -79,6 +84,20 @@ public class AuthAutoConfiguration {
     @Bean
     JwtTokenService jwtTokenService() {
         return new JwtTokenService();
+    }
+
+    @Bean
+    static RoleHierarchy roleHierarchy() {
+        RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
+        hierarchy.setHierarchy(Role.SUPER_USER.toUpperStringRole() + " > " + Role.ADMIN.toUpperStringRole());
+        return hierarchy;
+    }
+
+    @Bean
+    static MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
+        DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
+        expressionHandler.setRoleHierarchy(roleHierarchy);
+        return expressionHandler;
     }
 
 
