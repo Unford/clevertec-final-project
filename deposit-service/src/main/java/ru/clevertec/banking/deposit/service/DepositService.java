@@ -1,13 +1,13 @@
 package ru.clevertec.banking.deposit.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.banking.advice.exception.ResourceNotFoundException;
@@ -19,6 +19,7 @@ import ru.clevertec.banking.deposit.model.dto.request.CreateDepositRequest;
 import ru.clevertec.banking.deposit.model.dto.request.UpdateDepositRequest;
 import ru.clevertec.banking.deposit.model.dto.response.DepositResponse;
 import ru.clevertec.banking.deposit.repository.DepositRepository;
+import ru.clevertec.banking.deposit.repository.DepositSpecifications;
 
 import java.util.List;
 import java.util.Optional;
@@ -71,7 +72,6 @@ public class DepositService {
     }
 
 
-
     public List<DepositResponse> findAllByCustomerId(UUID customerId) {
         return depositRepository.findAllByCustomerId(customerId)
                 .stream()
@@ -79,11 +79,10 @@ public class DepositService {
                 .toList();
     }
 
-    public Page<DepositResponse> findPage(Pageable pageable) {
-        return depositRepository.findAll(pageable)
+    public Page<DepositResponse> findPageByRole(Pageable pageable, Authentication authentication) {
+        return depositRepository.findAll(DepositSpecifications.filterByUserId(authentication), pageable)
                 .map(depositMapper::toDepositResponse);
     }
-
 
 
     public boolean isDepositExistByIban(String iban) {

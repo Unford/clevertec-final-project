@@ -4,7 +4,6 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.clevertec.banking.advice.exception.ResourceNotFoundException;
 import ru.clevertec.banking.deposit.model.dto.request.CreateDepositRequest;
 import ru.clevertec.banking.deposit.service.DepositService;
 import ru.clevertec.banking.deposit.validation.UniqueAccountIban;

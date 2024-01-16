@@ -2,7 +2,6 @@ package ru.clevertec.banking.deposit.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import ru.clevertec.banking.deposit.validation.validator.OpenDateBeforeExpirationValidator;
 import ru.clevertec.banking.deposit.validation.validator.UniqueAccountIbanValidator;
 
 import java.lang.annotation.*;

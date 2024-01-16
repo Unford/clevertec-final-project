@@ -6,7 +6,6 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import ru.clevertec.banking.deposit.model.CustomerType;
-import ru.clevertec.banking.deposit.model.TermScale;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
