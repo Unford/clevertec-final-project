@@ -17,6 +17,13 @@ spring:
           filters:
             - AuthenticationFilter
 
+        - id: deposit-service
+          uri: lb://DEPOSIT-SERVICE
+          predicates:
+            - Path=${DEPOSIT_SERVICE_PATH}
+          filters:
+            - AuthenticationFilter
+
         - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
