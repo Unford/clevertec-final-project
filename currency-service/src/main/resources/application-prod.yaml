@@ -11,6 +11,8 @@ spring:
   rabbitmq:
     port: ${PROD_RABBIT_PORT}
     host: ${PROD_RABBIT_HOST}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
   jpa:
     properties:
       hibernate:

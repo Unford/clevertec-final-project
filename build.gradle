@@ -18,34 +18,34 @@ subprojects {
         set('mapstructVersion', "1.5.5.Final")
         set('lombokMapstructVersion', "0.2.0")
         set('preLiquibaseStarterVersion', "1.5.0")
-        set('springCloudVersion',  "2023.0.0")
+        set('springCloudVersion', "2023.0.0")
 
     }
 
-//    tasks.register('publishStarters') {
-//        doLast {
-//            subprojects.findAll { it.name.endsWith('-starter') }
-//                    .forEach { subproject ->
-//                        subproject.tasks.named('bootJar')
-//                    }
-//        }
-//        group 'custom_build'
-//    }
-//
-//    tasks.register('bootJarInServices') {
-//        doLast {
-//            subprojects.findAll { it.plugins.hasPlugin('java') && it.tasks.named('bootJar') != null }
-//                    .forEach { subproject ->
-//                        doLast {
-//                            subproject.tasks.named('bootJar')
-//                        }
-//                    }
-//        }
-//        group 'custom_build'
-//    }
+
 }
-//
-//tasks.register('publishStartersAndBootJarInServices') {
-//    dependsOn subprojects.tasks.'publishStarters', subprojects.tasks.'bootJarInServices'
-//    group 'custom_build'
-//}
+
+tasks.register('publishStarters') {
+    it.finalizedBy {
+        subprojects.findAll { it.name.endsWith('-starter') }
+                .stream().map { subproject ->
+                    subproject.tasks.named('publishToMavenLocal').get()
+                }.toArray()
+    }
+    group 'custom_build'
+}
+
+tasks.register('publishStartersAndBootJarInServices') {
+    it.finalizedBy {
+        subprojects.findAll() {
+            !it.name.endsWith('-starter') && it.tasks.findByName('bootJar') != null
+        }.stream().map {
+                    it.tasks.named('bootJar').get()
+                }.toArray()
+
+
+    }
+    dependsOn('publishStarters')
+    group 'custom_build'
+}
+

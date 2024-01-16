@@ -106,6 +106,27 @@ services:
     networks:
       - clevertec-banking-net
 
+  deposit-service:
+    image: deposit-service:0.0.1
+    build:
+      context: ./deposit-service
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - service-db
+      - eureka-server
+      - api-gateway
+    ports:
+      - "8085:8085"
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+      SPRING_DATASOURCE_URL: jdbc:postgresql://service-db/clevertec-banking
+      SPRING_PROFILES_ACTIVE: prod
+    env_file:
+      - ./deposit-service/.env
+    networks:
+      - clevertec-banking-net
+
   pgadmin:
     container_name: pgadmin4_container
     image: dpage/pgadmin4:7
