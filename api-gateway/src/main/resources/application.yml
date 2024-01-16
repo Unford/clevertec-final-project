@@ -33,6 +33,8 @@ spring:
           uri: lb://ACCOUNT-CARD-SERVICE
           predicates:
             - Path=${ACCOUNT_CARD_SERVICE_CARDS_PATH}
+          filters:
+            - AuthenticationFilter
 
         - id: credit-service
           uri: lb://CREDIT-SERVICE

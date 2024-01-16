@@ -22,7 +22,7 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     liquibase-schema: ${PROD_DEFAULT_SCHEMA:account_card}
   rabbitmq:
-    addresses: ${PROD_RABBITMQ_ADDRESSES:amqp://admin:admin@localhost:5673}
+    addresses: amqp://${RABBIT_USERNAME:admin}:${RABBIT_PASSWORD:admin}@${PROD_RABBIT_HOST:localhost}:${PROD_RABBIT_PORT:5673}
     listener:
       simple:
         acknowledge-mode: auto
