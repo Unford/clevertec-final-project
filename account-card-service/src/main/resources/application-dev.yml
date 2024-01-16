@@ -1,0 +1,48 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:${DEV_DB_PORT:5432}/${DEV_DB_NAME:banking}?currentSchema=${DEV_DEFAULT_SCHEMA:account_card}
+    username: ${DEV_DB_USERNAME:admin}
+    password: ${DEV_DB_USERNAME:admin}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 0
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+  liquibase:
+    enabled: true
+    default-schema: ${DEV_DEFAULT_SCHEMA:account_card}
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    liquibase-schema: ${DEV_DEFAULT_SCHEMA:account_card}
+  rabbitmq:
+    addresses: ${DEV_RABBITMQ_ADDRESSES:amqp://admin:admin@localhost:5673}
+    listener:
+      simple:
+        acknowledge-mode: auto
+        prefetch: 1
+clevertec:
+  rabbit:
+    consumer:
+      queue:
+        account-queue: ${DEV_ACCOUNT_QUEUE_NAME:account_info}
+        card-queue: ${DEV_CARD_QUEUE_NAME:card-info}
+  feign:
+    service:
+      currency-client: ${DEV_CURRENCY_SERVICE:CURRENCY-SERVICE}
+      currency-get-path: ${DEV_CURRENCY_GET_PATH:/api/v1/currencies}
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
+eureka:
+  client:
+    service-url:
+      defaultZone : http://${DEV_EUREKA_HOST:localhost}:${DEV_EUREKA_PORT:8761}/eureka/
