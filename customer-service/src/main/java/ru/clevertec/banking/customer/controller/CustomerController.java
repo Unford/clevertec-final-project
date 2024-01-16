@@ -8,7 +8,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.clevertec.banking.customer.dto.request.CreateCustomerRequest;
 import ru.clevertec.banking.customer.dto.request.GetCustomersPageableRequest;
+import ru.clevertec.banking.customer.dto.response.CustomerBankingProductsResponse;
 import ru.clevertec.banking.customer.dto.response.CustomerResponse;
+import ru.clevertec.banking.customer.service.CustomerBankingProductsService;
 import ru.clevertec.banking.customer.service.CustomerService;
 
 import java.util.UUID;
@@ -19,26 +21,37 @@ import java.util.UUID;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final CustomerBankingProductsService customerBankingProductsService;
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public Page<CustomerResponse> getCustomersPageable(
             @ModelAttribute @Valid GetCustomersPageableRequest getCustomersPageableRequest) {
         return customerService.getCustomersPageable(getCustomersPageableRequest);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public CustomerResponse getCustomerById(@PathVariable("id") UUID id) {
         return customerService.getCustomersById(id);
     }
 
     @GetMapping("/by-unp/{unp}")
+    @PreAuthorize("isAuthenticated()")
     public CustomerResponse getCustomerByUnp(@PathVariable("unp") String unp) {
         return customerService.getCustomersByUnp(unp);
     }
 
+    @GetMapping("/{id}/banking-products")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR " +
+                  "@customSecurityExpression.hasUserRoleAndIdEquals(#id)")
+    public CustomerBankingProductsResponse getCustomerBankingProducts(@PathVariable("id") UUID id) {
+        return customerBankingProductsService.getCustomerBankingProducts(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAnyRole('ROLE_SUPER_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public CustomerResponse createCustomer(@RequestBody @Valid CreateCustomerRequest createCustomerRequest) {
         return customerService.saveCustomer(createCustomerRequest);
     }
