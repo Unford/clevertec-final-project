@@ -16,11 +16,10 @@ java {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-docker-compose'
 
-    implementation 'ru.clevertec.banking:global-exception-starter:0.0.1'
-
-    implementation project(":logging-starter")
-    implementation project(":cache-starter")
-    implementation project(":security-starter")
+    implementation 'ru.clevertec.banking:global-exception-starter:1.0.0'
+    implementation 'ru.clevertec.banking:logging-starter:1.0.0'
+    implementation 'ru.clevertec.banking:cache-starter:1.0.0'
+    implementation 'ru.clevertec.banking:security-starter:1.0.0'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
