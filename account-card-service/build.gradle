@@ -11,24 +11,26 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
 }
 
-ext {
-    springCloudVersion = "2023.0.0"
-    mapstructVersion = '1.5.5.Final'
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'org.liquibase:liquibase-core'
     implementation "net.lbruun.springboot:preliquibase-spring-boot-starter:${preLiquibaseStarterVersion}"
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
-    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    implementation 'commons-io:commons-io:2.15.1'
 
     implementation 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
 
     implementation 'ru.clevertec.banking:global-exception-starter:1.0.0'
     implementation 'ru.clevertec.banking:logging-starter:1.0.0'
@@ -41,7 +43,6 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructVersion}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
-    implementation 'commons-io:commons-io:2.15.1'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
@@ -55,12 +56,6 @@ compileJava {
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
-}
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
     }
 }
 

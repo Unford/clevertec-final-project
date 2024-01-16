@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:${PROD_DB_PORT:5555}/${PROD_DB_NAME:account-card-service}?currentSchema=${PROD_DEFAULT_SCHEMA:credit}
+    username: ${PROD_DB_USERNAME:admin}
+    password: ${PROD_DB_PASSWORD:admin}
+  liquibase:
+    enabled: true
+    default-schema: ${PROD_DEFAULT_SCHEMA:credit}
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    liquibase-schema: ${PROD_DEFAULT_SCHEMA:credit}
+  rabbitmq:
+    addresses: ${PROD_RABBITMQ_ADDRESSES:amqp://admin:admin@localhost:5673}
+    listener:
+      simple:
+        acknowledge-mode: auto
+        prefetch: 1
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: ${PROD_DEFAULT_SCHEMA:credit}
+    show-sql: true
+clevertec:
+  rabbit:
+    consumer:
+      queue:
+        credit-queue: ${PROD_RABBITMQ_QUEUE_NAME:credit-details}
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${PROD_EUREKA_HOST:localhost}:${PROD_EUREKA_PORT:8761}/eureka/
+    enabled: true
