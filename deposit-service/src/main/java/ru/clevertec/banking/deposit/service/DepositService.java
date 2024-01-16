@@ -1,6 +1,11 @@
 package ru.clevertec.banking.deposit.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,6 +27,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@CacheConfig(cacheNames = "deposit")
 public class DepositService {
     private final DepositRepository depositRepository;
     private final DepositMapper depositMapper;
@@ -29,6 +35,7 @@ public class DepositService {
 
 
     @Transactional
+    @CachePut(key = "#result.accInfo.accIban")
     public DepositResponse save(CreateDepositRequest createDepositRequest) {
         return Optional.ofNullable(customerClient.findByCustomerId(createDepositRequest.getCustomerId()))
                 .map(c -> createDepositRequest)
@@ -41,13 +48,15 @@ public class DepositService {
     }
 
     @Transactional
-    public void saveFromMessage(DepositMessagePayload payload) {
+    @CachePut(key = "#result.accInfo.accIban")
+    public Deposit saveFromMessage(DepositMessagePayload payload) {
         Deposit deposit = depositRepository.findByAccInfoAccIban(payload.getAccInfo().getAccIban())
                 .map(d -> depositMapper.updateDeposit(payload, d))
                 .orElseGet(() -> depositMapper.toDeposit(payload));
-        depositRepository.save(deposit);
+        return depositRepository.save(deposit);
     }
 
+    @Cacheable(key = "#iban")
     public DepositResponse findByAccountIban(String iban) {
         return depositRepository.findByAccInfoAccIban(iban)
                 .map(depositMapper::toDepositResponse)
@@ -56,9 +65,12 @@ public class DepositService {
     }
 
     @Transactional
+    @CacheEvict(key = "#iban")
     public void deleteByAccountIban(String iban) {
         depositRepository.deleteByAccInfoAccIban(iban);
     }
+
+
 
     public List<DepositResponse> findAllByCustomerId(UUID customerId) {
         return depositRepository.findAllByCustomerId(customerId)
@@ -73,12 +85,14 @@ public class DepositService {
     }
 
 
+
     public boolean isDepositExistByIban(String iban) {
         return depositRepository.existsByAccInfoAccIban(iban);
     }
 
 
     @Transactional
+    @CachePut(key = "#iban")
     public DepositResponse update(String iban, UpdateDepositRequest updateDepositRequest) {
         return depositRepository.findByAccInfoAccIban(iban)
                 .map(d -> depositMapper.updateDeposit(updateDepositRequest, d))

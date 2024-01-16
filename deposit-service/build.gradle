@@ -19,6 +19,8 @@ dependencies {
     implementation 'ru.clevertec.banking:global-exception-starter:0.0.1'
 
     implementation project(":logging-starter")
+    implementation project(":cache-starter")
+    implementation project(":security-starter")
 
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 

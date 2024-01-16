@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.clevertec.banking.deposit.model.dto.request.CreateDepositRequest;
 import ru.clevertec.banking.deposit.model.dto.request.UpdateDepositRequest;
