@@ -32,9 +32,9 @@ services:
   service-db:
     image: postgres:15.2-alpine
     environment:
-      POSTGRES_USER: clevertec #TODO hide
-      POSTGRES_PASSWORD: banking #TODO hide
-      POSTGRES_DB: clevertec-banking #TODO hide
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "15432:5432"
     volumes:
@@ -111,8 +111,8 @@ services:
     image: dpage/pgadmin4:7
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com #TODO hide
-      PGADMIN_DEFAULT_PASSWORD: root #TODO hide
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports:
       - "5050:80"
     volumes:
@@ -125,8 +125,8 @@ services:
     hostname: rabbitmq
     restart: always
     environment:
-      - RABBITMQ_DEFAULT_USER=clevertec #TODO hide
-      - RABBITMQ_DEFAULT_PASS=banking #TODO hide
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
       - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit disk_free_limit 2147483648 # 2GB
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq

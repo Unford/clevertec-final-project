@@ -1,0 +1,45 @@
+server:
+  port: ${PORT:8084}
+spring:
+  docker:
+    compose:
+      file: deposit-service/docker-compose.yml
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:${DEV_DB_PORT:5432}/${DB_NAME:clevertec-banking}?currentSchema=${DEFAULT_SCHEMA:deposit}
+    username: ${DEV_DB_USERNAME:clevertec}
+    password: ${DEV_DB_USERNAME:banking}
+  liquibase:
+    default-schema: ${DEFAULT_SCHEMA:deposit}
+    change-log: db/changelog/db.changelog.yaml
+    liquibase-schema: ${DEFAULT_SCHEMA:deposit}
+  rabbitmq:
+    port: ${DEV_RABBIT_PORT:5672}
+    host: ${DEV_RABBIT_HOST:localhost}
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: ${DEFAULT_SCHEMA:deposit}
+        format_sql: true
+
+
+clevertec:
+  feign:
+    client:
+      customer:
+        name: CUSTOMER-SERVICE
+        path: "/api/v1/customers"
+  rabbit:
+    queue:
+      deposit: ${RABBIT_DEPOSIT_QUEUE:deposit}
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

@@ -15,8 +15,20 @@ configurations {
     }
 }
 
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springBootVersion', "3.2.0")
+    set('lombokVersion', "1.18.30")
+    set('feignCoreVersion', "13.1")
+}
+
 dependencies {
     api 'org.springframework.security:spring-security-core'
+    api "io.github.openfeign:feign-core:${feignCoreVersion}"
     api "org.springframework.boot:spring-boot-starter:${springBootVersion}"
     api "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     api "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
