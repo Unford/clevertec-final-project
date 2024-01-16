@@ -1,9 +1,11 @@
 package ru.clevertec.banking.advice.handler;
 
+import feign.FeignException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.hibernate.validator.internal.engine.path.NodeImpl;
 import org.hibernate.validator.internal.engine.path.PathImpl;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.clevertec.banking.advice.exception.ServiceException;
 import ru.clevertec.banking.advice.model.ApiError;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,6 +40,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ApiError apiError = new ApiError(ex.getHttpStatus().value(), ex.getMessage());
         return ResponseEntity.status(ex.getHttpStatus()).body(apiError);
     }
+
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<ApiError> handleFeignException(FeignException ex) {
+        int status = Arrays.stream(HttpStatus.values())
+                .map(HttpStatus::value)
+                .filter(s -> s == ex.status())
+                .findFirst()
+                .orElse(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        ApiError apiError = new ApiError(status, ex.getMessage());
+        return ResponseEntity.status(status).body(apiError);
+    }
+
 
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
@@ -111,7 +126,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiError);
     }
 
+    @Override
+    protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers,
+                                                        HttpStatusCode status, WebRequest request) {
+        ApiError apiError = new ApiError(status.value(), ex.getMessage());
+        return ResponseEntity.status(status).body(apiError);
 
+    }
 
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<ApiError> handleOtherExceptions(Exception ex, WebRequest request) {

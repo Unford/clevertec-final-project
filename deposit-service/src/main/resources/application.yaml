@@ -1,0 +1,26 @@
+server:
+  port: ${PORT}
+spring:
+  application:
+    name: DEPOSIT-SERVICE
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+  liquibase:
+    default-schema: ${DEFAULT_SCHEMA}
+    change-log: db/changelog/db.changelog.yaml
+    liquibase-schema: ${DEFAULT_SCHEMA}
+  jpa:
+    properties:
+      hibernate:
+        default_schema: ${DEFAULT_SCHEMA}
+    hibernate:
+      ddl-auto: validate
+  web:
+    resources:
+      add-mappings: false
