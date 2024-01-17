@@ -20,6 +20,7 @@ import ru.clevertec.banking.service.AccountService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +48,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<AccountWithCardResponse> findByCustomer(String uuid) {
+    public List<AccountWithCardResponse> findByCustomer(UUID uuid) {
         return repository.findAll(specifications.filter(uuid))
                 .stream()
                 .map(acc -> mapper.toResponseWithCards(acc, acc.getCards()))

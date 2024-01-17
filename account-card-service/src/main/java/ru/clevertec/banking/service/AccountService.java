@@ -8,13 +8,14 @@ import ru.clevertec.banking.dto.account.AccountResponse;
 import ru.clevertec.banking.dto.account.AccountWithCardResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface AccountService {
     AccountResponse save(AccountRequest request);
 
     Page<AccountWithCardResponse> getAll(Pageable pageable);
 
-    List<AccountWithCardResponse> findByCustomer(String uuid);
+    List<AccountWithCardResponse> findByCustomer(UUID uuid);
 
     AccountResponse findByIban(String iban);
 

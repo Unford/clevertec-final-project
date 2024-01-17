@@ -1,6 +1,7 @@
 package ru.clevertec.banking.customer.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.banking.customer.client.AccountAndLinkedCardsClient;
@@ -16,24 +17,25 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-@RequiredArgsConstructor
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class CustomerBankingProductsService {
 
+    private final DelegatingSecurityContextAsyncTaskExecutor executor;
     private final AccountAndLinkedCardsClient accountAndLinkedCardsClient;
     private final CreditClient creditClient;
     private final DepositClient depositClient;
 
     public CompletableFuture<List<AccountWithCardResponse>> getAccountsAndCards(UUID customerId) {
-        return CompletableFuture.supplyAsync(() -> accountAndLinkedCardsClient.findAllByCustomerId(customerId));
+        return CompletableFuture.supplyAsync(() -> accountAndLinkedCardsClient.findAllByCustomerId(customerId), executor);
     }
 
     public CompletableFuture<List<CreditResponse>> getCredits(UUID customerId) {
-        return CompletableFuture.supplyAsync(() -> creditClient.findAllByCustomerId(customerId));
+        return CompletableFuture.supplyAsync(() -> creditClient.findAllByCustomerId(customerId), executor);
     }
 
     public CompletableFuture<List<DepositResponse>> getDeposits(UUID customerId) {
-        return CompletableFuture.supplyAsync(() -> depositClient.findAllByCustomerId(customerId));
+        return CompletableFuture.supplyAsync(() -> depositClient.findAllByCustomerId(customerId), executor);
     }
 
     public CustomerBankingProductsResponse getCustomerBankingProducts(UUID customerId) {
@@ -41,14 +43,12 @@ public class CustomerBankingProductsService {
         CompletableFuture<List<CreditResponse>> creditsFuture = getCredits(customerId);
         CompletableFuture<List<DepositResponse>> depositsFuture = getDeposits(customerId);
 
-        // Combine results when all CompletableFuture instances are completed
         return CompletableFuture.allOf(accountsAndCardsFuture, creditsFuture, depositsFuture)
                                 .thenApplyAsync(ignored -> {
                                     List<AccountWithCardResponse> accountsAndCardsResponse = accountsAndCardsFuture.join();
                                     List<CreditResponse> creditsResponse = creditsFuture.join();
                                     List<DepositResponse> depositsResponse = depositsFuture.join();
 
-                                    // Create and return the combined response
                                     return new CustomerBankingProductsResponse(accountsAndCardsResponse, creditsResponse, depositsResponse);
                                 }).join();
     }

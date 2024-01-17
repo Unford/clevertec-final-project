@@ -1,13 +1,30 @@
 package ru.clevertec.banking.customer.client.configuration;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.clevertec.banking.security.model.AuthTokenProvider;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 
 @Configuration
 public class FeignConfiguration {
     @Bean
-    public AuthorizationRequestInterceptor authorizationRequestInterceptor(AuthTokenProvider tokenProvider){
-        return new AuthorizationRequestInterceptor(tokenProvider);
+    public AuthorizationRequestInterceptor authorizationRequestInterceptor(){
+        return new AuthorizationRequestInterceptor();
+    }
+
+    @Bean(name = "feignThreadPoolTaskExecutor")
+    public ThreadPoolTaskExecutor feignTaskExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(5);
+        executor.setMaxPoolSize(10);
+        executor.setThreadNamePrefix("feign-thread-");
+        return executor;
+    }
+
+    @Bean
+    public DelegatingSecurityContextAsyncTaskExecutor taskExecutor(
+            @Qualifier("feignThreadPoolTaskExecutor") ThreadPoolTaskExecutor delegate) {
+        return new DelegatingSecurityContextAsyncTaskExecutor(delegate);
     }
 }

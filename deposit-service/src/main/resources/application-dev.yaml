@@ -1,14 +1,11 @@
 server:
   port: ${PORT:8084}
 spring:
-  docker:
-    compose:
-      file: deposit-service/docker-compose.yml
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:${DEV_DB_PORT:5432}/${DB_NAME:clevertec-banking}?currentSchema=${DEFAULT_SCHEMA:deposit}
-    username: ${DEV_DB_USERNAME:clevertec}
-    password: ${DEV_DB_USERNAME:banking}
+    username: ${DEV_DB_USERNAME:postgres}
+    password: ${DEV_DB_USERNAME:postgres}
   liquibase:
     default-schema: ${DEFAULT_SCHEMA:deposit}
     change-log: db/changelog/db.changelog.yaml
