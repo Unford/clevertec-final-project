@@ -17,6 +17,7 @@ import ru.clevertec.banking.dto.account.AccountWithCardResponse;
 import ru.clevertec.banking.service.AccountService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/accounts")
@@ -43,7 +44,7 @@ public class AccountController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SUPER_USER') or authentication.principal.equals(#uuid) " +
             "and hasRole('ROLE_USER')")
     @GetMapping("/by-customer-id/{uuid}")
-    public List<AccountWithCardResponse> findByCustomer(@PathVariable String uuid) {
+    public List<AccountWithCardResponse> findByCustomer(@PathVariable UUID uuid) {
         return service.findByCustomer(uuid);
     }
 

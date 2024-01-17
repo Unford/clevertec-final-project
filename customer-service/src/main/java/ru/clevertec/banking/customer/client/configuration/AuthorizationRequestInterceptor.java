@@ -4,15 +4,22 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import ru.clevertec.banking.security.model.AuthTokenProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class AuthorizationRequestInterceptor implements RequestInterceptor {
-    private final AuthTokenProvider tokenProvider;
 
     @Override
     public void apply(RequestTemplate template) {
-        tokenProvider.getAuthorizationHeader()
-                .ifPresent(h -> template.header(HttpHeaders.AUTHORIZATION, h));
+        Authentication authentication = SecurityContextHolder.getContext()
+                                                             .getAuthentication();
+
+        String details =  authentication.getDetails().toString();
+
+        Optional.ofNullable(details)
+                        .ifPresent(h -> template.header(HttpHeaders.AUTHORIZATION, h));
     }
 }

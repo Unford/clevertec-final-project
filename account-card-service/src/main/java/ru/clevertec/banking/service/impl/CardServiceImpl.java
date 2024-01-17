@@ -21,6 +21,7 @@ import ru.clevertec.banking.util.CardBalanceUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +33,7 @@ public class CardServiceImpl implements CardService {
     private final FilterSpecifications<Card> specifications;
 
     @Override
-    public List<CardResponse> findByCustomer(String uuid) {
+    public List<CardResponse> findByCustomer(UUID uuid) {
         return repository.findAll(specifications.filter(uuid)).stream()
                 .map(mapper::toResponse)
                 .toList();

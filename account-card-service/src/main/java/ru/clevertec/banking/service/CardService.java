@@ -8,6 +8,7 @@ import ru.clevertec.banking.dto.card.CardRequestForUpdate;
 import ru.clevertec.banking.dto.card.CardResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface CardService {
 
@@ -17,7 +18,7 @@ public interface CardService {
 
     CardResponse update(CardRequestForUpdate request);
 
-    List<CardResponse> findByCustomer(String uuid);
+    List<CardResponse> findByCustomer(UUID uuid);
 
     Page<CardResponse> findByIban(String iban, Pageable pageable);
 

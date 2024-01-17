@@ -1,20 +1,23 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:${PROD_DB_PORT:5432}/${PROD_DB_NAME:banking}?currentSchema=${PROD_DEFAULT_SCHEMA:credit}
-    username: ${PROD_DB_USERNAME:admin}
-    password: ${PROD_DB_PASSWORD:admin}
+    url: jdbc:postgresql://localhost:${PROD_DB_PORT:5432}/${DB_NAME:clevertec-banking}?currentSchema=${PROD_DEFAULT_SCHEMA:credit}
+    username: ${PROD_DB_USERNAME:clevertec}
+    password: ${PROD_DB_PASSWORD:banking}
   liquibase:
     enabled: true
     default-schema: ${PROD_DEFAULT_SCHEMA:credit}
     change-log: classpath:db/changelog/db.changelog-master.yaml
     liquibase-schema: ${PROD_DEFAULT_SCHEMA:credit}
   rabbitmq:
-    addresses: amqp://${RABBIT_USERNAME:admin}:${RABBIT_PASSWORD:admin}@${PROD_RABBIT_HOST:localhost}:${PROD_RABBIT_PORT:5673}
     listener:
       simple:
         acknowledge-mode: auto
         prefetch: 1
+    port: ${PROD_RABBIT_PORT}
+    host: ${PROD_RABBIT_HOST}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
   jpa:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
