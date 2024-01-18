@@ -1,0 +1,48 @@
+spring:
+  cache:
+    type: none
+  application:
+    name: DEPOSIT-SERVICE-TEST
+  web:
+    resources:
+      add-mappings: false
+  datasource:
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    default-schema: deposit
+    change-log: db/changelog/db.changelog-test.yaml
+    liquibase-schema: deposit
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: deposit
+        format_sql: true
+    hibernate:
+      ddl-auto: validate
+
+
+clevertec:
+  feign:
+    client:
+      customer:
+        name: http://localhost:7777
+        path: "/api/v1/customers"
+  rabbit:
+    queue:
+      deposit: deposit
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
+eureka:
+  client:
+    enabled: false
