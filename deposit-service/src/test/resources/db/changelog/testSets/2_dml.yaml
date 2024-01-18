@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1705236288529-3
+      author: vladimir_feshenko (generated)
+      changes:
+        - sql:
+            sql:  "INSERT INTO deposits (customer_id, customer_type, deleted, acc_iban, acc_open_date, curr_amount, curr_amount_currency, rate, term_val, term_scale, exp_date, dep_type, auto_renew)
+                    VALUES
+                (gen_random_uuid(), 'LEGAL', false, '123456789', '2024-01-18', 1000.00, 'USD', 0.25, 12, 'M', '2025-01-18', 'REVOCABLE', true),
+                (gen_random_uuid(), 'PHYSIC', false, '987654321', '2024-01-18', 5000.00, 'EUR', 0.43, 24, 'D', '2026-01-18', 'IRREVOCABLE', false),
+                (gen_random_uuid(), 'LEGAL', false, '223456789', '2024-01-18', 1300.00, 'USD', 0.15, 12, 'M', '2025-01-18', 'REVOCABLE', true),
+                (gen_random_uuid(), 'PHYSIC', false, '387654328', '2024-01-18', 5400.00, 'RUB', 0.23, 24, 'D', '2026-01-18', 'IRREVOCABLE', false),
+                (gen_random_uuid(), 'LEGAL', false, '183456789', '2024-01-18', 1020.00, 'USD', 0.15, 12, 'M', '2025-01-18', 'REVOCABLE', true),
+                (gen_random_uuid(), 'PHYSIC', false, '124654322', '2024-01-18', 2400.00, 'EUR', 0.83, 24, 'D', '2026-01-18', 'IRREVOCABLE', false),
+                (gen_random_uuid(), 'LEGAL', false, '123333789', '2024-01-18', 13000.00, 'BYN', 0.75, 12, 'M', '2025-01-18', 'REVOCABLE', true),
+                (gen_random_uuid(), 'PHYSIC', false, '982654523', '2024-01-18', 1500.00, 'UAH', 0.83, 24, 'D', '2026-01-18', 'IRREVOCABLE', false),
+                (gen_random_uuid(), 'LEGAL', false, '42333789', '2024-01-18', 321.12, 'USD', 0.94, 12, 'M', '2025-01-18', 'REVOCABLE', true),
+                (gen_random_uuid(), 'PHYSIC', false, '944454324', '2024-01-18', 510.00, 'EUR', 0.03, 24, 'D', '2026-01-18', 'IRREVOCABLE', false),
+                ('1a72a05f-4b8f-43c5-a889-1ebc6d9dc738', 'PHYSIC', false, '944414224', '2024-01-18', 3510.00, 'EUR', 0.13, 24, 'M', '2026-01-18', 'IRREVOCABLE', true),
+                ('1a72a05f-4b8f-43c5-a889-1ebc6d9dc738', 'LEGAL', false, '9144142554', '2024-01-18', 510.00, 'EUR', 0.14, 45, 'D', '2026-01-18', 'REVOCABLE', true),
+                ('1a72a05f-4b8f-43c5-a889-1ebc6d9dc738', 'PHYSIC', false, '942414214', '2024-01-18', 770.00, 'BYN', 0.15, 24, 'M', '2026-01-18', 'IRREVOCABLE', false),
+                ('1a72a05f-4b8f-43c5-a889-1ebc6d9dc738', 'PHYSIC', false, '9444142224', '2024-01-18', 1511.00, 'UAH', 0.13, 14, 'M', '2026-01-18', 'REVOCABLE', true)"
+

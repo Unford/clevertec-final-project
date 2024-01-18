@@ -55,6 +55,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     }
 
     private void setAuthenticationWithToken(UUID sub, List<SimpleGrantedAuthority> authorities, String authHeader) {
+        //todo refactor UUID principal to implement UserDetails or Principal
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 sub,
                 null,

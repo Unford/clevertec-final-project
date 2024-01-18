@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import ru.clevertec.banking.deposit.model.CustomerType;
 import ru.clevertec.banking.deposit.validation.OpenDateBeforeExpiration;
 import ru.clevertec.banking.deposit.validation.UniqueAccountIban;
@@ -12,6 +13,7 @@ import ru.clevertec.banking.deposit.validation.UniqueAccountIban;
 import java.util.UUID;
 
 @Data
+@Accessors(chain = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @OpenDateBeforeExpiration
 @UniqueAccountIban

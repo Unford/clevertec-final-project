@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.clevertec.banking.deposit.model.dto.request.CreateDepositRequest;
 import ru.clevertec.banking.deposit.model.dto.request.UpdateDepositRequest;
@@ -24,21 +24,21 @@ public class DepositController {
 
     @GetMapping
     @PreAuthorize("isAuthenticated()")
-    public Page<DepositResponse> findAll(Pageable pageable, Authentication authentication) {
-        return depositService.findPageByRole(pageable, authentication);
+    public Page<DepositResponse> findAll(Pageable pageable) {
+        return depositService.findPageByRole(pageable, SecurityContextHolder.getContext().getAuthentication());
     }
 
 
     @GetMapping("/{iban}")
     @PreAuthorize("hasRole('ROLE_ADMIN') OR " +
-            "@customSecurityExpression.hasUserRoleAndOwnDeposit(#iban)")
+            "@customSecurityExpression.hasUserRoleAndOwnDeposit(#iban, authentication)")
     public DepositResponse findByAccountIban(@PathVariable String iban) {
         return depositService.findByAccountIban(iban);
     }
 
     @GetMapping("/customer/{customerId}")
     @PreAuthorize("hasRole('ROLE_ADMIN') OR " +
-            "@customSecurityExpression.hasUserRoleAndIdEquals(#customerId)")
+            "@customSecurityExpression.hasUserRoleAndIdEquals(#customerId, authentication)")
     public List<DepositResponse> findAllByCustomerId(@PathVariable UUID customerId) {
         return depositService.findAllByCustomerId(customerId);
     }
@@ -53,14 +53,14 @@ public class DepositController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_ADMIN') OR " +
-            "@customSecurityExpression.hasUserRoleAndIdEquals(#createDepositRequest.customerId)")
+            "@customSecurityExpression.hasUserRoleAndIdEquals(#createDepositRequest.customerId, authentication)")
     public DepositResponse createDeposit(@RequestBody @Valid CreateDepositRequest createDepositRequest) {
         return depositService.save(createDepositRequest);
     }
 
     @PatchMapping("/{iban}")
     @PreAuthorize("hasRole('ROLE_ADMIN') OR " +
-            "@customSecurityExpression.hasUserRoleAndOwnDeposit(#iban)")
+            "@customSecurityExpression.hasUserRoleAndOwnDeposit(#iban, authentication)")
     public DepositResponse updateDeposit(@PathVariable String iban,
                                          @RequestBody @Valid UpdateDepositRequest updateDepositRequest) {
         return depositService.update(iban, updateDepositRequest);
