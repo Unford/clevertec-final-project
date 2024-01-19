@@ -45,7 +45,7 @@ import static ru.clevertec.banking.deposit.util.FileReaderUtil.readFile;
 @ContextConfiguration(classes = {PostgresContainerConfiguration.class, DataFakerConfiguration.class})
 @EnableAutoConfiguration(exclude = {RabbitAutoConfiguration.class})
 @SpringUnitCompositeTest
-class DepositControllerIntegrationTest {
+class DepositControllerImplIntegrationTest {
     @MockBean
     DepositConsumer consumer;
     @Autowired
