@@ -20,15 +20,17 @@ public class ExchangeRate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 3)
+    @Column(length = 3, nullable = false)
     private String srcCurr;
-    @Column(length = 3)
+    @Column(length = 3, nullable = false)
     private String reqCurr;
+    @Column(nullable = false)
     private BigDecimal buyRate;
+    @Column(nullable = false)
     private BigDecimal sellRate;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "exchange_date_id", insertable = false, updatable = false)
+    @JoinColumn(name = "exchange_date_id", nullable = false, insertable = false, updatable = false)
     @ToString.Exclude
     private ExchangeData exchangeData;
 }
