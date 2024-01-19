@@ -6,14 +6,14 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.banking.advice.exception.ResourceNotFoundException;
-import ru.clevertec.banking.advice.exception.ResourceUniqueException;
-import ru.clevertec.banking.customer.dto.CustomerMapper;
+import ru.clevertec.banking.customer.mapper.CustomerMapper;
 import ru.clevertec.banking.customer.dto.message.CustomerMessagePayload;
 import ru.clevertec.banking.customer.dto.request.CreateCustomerRequest;
 import ru.clevertec.banking.customer.dto.request.GetCustomersPageableRequest;
 import ru.clevertec.banking.customer.dto.response.CustomerResponse;
 import ru.clevertec.banking.customer.entity.Customer;
-import ru.clevertec.banking.customer.producer.CustomerProducer;
+import ru.clevertec.banking.customer.exception.InternalCustomerServiceException;
+import ru.clevertec.banking.customer.message.producer.CustomerProducer;
 import ru.clevertec.banking.customer.repository.CustomerRepository;
 import ru.clevertec.banking.customer.repository.CustomerSpecification;
 import ru.clevertec.banking.logging.annotation.Loggable;
@@ -62,7 +62,7 @@ public class CustomerService {
         customerResponse.ifPresent(customerProducer::prepareAndProduceForward);
 
         return customerResponse
-                .orElseThrow(() -> new ResourceUniqueException("Failed to create customer"));
+                .orElseThrow(() -> new InternalCustomerServiceException("Failed to create customer"));
     }
 
     @Transactional

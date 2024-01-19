@@ -23,19 +23,25 @@ public class CreateCustomerRequestValidator implements ConstraintValidator<Creat
 
     @Override
     public boolean isValid(CreateCustomerRequest value, ConstraintValidatorContext context) {
+        return checkIfCustomerNotExist(value, context)
+               && checkIfLegalCustomerHasUnp(value, context);
+    }
 
+    private boolean checkIfCustomerNotExist(CreateCustomerRequest value, ConstraintValidatorContext context) {
         if ((value.getUnp() == null && customerService.isCustomerExist(value.getId(), value.getEmail()))
             || (value.getUnp() != null && customerService.isCustomerExist(value.getId(), value.getEmail(), value.getUnp()))) {
             addValidationMessage(context, "Customer with this email, UUID, or UNP already exists");
             return false;
         }
+        return true;
+    }
 
+    private boolean checkIfLegalCustomerHasUnp(CreateCustomerRequest value, ConstraintValidatorContext context) {
         if (Objects.equals(CustomerType.LEGAL.toString(), value.getCustomerType())
             && (value.getUnp() == null || value.getUnp().isBlank())) {
             addValidationMessage(context, "Legal Customer must have UNP");
             return false;
         }
-
         return true;
     }
 

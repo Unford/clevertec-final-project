@@ -1,0 +1,63 @@
+server:
+  port: 0
+
+spring:
+  cache:
+    type: none
+  application:
+    name: CUSTOMER-SERVICE-TEST
+  web:
+    resources:
+      add-mappings: false
+  datasource:
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+    driver-class-name: org.postgresql.Driver
+  rabbitmq:
+    listener:
+      simple:
+        auto-startup: false
+
+  liquibase:
+    default-schema: customer
+    change-log: db/changelog/db.changelog-test.xml
+    liquibase-schema: customer
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: customer
+        format_sql: true
+    hibernate:
+      ddl-auto: validate
+
+
+clevertec:
+  rabbit:
+    config:
+      name-forward-exchange: auth
+      queue-name: customer
+  feign:
+    client:
+      account-card:
+        name: http://localhost:7777
+        path: "/api/v1/accounts"
+      credit:
+        name: http://localhost:7777/api
+        path: "/v1/credits"
+      deposit:
+        name: http://localhost:7777/api/v1
+        path: "/deposits"
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
+eureka:
+  client:
+    enabled: false

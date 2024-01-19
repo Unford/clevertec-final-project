@@ -1,4 +1,4 @@
-package ru.clevertec.banking.customer.configuration;
+package ru.clevertec.banking.customer.message.configuration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

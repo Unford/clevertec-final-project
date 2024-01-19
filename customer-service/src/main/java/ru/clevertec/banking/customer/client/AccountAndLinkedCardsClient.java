@@ -10,7 +10,7 @@ import ru.clevertec.banking.customer.dto.response.client.account.AccountWithCard
 import java.util.List;
 import java.util.UUID;
 
-@FeignClient(name = "${clevertec.feign.client.account-card.name}",
+@FeignClient(value = "${clevertec.feign.client.account-card.name}",
              path = "${clevertec.feign.client.account-card.path}",
              configuration= FeignConfiguration.class)
 public interface AccountAndLinkedCardsClient {

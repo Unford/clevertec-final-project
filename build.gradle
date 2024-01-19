@@ -24,10 +24,6 @@ subprojects {
         set('openapiStarterVersion',  '2.3.0')
 
     }
-    ext {
-
-    }
-
 
 }
 

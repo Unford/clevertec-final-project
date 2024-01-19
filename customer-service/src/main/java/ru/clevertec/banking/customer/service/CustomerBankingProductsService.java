@@ -1,7 +1,7 @@
 package ru.clevertec.banking.customer.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.banking.customer.client.AccountAndLinkedCardsClient;
@@ -18,13 +18,23 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 @Transactional(readOnly = true)
-@RequiredArgsConstructor
 public class CustomerBankingProductsService {
 
-    private final DelegatingSecurityContextAsyncTaskExecutor executor;
+
+    private final AsyncTaskExecutor executor;
     private final AccountAndLinkedCardsClient accountAndLinkedCardsClient;
     private final CreditClient creditClient;
     private final DepositClient depositClient;
+
+    public CustomerBankingProductsService(
+            @Qualifier("delegatingSecurityContextAsyncTaskExecutor") AsyncTaskExecutor executor,
+                                          AccountAndLinkedCardsClient accountAndLinkedCardsClient,
+                                          CreditClient creditClient, DepositClient depositClient) {
+        this.executor = executor;
+        this.accountAndLinkedCardsClient = accountAndLinkedCardsClient;
+        this.creditClient = creditClient;
+        this.depositClient = depositClient;
+    }
 
     public CompletableFuture<List<AccountWithCardResponse>> getAccountsAndCards(UUID customerId) {
         return CompletableFuture.supplyAsync(() -> accountAndLinkedCardsClient.findAllByCustomerId(customerId), executor);

@@ -10,7 +10,7 @@ import ru.clevertec.banking.customer.dto.response.client.deposit.DepositResponse
 import java.util.List;
 import java.util.UUID;
 
-@FeignClient(name = "${clevertec.feign.client.deposit.name}",
+@FeignClient(value = "${clevertec.feign.client.deposit.name}",
              path = "${clevertec.feign.client.deposit.path}",
              configuration = FeignConfiguration.class)
 public interface DepositClient {
