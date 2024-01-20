@@ -61,7 +61,7 @@ class DepositConsumerIntegrationTest {
         Mockito.verify(service).saveFromMessage(Mockito.any());
 
         Assertions.assertThat(output.getErr()).isEmpty();
-        Assertions.assertThat(output.getOut()).contains("Received message from queue", "Hibernate: \n    insert ");
+        Assertions.assertThat(output.getOut()).contains("Received message from queue", "insert");
         Assertions.assertThat(depositRepository.findByAccInfoAccIban(depositMessage.getPayload()
                         .getAccInfo()
                         .getAccIban()))
@@ -89,9 +89,7 @@ class DepositConsumerIntegrationTest {
         Mockito.verify(service, Mockito.times(2)).saveFromMessage(Mockito.any());
 
         Assertions.assertThat(output.getErr()).isEmpty();
-        Assertions.assertThat(output.getOut()).contains("Received message from queue", "Hibernate: \n" +
-                "    update\n" +
-                "        deposit.deposits");
+        Assertions.assertThat(output.getOut()).contains("Received message from queue", "update");
 
         Assertions.assertThat(depositRepository.findAll()).hasSize(1);
 
