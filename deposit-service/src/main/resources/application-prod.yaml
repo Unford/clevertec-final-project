@@ -17,6 +17,12 @@ spring:
     properties:
       hibernate:
         default_schema: ${DEFAULT_SCHEMA}
+  data:
+    redis:
+      password: ${PROD_REDIS_PASSWORD}
+      host: ${PROD_REDIS_HOST}
+      port: ${PROD_REDIS_PORT}
+      database: ${PROD_REDIS_DATABASE}
 clevertec:
   feign:
     client:

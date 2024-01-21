@@ -50,11 +50,11 @@ public class DepositService {
 
     @Transactional
     @CachePut(key = "#result.accInfo.accIban")
-    public Deposit saveFromMessage(DepositMessagePayload payload) {
+    public DepositResponse saveFromMessage(DepositMessagePayload payload) {
         Deposit deposit = depositRepository.findByAccInfoAccIban(payload.getAccInfo().getAccIban())
                 .map(d -> depositMapper.updateDeposit(payload, d))
                 .orElseGet(() -> depositMapper.toDeposit(payload));
-        return depositRepository.save(deposit);
+        return depositMapper.toDepositResponse(depositRepository.save(deposit));
     }
 
     @Cacheable(key = "#iban")

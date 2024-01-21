@@ -13,32 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-/* todo
-{
-    "header": {
-        "message_type": "deposit_info"
-    },
-    "payload": {
-        "customer_id": "1a72a05f-4b8f-43c5-a889-1ebc6d9dc729",
-        "customer_type" : "LEGAL/PHYSIC",
-        "acc_info": {
-            "acc_iban": "AABBCCCDDDDEEEEEEEEEEEEEEEE",
-            "acc_open_date": "dd.MM.yyyy",
-            "curr_amount": 3000.00,
-            "curr_amount_currency": "BYN"
-        },
-        "dep_info": {
-            "rate": 14.50,
-            "term_val": 24,
-            "term_scale": "M/D",
-            "exp_date": "dd.MM.yyyy",
-            "dep_type": "REVOCABLE/IRREVOCABLE",
-            "auto_renew": true
-        }
-    }
-}
 
- */
 
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)

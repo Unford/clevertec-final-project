@@ -23,7 +23,9 @@ subprojects {
         set('wiremockVersion','3.3.1')
         set('openapiStarterVersion',  '2.3.0')
 
+
     }
+
 
 }
 
