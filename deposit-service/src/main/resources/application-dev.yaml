@@ -19,7 +19,12 @@ spring:
       hibernate:
         default_schema: ${DEFAULT_SCHEMA:deposit}
         format_sql: true
-
+  data:
+    redis:
+      password: ${DEV_REDIS_PASSWORD:changeMeLater}
+      host: ${DEV_REDIS_HOST:localhost}
+      port: ${DEV_REDIS_PORT:6379}
+      database: ${DEV_REDIS_DATABASE:1}
 
 clevertec:
   feign:
