@@ -6,6 +6,7 @@ import feign.FeignException;
 import lombok.AllArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,6 +40,7 @@ import static ru.clevertec.banking.deposit.util.FileReaderUtil.readFile;
 @ContextConfiguration(classes = {PostgresContainerConfiguration.class,
         DataFakerConfiguration.class})
 @AllArgsConstructor
+@Tag("integration")
 class DepositServiceIntegrationTest {
     DepositService depositService;
     DepositRepository depositRepository;

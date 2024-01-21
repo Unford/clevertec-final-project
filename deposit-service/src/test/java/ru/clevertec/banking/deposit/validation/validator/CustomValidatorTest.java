@@ -3,6 +3,7 @@ package ru.clevertec.banking.deposit.validation.validator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,6 +23,7 @@ import java.time.LocalDate;
 
 @SpringUnitCompositeTest
 @ExtendWith(MockitoExtension.class)
+@Tag("unit")
 class CustomValidatorTest {
 
 

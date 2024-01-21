@@ -13,12 +13,14 @@ import java.math.BigDecimal;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Accessors(chain = true)
 @Table(name = "exchange_rates")
 public class ExchangeRate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
     @Column(length = 3, nullable = false)
     private String srcCurr;

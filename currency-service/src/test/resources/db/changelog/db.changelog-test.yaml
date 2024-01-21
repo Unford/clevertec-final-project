@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - includeAll:
+      path: /testSets
+      relativeToChangelogFile: true

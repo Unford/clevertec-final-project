@@ -1,6 +1,7 @@
 package ru.clevertec.banking.deposit.service;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +18,7 @@ import ru.clevertec.banking.deposit.util.SpringUnitCompositeTest;
 
 @SpringUnitCompositeTest
 @ExtendWith(MockitoExtension.class)
+@Tag("unit")
 class DepositServiceTest {
     @Autowired
     RandomDepositFactory depositFactory;

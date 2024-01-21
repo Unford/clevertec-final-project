@@ -2,6 +2,7 @@ package ru.clevertec.banking.deposit.model.domain;
 
 import lombok.AllArgsConstructor;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import ru.clevertec.banking.deposit.util.RandomDepositFactory;
 import ru.clevertec.banking.deposit.util.SpringUnitCompositeTest;
@@ -11,6 +12,8 @@ import java.time.LocalDate;
 
 @SpringUnitCompositeTest
 @AllArgsConstructor
+@Tag("unit")
+
 class DepositTest {
     RandomDepositFactory depositFactory;
     @Test
