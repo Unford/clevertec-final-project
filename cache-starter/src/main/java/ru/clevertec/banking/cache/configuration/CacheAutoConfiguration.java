@@ -1,5 +1,8 @@
 package ru.clevertec.banking.cache.configuration;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -63,13 +66,21 @@ public class CacheAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean({LFUCacheManager.class, LRUCacheManager.class})
+    @ConditionalOnMissingBean({LFUCacheManager.class, LRUCacheManager.class, RedisCacheConfiguration.class})
     @ConditionalOnProperty(prefix = "spring.cache", name = "type", havingValue = "redis", matchIfMissing = true)
-    public RedisCacheConfiguration defaultCacheConfig(CacheProperties properties) {
+    public RedisCacheConfiguration defaultCacheConfig(CacheProperties properties, ObjectMapper objectMapper) {
+        CacheProperties.Redis redisProperties = properties.getRedis();
+        ObjectMapper redisObjectMapper = objectMapper.copy()
+                .activateDefaultTyping(
+                        objectMapper.getPolymorphicTypeValidator(),
+                        ObjectMapper.DefaultTyping.EVERYTHING
+                );
         return RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Optional.ofNullable(properties.getRedis().getTimeToLive()).orElse(Duration.ZERO))
-                .prefixCacheNameWith(Optional.ofNullable(properties.getRedis().getKeyPrefix()).orElse(""))
-                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+                .entryTtl(Optional.ofNullable(redisProperties.getTimeToLive()).orElse(Duration.ZERO))
+                .prefixCacheNameWith(Optional.ofNullable(redisProperties.getKeyPrefix()).orElse(""))
+                .serializeKeysWith(RedisSerializationContext.SerializationPair
+                        .fromSerializer(new StringRedisSerializer()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair
+                        .fromSerializer(new GenericJackson2JsonRedisSerializer(redisObjectMapper)));
     }
 }
