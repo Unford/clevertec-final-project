@@ -31,12 +31,12 @@ clevertec:
     client:
       account-card:
         name: ACCOUNT-CARD-SERVICE
-        path: /api/v1/accounts
+        path: ${ACCOUNT_CARD_PATH}
       credit:
         name: CREDIT-SERVICE
-        path: /api/v1/credits
+        path: ${CREDIT_PATH}
       deposit:
         name: DEPOSIT-SERVICE
-        path: /api/v1/deposits
+        path: ${DEPOSIT_PATH}
 #logging:
 #  config: #мб уйдет в стартер

@@ -1,11 +1,11 @@
-package ru.clevertec.banking.customer.consumer;
+package ru.clevertec.banking.customer.message.consumer;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import ru.clevertec.banking.customer.dto.message.CustomerMessage;
-import ru.clevertec.banking.customer.producer.CustomerProducer;
+import ru.clevertec.banking.customer.message.producer.CustomerProducer;
 import ru.clevertec.banking.customer.service.CustomerService;
 
 @Service

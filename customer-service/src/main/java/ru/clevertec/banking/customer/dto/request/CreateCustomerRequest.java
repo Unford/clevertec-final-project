@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 import ru.clevertec.banking.customer.entity.CustomerType;
 import ru.clevertec.banking.customer.validator.CreateCustomerProfileValidation;
 
@@ -15,7 +16,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Builder
+@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @CreateCustomerProfileValidation

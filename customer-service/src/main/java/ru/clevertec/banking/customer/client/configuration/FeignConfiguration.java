@@ -22,7 +22,7 @@ public class FeignConfiguration {
         return executor;
     }
 
-    @Bean
+    @Bean(name = "delegatingSecurityContextAsyncTaskExecutor")
     public DelegatingSecurityContextAsyncTaskExecutor taskExecutor(
             @Qualifier("feignThreadPoolTaskExecutor") ThreadPoolTaskExecutor delegate) {
         return new DelegatingSecurityContextAsyncTaskExecutor(delegate);

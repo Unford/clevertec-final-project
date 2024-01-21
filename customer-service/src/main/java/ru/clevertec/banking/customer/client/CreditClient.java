@@ -10,7 +10,7 @@ import ru.clevertec.banking.customer.dto.response.client.credit.CreditResponse;
 import java.util.List;
 import java.util.UUID;
 
-@FeignClient(name = "${clevertec.feign.client.credit.name}",
+@FeignClient(value = "${clevertec.feign.client.credit.name}",
              path = "${clevertec.feign.client.credit.path}",
              configuration = FeignConfiguration.class)
 public interface CreditClient {

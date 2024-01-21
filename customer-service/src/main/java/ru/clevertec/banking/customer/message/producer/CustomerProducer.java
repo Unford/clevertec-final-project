@@ -1,4 +1,4 @@
-package ru.clevertec.banking.customer.producer;
+package ru.clevertec.banking.customer.message.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import ru.clevertec.banking.customer.dto.CustomerMapper;
+import ru.clevertec.banking.customer.mapper.CustomerMapper;
 import ru.clevertec.banking.customer.dto.message.AuthMessage;
 import ru.clevertec.banking.customer.dto.message.AuthMessagePayload;
 import ru.clevertec.banking.customer.dto.message.CustomerMessagePayload;

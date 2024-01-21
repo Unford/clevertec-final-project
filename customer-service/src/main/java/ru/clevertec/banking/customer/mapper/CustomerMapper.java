@@ -1,4 +1,4 @@
-package ru.clevertec.banking.customer.dto;
+package ru.clevertec.banking.customer.mapper;
 
 import org.mapstruct.*;
 import ru.clevertec.banking.customer.dto.message.CustomerMessagePayload;
@@ -7,6 +7,8 @@ import ru.clevertec.banking.customer.dto.response.CustomerResponse;
 import ru.clevertec.banking.customer.entity.Customer;
 import ru.clevertec.banking.customer.entity.CustomerType;
 import ru.clevertec.banking.customer.exception.InvalidCustomerTypeException;
+
+import java.util.Objects;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CustomerMapper {
@@ -32,5 +34,14 @@ public interface CustomerMapper {
     }
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "customerType", expression = "java(updateCustomerType(source, target))")
     Customer partialUpdate(CustomerMessagePayload source, @MappingTarget Customer target);
+
+    default CustomerType updateCustomerType(CustomerMessagePayload source, @MappingTarget Customer target) {
+        if (Objects.equals(source.getCustomerType(), CustomerType.PHYSIC.toString())
+            && target.getCustomerType() == CustomerType.LEGAL) {
+            target.setUnp(null);
+        }
+        return source.getCustomerType() == null ? target.getCustomerType() : stringToCustomerType(source.getCustomerType());
+    }
 }

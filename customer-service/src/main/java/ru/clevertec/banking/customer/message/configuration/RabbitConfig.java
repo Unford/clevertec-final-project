@@ -1,4 +1,4 @@
-package ru.clevertec.banking.customer.configuration;
+package ru.clevertec.banking.customer.message.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
