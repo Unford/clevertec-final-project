@@ -12,26 +12,27 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Accessors(chain = true)
+@Entity
+@NamedEntityGraph(name = "ExchangeData.exchangeRates",
+        attributeNodes = @NamedAttributeNode("exchangeRates"))
 @Table(name = "exchange_dates")
 public class ExchangeData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
+    @Column(nullable = false, unique = true)
     private OffsetDateTime startDt;
-    private OffsetDateTime createdAt;
 
-    @OneToMany(cascade = CascadeType.ALL)
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "exchange_date_id", nullable = false)
     @ToString.Exclude
     private List<ExchangeRate> exchangeRates = new ArrayList<>();
 
 
-    @PrePersist
-    private void onPrePersist() {
-        this.createdAt = OffsetDateTime.now();
-    }
 }

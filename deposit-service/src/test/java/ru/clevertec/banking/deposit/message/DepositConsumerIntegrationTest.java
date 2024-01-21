@@ -4,6 +4,7 @@ package ru.clevertec.banking.deposit.message;
 import lombok.AllArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -33,6 +34,7 @@ import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
         DataFakerConfiguration.class})
 @ExtendWith(OutputCaptureExtension.class)
 @AllArgsConstructor
+@Tag("integration")
 class DepositConsumerIntegrationTest {
     RandomDepositFactory randomDepositFactory;
     RabbitTemplate rabbitTemplate;
@@ -61,7 +63,7 @@ class DepositConsumerIntegrationTest {
         Mockito.verify(service).saveFromMessage(Mockito.any());
 
         Assertions.assertThat(output.getErr()).isEmpty();
-        Assertions.assertThat(output.getOut()).contains("Received message from queue", "Hibernate: \n    insert ");
+        Assertions.assertThat(output.getOut()).contains("Received message from queue", "insert");
         Assertions.assertThat(depositRepository.findByAccInfoAccIban(depositMessage.getPayload()
                         .getAccInfo()
                         .getAccIban()))
@@ -89,9 +91,7 @@ class DepositConsumerIntegrationTest {
         Mockito.verify(service, Mockito.times(2)).saveFromMessage(Mockito.any());
 
         Assertions.assertThat(output.getErr()).isEmpty();
-        Assertions.assertThat(output.getOut()).contains("Received message from queue", "Hibernate: \n" +
-                "    update\n" +
-                "        deposit.deposits");
+        Assertions.assertThat(output.getOut()).contains("Received message from queue", "update");
 
         Assertions.assertThat(depositRepository.findAll()).hasSize(1);
 

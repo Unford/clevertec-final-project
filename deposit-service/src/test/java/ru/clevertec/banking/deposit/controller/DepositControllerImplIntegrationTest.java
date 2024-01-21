@@ -6,6 +6,7 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import net.datafaker.Faker;
 import org.hamcrest.core.AllOf;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -45,7 +46,8 @@ import static ru.clevertec.banking.deposit.util.FileReaderUtil.readFile;
 @ContextConfiguration(classes = {PostgresContainerConfiguration.class, DataFakerConfiguration.class})
 @EnableAutoConfiguration(exclude = {RabbitAutoConfiguration.class})
 @SpringUnitCompositeTest
-class DepositControllerIntegrationTest {
+@Tag("integration")
+class DepositControllerImplIntegrationTest {
     @MockBean
     DepositConsumer consumer;
     @Autowired

@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1705711244469-5
+      author: vladimir_feshenko
+      changes:
+        - sql:
+            sql: "INSERT INTO exchange_dates (start_dt)
+                   VALUES ('2024-01-21 08:00:00'),
+                          ('2024-01-22 09:30:00'),
+                          ('2024-01-23 12:45:00'),
+                          ('2024-01-24 15:15:00'),
+                          ('2024-01-25 18:00:00');"
+  - changeSet:
+      id: 1705711244469-6
+      author: vladimir_feshenko
+      changes:
+        - sql:
+            sql: "INSERT INTO exchange_rates (src_curr, req_curr, buy_rate, sell_rate, exchange_date_id)
+                  VALUES ('USD', 'EUR', 1.15, 1.12, 1),
+                         ('RUB', 'USD', 0.85, 0.88, 1),
+                         ('USD', 'GBP', 1.20, 1.15, 1),
+                         ('GBP', 'USD', 0.82, 0.79, 1),
+                         ('GBP', 'USD', 1.32, 1.28, 2),
+                         ('BYN', 'GBP', 0.76, 0.80, 2),
+                         ('EUR', 'JPY', 130.20, 128.50, 2),
+                         ('JPY', 'EUR', 0.0077, 0.0078, 2),
+                         ('UAH', 'GBP', 0.90, 0.87, 3),
+                         ('GBP', 'EUR', 1.11, 1.15, 3),
+                         ('USD', 'EUR', 1.18, 1.16, 3),
+                         ('EUR', 'USD', 0.84, 0.86, 3),
+                         ('EUR', 'JPY', 110.50, 108.80, 4),
+                         ('JPY', 'USD', 0.0091, 0.0092, 4),
+                         ('GBP', 'USD', 1.28, 1.25, 4),
+                         ('USD', 'GBP', 0.79, 0.81, 4),
+                         ('BYN', 'JPY', 128.40, 126.70, 5),
+                         ('RUB', 'EUR', 0.078, 0.079, 5),
+                         ('EUR', 'JPY', 127.80, 126.00, 5),
+                         ('JPY', 'EUR', 0.0082, 0.0083, 5);"
+

@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:${DEV_DB_PORT:5432}/${DB_NAME:banking}?currentSchema=${DEFAULT_SCHEMA:currency}
-    username: ${DEV_DB_USERNAME:antoha}
-    password: ${DEV_DB_USERNAME:antoha}
+    url: jdbc:postgresql://localhost:${DEV_DB_PORT:5432}/${DB_NAME:clevertec-banking}?currentSchema=${DEFAULT_SCHEMA:currency}
+    username: ${DEV_DB_USERNAME:postgres}
+    password: ${DEV_DB_USERNAME:postgres}
   liquibase:
     default-schema: ${DEFAULT_SCHEMA:currency}
     change-log: db/changelog/db.changelog.yaml

@@ -1,6 +1,7 @@
 package ru.clevertec.banking.deposit.security;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,6 +23,7 @@ import java.util.UUID;
 
 @SpringUnitCompositeTest
 @ExtendWith(MockitoExtension.class)
+@Tag("unit")
 class CustomSecurityExpressionTest {
 
     @Autowired

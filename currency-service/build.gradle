@@ -2,10 +2,15 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+    id 'io.freefair.lombok' version '8.4'
+    id 'jacoco'
 }
 
 group = 'ru.clevertec.banking.currency'
 
+ext {
+    datafakerVersion = '2.1.0'
+}
 
 
 java {
@@ -18,6 +23,9 @@ dependencies {
     implementation 'ru.clevertec.banking:logging-starter:1.0.0'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openapiStarterVersion}"
+
 
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 
@@ -32,16 +40,19 @@ dependencies {
 
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
-    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructVersion}"
-
-    compileOnly "org.projectlombok:lombok:${lombokVersion}"
-    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
 
 
     testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-testcontainers:${springBootVersion}"
 
+    testImplementation "org.testcontainers:postgresql:${testContainersVersion}"
+    testImplementation "org.testcontainers:testcontainers:${testContainersVersion}"
+    testImplementation "org.testcontainers:junit-jupiter:${testContainersVersion}"
+    testImplementation "org.testcontainers:rabbitmq:${testContainersVersion}"
+
+    testImplementation "net.datafaker:datafaker:${datafakerVersion}"
 
 }
 
@@ -61,6 +72,20 @@ compileJava {
 
 
 
+jacocoTestReport{
+
+    afterEvaluate {
+        getClassDirectories().setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "ru/clevertec/banking/**/mapper/*",
+            ])
+        }))
+    }
+
+}
+
+
 test {
     useJUnitPlatform()
+    finalizedBy(jacocoTestReport)
 }
