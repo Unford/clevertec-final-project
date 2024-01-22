@@ -14,7 +14,13 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.AbstractCachingConfiguration;
+import org.springframework.cache.annotation.AnnotationCacheOperationSource;
+import org.springframework.cache.interceptor.CacheInterceptor;
+import org.springframework.cache.interceptor.CacheOperationSource;
+import org.springframework.cache.interceptor.CompositeCacheOperationSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Role;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -23,6 +29,8 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import ru.clevertec.banking.cache.impl.LFUCacheManager;
 import ru.clevertec.banking.cache.impl.LRUCacheManager;
+import ru.clevertec.banking.cache.interceptor.CustomCacheInterceptor;
+import ru.clevertec.banking.cache.operation.CacheExistOperationSource;
 import ru.clevertec.banking.cache.property.LFUCacheProperty;
 import ru.clevertec.banking.cache.property.LRUCacheProperty;
 
@@ -35,7 +43,7 @@ import java.util.Optional;
 @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 @EnableConfigurationProperties({LRUCacheProperty.class, LFUCacheProperty.class, CacheProperties.class})
 @ConditionalOnMissingBean(CacheManager.class)
-public class CacheAutoConfiguration {
+public class CacheAutoConfiguration extends AbstractCachingConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
@@ -82,5 +90,24 @@ public class CacheAutoConfiguration {
                         .fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair
                         .fromSerializer(new GenericJackson2JsonRedisSerializer(redisObjectMapper)));
+    }
+
+
+    @Bean
+    @Primary
+    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    public CacheOperationSource cacheOperationSource() {
+        return new CompositeCacheOperationSource(new AnnotationCacheOperationSource(false),
+                new CacheExistOperationSource());
+    }
+
+    @Bean
+    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    @Primary
+    public CacheInterceptor cacheInterceptor(CacheOperationSource cacheOperationSource) {
+        CacheInterceptor interceptor = new CustomCacheInterceptor();
+        interceptor.configure(this.errorHandler, this.keyGenerator, this.cacheResolver, this.cacheManager);
+        interceptor.setCacheOperationSource(cacheOperationSource);
+        return interceptor;
     }
 }
