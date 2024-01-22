@@ -31,5 +31,11 @@ clevertec:
   rabbit:
     config:
       queue-name: ${RABBIT_AUTH_QUEUE}
+
+token:
+  secret-key: ${JWT_SECRET}
+  refresh-token-expiration-ms: 604800000 # 1 неделя в миллисекундах
+  token-expiration-ms: 604800000 # 2 минуты = 120000 в миллисекундах
+
 #logging:
 #  config: #мб уйдет в стартер

@@ -6,6 +6,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.stereotype.Component;
 import ru.clevertec.banking.auth.util.JwtUtil;
+import ru.clevertec.banking.exception.UnauthorizedException;
 
 import java.util.Objects;
 
@@ -27,8 +28,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
         return ((exchange, chain) -> {
             if (validator.isSecured().test(exchange.getRequest())) {
                 if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
-                    throw new RuntimeException("missing authorization header");
-                    // TODO custom error with 401 response
+                    throw new UnauthorizedException("Authorization header not found");
                 }
 
                 String authHeader = Objects.requireNonNull(exchange.getRequest()
@@ -41,9 +41,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 try {
                     jwtUtil.validateToken(authHeader);
                 } catch (Exception e) {
-                    // TODO custom error with 401 response
-                    System.out.println("invalid access...!");
-                    throw new RuntimeException("un authorized access to application: ", e.getCause());
+                    throw new UnauthorizedException("Unauthorized access to application: " + e.getMessage());
                 }
             }
             return chain.filter(exchange);

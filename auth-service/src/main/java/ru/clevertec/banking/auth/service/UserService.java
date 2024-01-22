@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.banking.advice.exception.ResourceNotFoundException;
 import ru.clevertec.banking.auth.dto.UserCredentialsDto;
-import ru.clevertec.banking.auth.dto.UserMapper;
+import ru.clevertec.banking.auth.mapper.UserMapper;
 import ru.clevertec.banking.auth.exception.UserOperationException;
 import ru.clevertec.banking.auth.repository.UserCredentialsRepository;
 

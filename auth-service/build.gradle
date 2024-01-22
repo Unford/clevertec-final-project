@@ -2,12 +2,19 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+    id 'io.freefair.lombok' version '8.4'
+    id 'jacoco'
 }
 
 group = 'ru.clevertec.banking.auth'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
+}
+
+ext {
+    springSecurityTestVersion = '6.2.1'
+    awaitilityVerstion = '4.2.0'
 }
 
 dependencies {
@@ -21,24 +28,44 @@ dependencies {
     implementation 'org.liquibase:liquibase-core'
     implementation "net.lbruun.springboot:preliquibase-spring-boot-starter:${preLiquibaseStarterVersion}"
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openapiStarterVersion}"
 
     implementation 'ru.clevertec.banking:global-exception-starter:1.0.0'
     implementation 'ru.clevertec.banking:cache-starter:1.0.0'
     implementation 'ru.clevertec.banking:logging-starter:1.0.0'
 
-    compileOnly "org.projectlombok:lombok:${lombokVersion}"
     runtimeOnly 'org.postgresql:postgresql'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
-    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructVersion}"
-    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-testcontainers:${springBootVersion}"
+    testImplementation "org.springframework.security:spring-security-test:${springSecurityTestVersion}"
+
+    testImplementation "org.testcontainers:postgresql:${testContainersVersion}"
+    testImplementation "org.testcontainers:testcontainers:${testContainersVersion}"
+    testImplementation "org.testcontainers:junit-jupiter:${testContainersVersion}"
+    testImplementation "org.testcontainers:rabbitmq:${testContainersVersion}"
+    testImplementation "org.wiremock:wiremock-standalone:${wiremockVersion}"
+    testImplementation "org.awaitility:awaitility:${awaitilityVerstion}"
+}
+
+jacocoTestReport{
+
+    afterEvaluate {
+        getClassDirectories().setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "ru/clevertec/banking/**/mapper/*",
+            ])
+        }))
+    }
+
 }
 
 test {
     useJUnitPlatform()
+    finalizedBy(jacocoTestReport)
 }
 
 dependencyManagement {
