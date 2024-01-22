@@ -21,4 +21,6 @@ public interface CreditService {
     CreditResponse update(CreditRequestForUpdate request);
 
     void delete(String contractNumber);
+
+    void saveOrUpdate(CreditRequest request);
 }

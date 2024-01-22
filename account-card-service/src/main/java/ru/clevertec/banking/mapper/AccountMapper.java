@@ -51,4 +51,6 @@ public interface AccountMapper {
     @Mapping(target = "customerId", source = "response.customer_id")
     @Mapping(target = "customerType", source = "response.customer_type")
     Account fromResponse(AccountResponse response);
+
+    Account updateFromMessage(Account message, @MappingTarget() Account account);
 }

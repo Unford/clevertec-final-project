@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import ru.clevertec.banking.dto.CreditMessage;
 import ru.clevertec.banking.service.CreditService;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 @Service
 public class CreditConsumer {
@@ -15,7 +13,6 @@ public class CreditConsumer {
 
     @RabbitListener(queues = "${clevertec.rabbit.consumer.queue.credit-queue}")
     public void readMessageFromQueue(CreditMessage message) {
-        Optional.of(message.payload())
-                .map(service::save);
+        service.saveOrUpdate(message.payload());
     }
 }

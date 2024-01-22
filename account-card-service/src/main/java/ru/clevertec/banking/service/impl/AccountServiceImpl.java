@@ -13,6 +13,7 @@ import ru.clevertec.banking.dto.account.AccountRequest;
 import ru.clevertec.banking.dto.account.AccountRequestForUpdate;
 import ru.clevertec.banking.dto.account.AccountResponse;
 import ru.clevertec.banking.dto.account.AccountWithCardResponse;
+import ru.clevertec.banking.dto.card.CardRequest;
 import ru.clevertec.banking.entity.Account;
 import ru.clevertec.banking.exception.ResourceCreateException;
 import ru.clevertec.banking.exception.RestApiServerException;
@@ -80,6 +81,17 @@ public class AccountServiceImpl implements AccountService {
                 .map(mapper::toResponse)
                 .orElseThrow(() -> new RestApiServerException("Failed to update account with iban: %s "
                         .formatted(request.iban()), HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+    @Override
+    @Transactional
+    public void saveOrUpdate(AccountRequest request) {
+        Optional.of(request)
+                .map(AccountRequest::iban)
+                .map(repository::findAccountByIbanWithDeleted)
+                .flatMap(o -> o)
+                .ifPresentOrElse(acc -> repository.save(mapper.updateFromMessage(mapper.fromRequest(request),acc)),
+                        ()->repository.save(mapper.fromRequest(request)));
     }
 
     @Override

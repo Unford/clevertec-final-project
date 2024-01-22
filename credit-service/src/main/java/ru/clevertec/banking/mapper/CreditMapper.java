@@ -37,4 +37,6 @@ public interface CreditMapper {
     @Mapping(target = "customerType", source = "response.customer_type")
     @Mapping(target = "closed", source = "response.isClosed")
     Credit fromResponse(CreditResponse response);
+
+    Credit updateFromMessage(Credit message, @MappingTarget() Credit credit);
 }

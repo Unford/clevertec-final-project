@@ -76,6 +76,17 @@ public class CreditServiceImpl implements CreditService {
                         .formatted(request.contractNumber())));
     }
 
+    @Override
+    @Transactional
+    public void saveOrUpdate(CreditRequest request) {
+        Optional.of(request)
+                .map(CreditRequest::contractNumber)
+                .map(repository::findCreditByContractNumberWithDeleted)
+                .flatMap(o -> o)
+                .ifPresentOrElse(cred -> repository.save(mapper.updateFromMessage(mapper.fromRequest(request), cred)),
+                        () -> repository.save(mapper.fromRequest(request)));
+    }
+
     @Transactional
     @Override
     @CacheEvict(key = "#contractNumber")
