@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:${PROD_DB_PORT}/${DB_NAME}?currentSchema=${DEFAULT_SCHEMA}
+    url: {PROD_DB_URL}
     username: ${PROD_DB_USERNAME}
     password: ${PROD_DB_PASSWORD}
   liquibase:
@@ -27,12 +27,12 @@ clevertec:
   feign:
     client:
       customer:
-        name: CUSTOMER-SERVICE
-        path: "/api/v1/customers"
+        name:  ${PROD_FEIGN_CUSTOMER_NAME}
+        path: ${PROD_FEIGN_CUSTOMER_PATH}
   rabbit:
     queue:
       deposit: ${RABBIT_DEPOSIT_QUEUE}
 eureka:
   client:
     service-url:
-      defaultZone: http://${PROD_EUREKA_HOST}:${EUREKA_PORT}/eureka/
+      defaultZone: http://${PROD_EUREKA_HOST}:${PROD_EUREKA_PORT}/eureka/
