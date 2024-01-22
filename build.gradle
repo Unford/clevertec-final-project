@@ -22,6 +22,8 @@ subprojects {
         set('testContainersVersion','1.19.3')
         set('wiremockVersion','3.3.1')
         set('openapiStarterVersion',  '2.3.0')
+        set('springCloudStarterBootstrapVersion', '4.0.1')
+        set('springCloudStarterConfigVersion', '4.1.0')
 
 
     }

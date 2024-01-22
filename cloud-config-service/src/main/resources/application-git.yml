@@ -1,0 +1,63 @@
+spring:
+  cloud:
+    config:
+      server:
+        prefix: ${PREFIX_PATH} # перфикс, по которому делать запрос
+        git:
+          uri: ${GIT_URI} # урл гит репозитория с конфигами
+          default-label: ${DEFAULT_BRANCH} #ветка в которой будет идти поиск конфигов
+          search-paths: ${SEARCH_PATH}
+          force-pull: true
+          ignore-local-ssh-settings: true
+          private-key: |
+                              -----BEGIN RSA PRIVATE KEY-----
+                              MIIJKAIBAAKCAgEAxMDRH0k6g3GZonGChTwwT1YwpXVSpE6Q0V1Ld5VNurecBWnb
+                              hRBVq+TpQ/cLA8nQjekJXYOf4HGqYd5HJZOIhiltPH6UhRDgwVffJBs051aL1qPU
+                              9+hNByVynwiYp1qdv2n+o2Pg8qHZfDfDU02hJhHy6l+b7f8w7L45UnmSCle0zywr
+                              XTNd1iScFrKhcKwqgM28m1o8IDiCt3WxqmxgqJOygkU4yyQGuDuXkSTCh+Dec01A
+                              o5qGc4djfpeJa+N8jpfzA5YA0tam9mER8l3wLxTMrQBj3m6MNTafiarkxGBqLaf3
+                              vsTwiSxACabBsIHLge4LisPHj88gezykHAjyT++7YzzJtlNry50he8918dKUN6q3
+                              E0l6RMrtj7px29rxhebp74wf2UV4NleqBuK7rh89XQqnxrNPyzRT6McpbvVgoH3r
+                              pepkXOTuE805XBI8YO89VN1XPJXlH91HPgj9DRZOdqO2b/e2Uu6Oacbbu+VKLY6J
+                              2vZMigItwCT6pVwsmhvYJ1rDREj/ETBGqGRr0gBTT34+h/SU89SIXL/vX8xbR5JD
+                              ki3ue923ObN3lhAn1Nm02wu8xkkenryMxWXHtIpMtDXWm9RKnIJY1Oe7KmVAQEb/
+                              swi12LdMZCzzkbtqr+tBjEA8vi1TzEr5KEBxkIGq6hDG6r1H2F92q1UQLjsCAwEA
+                              AQKCAgAd3E72BZdzfYPd9duOPFfvTTBthsR3xVNl7a0sxU8aXbq4ePFlB4Pzu6Ef
+                              Zy3tHEL3q/zM4X4b19m4/Wgk2Xg94amqJbfas3i46eImyQOaxzV1P5YXLdK1mUcF
+                              FePnz5vjV23a/vyT4QvF4MdXLDqfMYLWyT3mvUp/6PrVe+KLM/Zv/s8crQAP0QHo
+                              0UwpHSgHi7Hqjfj+wYotLRfoD9y3mPrdmdiIaWZPraj6Jpm+JNr9+s/VmffP2Xtj
+                              KhJ5ek6xbCQ9+2pn6ptFB0RsWToWRdIua2xnb2BTbyp///IKT8EC6YbIatFABaQ5
+                              EsLl9pJGnN8e50mxQgk29Y7JO8kHzg0FWf3fMGZof9cUmtMv4I70QndhoLam5bps
+                              ZwTlZV2PX8Ssnu/Ajad4slyShwEoDrN9NzlVSo2jk2889E1GI/ugJNaGfgnJxOGm
+                              JJbqiFB9o8BvQGIDIgIfzOKEcuGFb3wp+GRYhNYzgXogPrrSTXdRj5eOomGwIEWF
+                              FudXdLi+ArM2gIGTyESZg0mitRa5N6EC4DVnQulNWLygKrk/XJsYXVnacA81KVVV
+                              V6c2MzpBqt5Lr1o9868xqsnD6R0OvajMm6JuFpr4kdZD8EZDwTV6mNBw4MYkrdlF
+                              f6f3kRkTaA4JQoiWeGnpuPWl/lHatB2pslze3H8Vl/SP3AHbsQKCAQEA/v0Fd7ce
+                              bT1FnBsM3tDHIPZsJaodWstSfzztVpdEs9qbJSSsfuKEA86zQe9yIhP2nlwSapwi
+                              v/91t8abDO7hZb1oammC1o1Y+uRvtAqhdh1+TjFlDSbvJQLeZlmUnVAi2vs3dGcF
+                              +vHzcytlvaqN6rrmZ0e9qxQaxY92/LY0uyKcaCyOfGDWV/F220bdazS8Br+/mUNR
+                              EXimtZ4g9xNc5Q7VrzdaeChdQLAw6K2JNPoYnbhxXL5rGdT5dC6mO/zDprdmh0PE
+                              rq7oz3m0/kbC3Kwc4B1q1MV37PiBzyd6IVojtOt1tig7T5QSJNDNWKn3nASXC0X7
+                              iBq2EFJoQfBSEwKCAQEAxYimJ1f4WZ54QOI3iW6cD0XwM/EeQMN+2bI1pviiIKf3
+                              do3Nq43E7HxH9/xcq+a0eoRpz10fZuoDUeie/pvq4YQ+hkh+BYOCM9o44DJhcD7A
+                              EKvFPQ3eZ/jIEO/o2tbVkFk5N2aoZ/2hqbmSWIG40elphBwcTNnO30RC/ITCRM4+
+                              GIhDFzq5qsudrk6CPqDeyIWxgulvNhNl1kHHq8GPFfEGF7yUqUhq3r/6zuA9gdAN
+                              G9/USpdNLS6V+A23CdpAFXvvmRBqUQ16JQZAnHd70fO54psqvFvtEmmxUelQ/wTO
+                              hNWyurqmlQUw20jSF0U7qDzYf69izix4mXgn6jd4OQKCAQB8ZymRvK+FkE0z2iav
+                              VqCwPkmJHrPvph77oNgSVP7Z2J+0wW2/AfhyexgN5SqD4cWCgV0i0kZJ8fKW1Li0
+                              2J7zKjOVJyEEWDW/QlAVQNKBc+Y5c/PfNM2b+whSWwYcsgovWD0390N9qSmjWNrs
+                              bBeNG95pKSEqJEbjeBkPNj4Hxt0UHhjuKbipc08PsEU6lqHdkRODTMpygbCkDx/6
+                              K2I5BsHOGG11DgxhERTrkC7Ov+3elSwJmYVbNwL1YgUMY0d5QSUufSuqJf/DqZda
+                              L1/GldoIpZGHeUgHPz7luFbniri8/duSIZK+QnmPqKdmyJXbconWoDAVuSJ2WB4x
+                              fXQtAoIBADsrXpHkcPjvVhghav9YyZhtm7EDZcuCg8nT7uxQB8h+Z8r0WQotUjKA
+                              W9J1npDDb4ZPiZ5ax6A9MrdjVdTwgWACC/SPXGhsZyD/GhBWJwfHVCLqQQ+zys4c
+                              IFmqc3ax6ZDumQv2TTWxLK65bpPib6k5IKk4/mUqzSPlv6cCYWrY2JLipi4cIid+
+                              DIJ889isuW8ZVP3gzLZHAzc1xwi01xZ8dxW/IEzA63pDyW4Uj3gGCRczadTaE30Y
+                              OkXuXciuvolw8WlJGH+k6NSUVeBIjidquWCemCOJ6a6dSEc/+0oYd4Akvv/eDy4O
+                              Ov9EheIAlAkmCLfeolsdyRY3fsVSzkkCggEBAIAWuvV4twFULELFkYlp4owxodBG
+                              F10XDh6D2qGWKrcuwgbACImNKWwFlaGnRc+40uxGFf9Uq7bmuW2qz4BOcSnMXeyl
+                              RJk0RB4kV1SR+rtiPv6nGV/QYMUz9JZirjfJRbVsV2bsF5XnUhBnTNVJm0lh/Zey
+                              aa7u/MVT+s2PCA1NFbUIXAUtmZuc0oydO7HQVu3CrgxdKsY/u8oVkxJdMjW3n1FW
+                              ipaDKTZ9o13fiidfu1u0ZLKHw+cz0xnCaOgQGtGKeXFxAw2KKhej455oy4VO7KOA
+                              w/x8iUwI8m4woFZHcI9kVEvr2l6uGB+25RocjMHld+MLCFAmE8pxk3CMj6g=
+                              -----END RSA PRIVATE KEY-----

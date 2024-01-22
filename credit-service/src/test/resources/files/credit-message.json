@@ -1,0 +1,19 @@
+{
+  "header": {
+    "message_type": "credit-details"
+  },
+  "payload": {
+    "customer_id": "fbd6a92b-9e43-4c88-aa2b-6e1fe788d9c4",
+    "contractNumber": "11-0211234-2-0",
+    "contractStartDate": "10.01.2000",
+    "totalDebt": 999999.00,
+    "currentDebt": 3020.00,
+    "currency": "BYN",
+    "repaymentDate": "16.05.2025",
+    "rate": 22.8,
+    "iban": "DE89370400440532013000234567",
+    "possibleRepayment": true,
+    "isClosed": false,
+    "customer_type": "PHYSIC"
+  }
+}

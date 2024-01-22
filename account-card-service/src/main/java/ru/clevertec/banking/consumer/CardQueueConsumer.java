@@ -15,7 +15,6 @@ public class CardQueueConsumer {
 
     @RabbitListener(queues = "${clevertec.rabbit.consumer.queue.card-queue}")
     public void readMessageFromQueue(CardMessage message) {
-        Optional.of(message.payload())
-                .map(service::save);
+        service.saveOrUpdate(message.payload());
     }
 }

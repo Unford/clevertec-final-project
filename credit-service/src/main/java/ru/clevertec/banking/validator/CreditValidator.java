@@ -22,16 +22,19 @@ public class CreditValidator implements ConstraintValidator<CreditValidation, Cr
         boolean existCreditByContractNumber = repository.existsCreditByContractNumber(value.contractNumber());
         boolean existCreditByIban = repository.existsCreditByIban(value.iban());
 
+        boolean result = true;
+
         if (existCreditByContractNumber) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate("An credit with such an contract number already exists")
                     .addConstraintViolation();
-            return false;
+            result = false;
         } else if (existCreditByIban) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate("An credit with such an iban already exists")
                     .addConstraintViolation();
+            result = false;
         }
-        return true;
+        return result;
     }
 }

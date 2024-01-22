@@ -1,0 +1,53 @@
+server:
+  port: 0
+spring:
+  rabbitmq:
+    template:
+      exchange: banking
+  cache:
+    type: none
+  application:
+    name: ACCOUNT-CARD-SERVICE
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: test
+    password: test
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+  liquibase:
+    enabled: true
+    default-schema: account_card
+    change-log: db/changelog/db.changelog-test.yaml
+    liquibase-schema: account_card
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: account_card
+    database: postgresql
+clevertec:
+  rabbit:
+    consumer:
+      queue:
+        account-queue: account_info
+        card-queue: card-info
+  feign:
+    service:
+      currency-client: http://localhost:6666
+      currency-get-path: /api/v1/currencies
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
+eureka:
+  client:
+    enabled: false

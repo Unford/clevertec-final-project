@@ -15,7 +15,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@SQLDelete(sql = "UPDATE card SET deleted = true WHERE card_number=?")
+@Table(name = "card")
+@SQLDelete(sql = "UPDATE {h-schema}card SET deleted = true WHERE card_number=?")
 @SQLRestriction(value = "deleted = false")
 public class Card {
     @Id

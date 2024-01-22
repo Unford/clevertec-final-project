@@ -29,6 +29,22 @@ services:
     networks:
       - clevertec-banking-net
 
+  cloud-config-service:
+    image: cloud-config-service:0.0.1
+    build:
+      context: ./cloud-config-service
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+      SPRING_PROFILES_ACTIVE: native
+    env_file:
+      - ./cloud-config-service/.env
+    ports:
+      - "8254:8254"
+    networks:
+      - clevertec-banking-net
+
   service-db:
     image: postgres:15.2-alpine
     environment:
@@ -36,7 +52,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "15432:5432"
+      - "15432:5431"
     volumes:
       - db-data:/var/lib/postgresql/data
     restart: always
@@ -153,11 +169,14 @@ services:
       - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit disk_free_limit 2147483648 # 2GB
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
+      - ./rabbit/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./rabbit/definitions.json:/etc/rabbitmq/definitions.json:ro
     ports:
       - "15672:15672"
       - "5672:5672"
     networks:
       - clevertec-banking-net
+
 
   redis-cache:
     image: redis:7.2.4-alpine
@@ -172,6 +191,41 @@ services:
     ports:
       - "6379:6379"
     restart: always
+    networks:
+      - clevertec-banking-net
+
+
+  account-card-service:
+    image: account-card-service:0.0.1
+    build:
+      context: ./account-card-service
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://service-db/clevertec-banking
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+      SPRING_PROFILES_ACTIVE: prod
+    env_file:
+      - ./account-card-service/.env
+    ports:
+      - "8540:8540"
+    networks:
+      - clevertec-banking-net
+
+  credit-service:
+    image: credit-service:0.0.1
+    build:
+      context: ./credit-service
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://service-db/clevertec-banking
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+      SPRING_PROFILES_ACTIVE: prod
+    env_file:
+      - ./credit-service/.env
+    ports:
+      - "8640:8640"
     networks:
       - clevertec-banking-net
 

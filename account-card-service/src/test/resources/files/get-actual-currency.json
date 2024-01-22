@@ -1,0 +1,24 @@
+{
+    "startDt": "2024-01-03T13:56:51.604498616+03:00",
+    "exchangeRates": [
+      {
+        "buyRate": 3.33,
+        "sellRate": 3.43,
+        "srcCurr": "EUR",
+        "reqCurr": "BYN"
+      },
+      {
+        "buyRate": 3.05,
+        "sellRate": 3.15,
+        "srcCurr": "USD",
+        "reqCurr": "BYN"
+      },
+      {
+        "id": 5,
+        "buyRate": 1.075,
+        "sellRate": 1.1,
+        "srcCurr": "EUR",
+        "reqCurr": "USD"
+      }
+    ]
+}

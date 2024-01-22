@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: CREDIT-SERVICE
+  cache:
+    type: none
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: test
+    password: test
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: credit
+    database: postgresql
+  liquibase:
+    default-schema: credit
+    change-log: db/changelog/db.changelog-test.yaml
+    liquibase-schema: credit
+  rabbitmq:
+    template:
+      exchange: banking
+clevertec:
+  rabbit:
+    consumer:
+      queue:
+        credit-queue: credit-details
+eureka:
+  client:
+    enabled: false

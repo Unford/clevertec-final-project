@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert_into_account
+      author: Maks Laptsev
+      changes:
+        - sql:
+            sql: "INSERT INTO card (card_number, iban, customer_id, customer_type, cardholder, card_status, deleted)
+                  VALUES
+                  ('5200000000001096', 'AABBCCCDDDDEEEEEEEEEEEEEEEEE', '1a72a05f-4b8f-43c5-a889-1ebc6d9dc729', 'LEGAL', 'CARDHOLDER NAME', 'INACTIVE', false),
+                  ('4532015112890366', 'RU42100203003212345678012345', 'a3e8c29f-7c16-4a5d-b1c1-2d32f31a8d71', 'PHYSIC', 'Petr Holder', 'ACTIVE', false),
+                  ('5218347602398745', 'DE89370400440532013000234567', 'fbd6a92b-9e43-4c88-aa2b-6e1fe788d9c4', 'LEGAL', 'CARDHOLDER NONAME', 'ACTIVE', false),
+                  ('6010457823469082', 'US58469159383322778899012345', '8a7b3f5e-6d12-47f9-8c9a-1fcb4d3c928f', 'PHYSIC', 'CARDHOLDER FEMALE', 'NEW', false),
+                  ('3786543201987456', 'FR1420041010050500013M026060', '8a7b3f5e-6d12-47f9-8c9a-1fcb4d3c928f', 'PHYSIC', 'CARDHOLDER NAME', 'BLOCKED', false),
+                  ('4857263091275043', 'US58469159383322778899012345', '8a7b3f5e-6d12-47f9-8c9a-1fcb4d3c928f', 'PHYSIC', 'CARDHOLDER FEMALE OR NOT', 'NEW', false)
+                  "

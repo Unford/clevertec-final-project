@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert_into_account
+      author: Maks Laptsev
+      changes:
+        - sql:
+            sql: "INSERT INTO account (name, iban, amount, currency_code, open_date, main_acc, customer_id,
+             customer_type, rate, deleted)
+                  VALUES
+                  ('Название счёта', 'AABBCCCDDDDEEEEEEEEEEEEEEEEE', 2100.00, '933', '2021-01-18', true, '1a72a05f-4b8f-43c5-a889-1ebc6d9dc729', 'LEGAL', 0.01, false),
+                  ('Название счёта №2', 'RU42100203003212345678012345', 3100.00, 'USD', '2022-02-17', true, 'a3e8c29f-7c16-4a5d-b1c1-2d32f31a8d71', 'PHYSIC', 0.01, false),
+                  ('Название счёта №3', 'DE89370400440532013000234567', 4100.00, 'BYN', '2015-03-15', true, 'fbd6a92b-9e43-4c88-aa2b-6e1fe788d9c4', 'LEGAL', 0.01, false),
+                  ('Название счёта №4', 'US58469159383322778899012345', 7100.70, 'EUR', '2012-04-19', false, '8a7b3f5e-6d12-47f9-8c9a-1fcb4d3c928f', 'PHYSIC', 0.01, false),
+                  ('Название счёта №5', 'FR1420041010050500013M026060', 2800.31, '933', '2019-10-11', true, '8a7b3f5e-6d12-47f9-8c9a-1fcb4d3c928f', 'PHYSIC', 0.01, false)
+                  "

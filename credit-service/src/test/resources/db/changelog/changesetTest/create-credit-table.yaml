@@ -1,0 +1,64 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-credit-table
+      author: Maks Laptsev
+      changes:
+        - createTable:
+            tableName: credit
+            columns:
+              - column:
+                  name: customer_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: contract_number
+                  type: VARCHAR(100)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: contract_start_date
+                  type: date
+              - column:
+                  name: total_debt
+                  type: DECIMAL
+                  constraints:
+                    nullable: false
+              - column:
+                  name: current_debt
+                  type: DECIMAL
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repayment_date
+                  type: date
+              - column:
+                  name: rate
+                  type: DECIMAL
+                  constraints:
+                    nullable: false
+              - column:
+                  name: iban
+                  type: VARCHAR(35)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: possible_repayment
+                  type: BOOLEAN
+              - column:
+                  name: closed
+                  type: BOOLEAN
+              - column:
+                  name: customer_type
+                  type: VARCHAR(15)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: deleted
+                  type: BOOLEAN

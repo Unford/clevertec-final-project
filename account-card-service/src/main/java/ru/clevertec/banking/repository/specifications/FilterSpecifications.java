@@ -26,6 +26,7 @@ public class FilterSpecifications<T extends Object> {
                     .ifPresent(value -> predicates.add(criteriaBuilder.equal(root.get("iban"), value)));
 
             Optional.ofNullable(customerId)
+                    .filter(Objects::nonNull)
                     .ifPresent(value -> predicates.add(criteriaBuilder.equal(root.get("customerId"), value)));
 
             Optional.ofNullable(cardNumber)

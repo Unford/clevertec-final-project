@@ -1,6 +1,8 @@
 package ru.clevertec.banking.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
+    @CachePut(key = "#cardNumber")
     public CardCurrencyResponse findByCardNumber(String cardNumber) {
         return repository.findCardByCardNumber(cardNumber)
                 .map(card -> mapper.toCardWithBalance(card, balanceUtils.getBalance(card)))
@@ -61,6 +64,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     @Transactional
+    @CachePut(key = "#result.card_number()")
     public CardResponse save(CardRequest request) {
         return Optional.of(request)
                 .map(mapper::fromRequest)
@@ -71,6 +75,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     @Transactional
+    @CachePut(key = "#request.card_number()")
     public CardResponse update(CardRequestForUpdate request) {
         return Optional.of(request)
                 .map(CardRequestForUpdate::card_number)
@@ -86,7 +91,20 @@ public class CardServiceImpl implements CardService {
 
     @Override
     @Transactional
+    @CacheEvict(key = "#cardNumber")
     public void deleteByCardNumber(String cardNumber) {
         repository.deleteCardByCardNumber(cardNumber);
+    }
+
+    @Override
+    @Transactional
+    public void saveOrUpdate(CardRequest request) {
+        Optional.of(request)
+                .map(CardRequest::card_number)
+                .map(repository::findCardByCardNumber)
+                .flatMap(o -> o)
+                .ifPresentOrElse(c->repository.save(mapper.updateFromMessage(mapper.fromRequest(request),c))
+                        ,()->repository.save(mapper.fromRequest(request)));
+
     }
 }

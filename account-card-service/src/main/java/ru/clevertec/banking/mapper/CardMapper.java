@@ -39,4 +39,6 @@ public interface CardMapper {
     @Mapping(target = "card_number_readable", expression = "java(card.getCardNumber().replaceAll(\"(.{4})(?=.{4})\",\"$1 \"))")
     @Mapping(target = "card_balance", source = "balance")
     CardCurrencyResponse toCardWithBalance(Card card, Balance balance);
+
+    Card updateFromMessage(Card message, @MappingTarget() Card card);
 }

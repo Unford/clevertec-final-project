@@ -1,8 +1,9 @@
 package ru.clevertec.banking.dto.card;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 public record Balance(String main_currency_card,
                       String balance,
-                      Map<String, String> in_other_currencies) {
+                      Map<String, BigDecimal> in_other_currencies) {
 }

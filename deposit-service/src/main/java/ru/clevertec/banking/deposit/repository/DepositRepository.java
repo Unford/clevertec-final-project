@@ -17,6 +17,6 @@ public interface DepositRepository extends JpaRepository<Deposit, Long>, JpaSpec
 
     boolean existsByAccInfoAccIban(String accIban);
 
-    @Query(value = "SELECT d.* FROM deposits d WHERE d.acc_Iban = ?1", nativeQuery = true)
+    @Query(value = "SELECT d.* FROM  {h-schema}deposits d WHERE d.acc_Iban = ?1", nativeQuery = true)
     Optional<Deposit> findByAccInfoAccIbanWithDeleted(String iban);
 }

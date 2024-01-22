@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changesetTest/create-account-table.yaml
+  - include:
+      file: db/changelog/changesetTest/create-card-table.yaml
+  - include:
+      file: db/changelog/changesetTest/ddl-account.yaml
+  - include:
+      file: db/changelog/changesetTest/ddl-card.yaml

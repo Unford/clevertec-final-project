@@ -1,6 +1,8 @@
 package ru.clevertec.banking.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ public class CreditServiceImpl implements CreditService {
 
     @Transactional
     @Override
+    @CachePut(key = "#result.contractNumber()")
     public CreditResponse save(CreditRequest request) {
         return Optional.of(request)
                 .map(mapper::fromRequest)
@@ -43,6 +46,7 @@ public class CreditServiceImpl implements CreditService {
     }
 
     @Override
+    @CachePut(key = "#contractNumber")
     public CreditResponse findByContractNumber(String contractNumber) {
         return Optional.of(contractNumber)
                 .map(repository::findCreditByContractNumber)
@@ -59,6 +63,7 @@ public class CreditServiceImpl implements CreditService {
 
     @Transactional
     @Override
+    @CachePut(key = "#request.contractNumber()")
     public CreditResponse update(CreditRequestForUpdate request) {
         return Optional.of(request)
                 .map(CreditRequestForUpdate::contractNumber)
@@ -73,6 +78,7 @@ public class CreditServiceImpl implements CreditService {
 
     @Transactional
     @Override
+    @CacheEvict(key = "#contractNumber")
     public void delete(String contractNumber) {
         repository.deleteByContractNumber(contractNumber);
     }
