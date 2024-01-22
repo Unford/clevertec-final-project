@@ -1,0 +1,26 @@
+server:
+  port: ${PORT:0}
+spring:
+  cache:
+    redis:
+      time-to-live: 3h
+      key-prefix: "${spring.application.name}:"
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: ${DEFAULT_SCHEMA:account_card}
+    database: postgresql
+

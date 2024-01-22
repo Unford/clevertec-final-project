@@ -18,7 +18,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@SQLDelete(sql = "UPDATE account SET deleted = true WHERE iban=?")
+@Table(name = "account")
+@SQLDelete(sql = "UPDATE {h-schema}account SET deleted = true WHERE iban=?")
 @SQLRestriction(value = "deleted = false")
 public class Account {
     private String name;

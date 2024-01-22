@@ -6,6 +6,7 @@ import ru.clevertec.banking.dto.card.CardResponse;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 public record AccountWithCardResponse(String name,
                                       String iban,
@@ -15,7 +16,7 @@ public record AccountWithCardResponse(String name,
                                       @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
                                       LocalDate open_date,
                                       boolean main_acc,
-                                      String customer_id,
+                                      UUID customer_id,
                                       String customer_type,
                                       BigDecimal rate,
                                       List<CardResponse> cards) {

@@ -3,11 +3,13 @@ package ru.clevertec.banking.util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import ru.clevertec.banking.dto.card.Balance;
 import ru.clevertec.banking.dto.currencyRate.ExchangeRateDto;
 import ru.clevertec.banking.dto.currencyRate.ExchangeRateResponse;
 import ru.clevertec.banking.entity.Card;
+import ru.clevertec.banking.exception.RestApiServerException;
 import ru.clevertec.banking.feign.CurrencyRateClient;
 
 import java.math.BigDecimal;
@@ -32,7 +34,7 @@ public class CardBalanceUtils {
             String mainCurrencyCard = getCurrencyCode(card.getAccount().getCurrencyCode());
             BigDecimal accountAmount = card.getAccount().getAmount();
 
-            Map<String, String> args = getBalanceArgs(accountAmount, mainCurrencyCard, rateResponse);
+            Map<String, BigDecimal> args = getBalanceArgs(accountAmount, mainCurrencyCard, rateResponse);
 
             return new Balance(mainCurrencyCard, accountAmount.setScale(2, RoundingMode.DOWN).toString(), args);
         }
@@ -45,23 +47,24 @@ public class CardBalanceUtils {
                     .filter(currency -> currency.getNumericCode() == currNumeric)
                     .findAny()
                     .map(Currency::getCurrencyCode)
-                    .orElseThrow(() -> new RuntimeException("Unknown currency type"));
+                    .orElseThrow(() -> new RestApiServerException("Unknown currency type",
+                            HttpStatus.INTERNAL_SERVER_ERROR));
         } else return curr;
     }
 
-    private Map<String, String> getBalanceArgs(BigDecimal accountAmount, String mainCurrencyCard, ExchangeRateResponse response) {
+    private Map<String, BigDecimal> getBalanceArgs(BigDecimal accountAmount, String mainCurrencyCard, ExchangeRateResponse response) {
         List<ExchangeRateDto> currencyList = response.exchangeRates();
 
-        Map<String, String> args = new HashMap<>();
+        Map<String, BigDecimal> args = new HashMap<>();
 
         for (ExchangeRateDto rateDto : currencyList) {
             if (rateDto.reqCurr().equals(mainCurrencyCard)) {
                 args.put(rateDto.srcCurr(),
-                        convert(accountAmount, rateDto.sellRate(), true).toString());
+                        convert(accountAmount, rateDto.sellRate(), true));
             }
             if (rateDto.srcCurr().equals(mainCurrencyCard)) {
                 args.put(rateDto.reqCurr(),
-                        convert(accountAmount, rateDto.buyRate(), false).toString());
+                        convert(accountAmount, rateDto.buyRate(), false));
             }
         }
         return args;

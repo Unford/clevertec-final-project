@@ -1,0 +1,219 @@
+{
+  "rabbit_version": "3.10.7",
+  "rabbitmq_version": "3.10.7",
+  "product_name": "RabbitMQ",
+  "product_version": "3.10.7",
+  "users": [
+    {
+      "name": "clevertec",
+      "password_hash": "JFze8hes+WqhpGoeQNhlIavb2sEbbczC1b5Tgx5/7x92k9N9",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": [
+        "administrator"
+      ],
+      "limits": {}
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "clevertec",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "topic_permissions": [],
+  "parameters": [],
+  "global_parameters": [
+    {
+      "name": "internal_cluster_id",
+      "value": "rabbitmq-cluster-id-pRKz6sOj5dDvML00wUvJnQ"
+    }
+  ],
+  "policies": [],
+  "queues": [
+    {
+      "name": "currency",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "customer",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "deposit",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "credit-details",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "account_info",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "default",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "card-info",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "auth",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "banking",
+      "vhost": "/",
+      "type": "headers",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "auth",
+      "vhost": "/",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "default",
+      "vhost": "/",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "auth",
+      "vhost": "/",
+      "destination": "auth",
+      "destination_type": "queue",
+      "routing_key": "auth",
+      "arguments": {}
+    },
+    {
+      "source": "banking",
+      "vhost": "/",
+      "destination": "account_info",
+      "destination_type": "queue",
+      "routing_key": "",
+      "arguments": {
+        "message_type": "account_info"
+      }
+    },
+    {
+      "source": "banking",
+      "vhost": "/",
+      "destination": "card-info",
+      "destination_type": "queue",
+      "routing_key": "",
+      "arguments": {
+        "message_type": "card-info"
+      }
+    },
+    {
+      "source": "banking",
+      "vhost": "/",
+      "destination": "credit-details",
+      "destination_type": "queue",
+      "routing_key": "",
+      "arguments": {
+        "message_type": "credit-details"
+      }
+    },
+    {
+      "source": "banking",
+      "vhost": "/",
+      "destination": "currency",
+      "destination_type": "queue",
+      "routing_key": "",
+      "arguments": {
+        "message_type": "currency-rate"
+      }
+    },
+    {
+      "source": "banking",
+      "vhost": "/",
+      "destination": "customer",
+      "destination_type": "queue",
+      "routing_key": "",
+      "arguments": {
+        "message_type": "customer"
+      }
+    },
+    {
+      "source": "banking",
+      "vhost": "/",
+      "destination": "deposit",
+      "destination_type": "queue",
+      "routing_key": "",
+      "arguments": {
+        "message_type": "deposit_info"
+      }
+    },
+    {
+      "source": "default",
+      "vhost": "/",
+      "destination": "default",
+      "destination_type": "queue",
+      "routing_key": "routingKey",
+      "arguments": {}
+    }
+  ]
+}

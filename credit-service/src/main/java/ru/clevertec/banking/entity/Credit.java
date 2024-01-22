@@ -2,7 +2,10 @@ package ru.clevertec.banking.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,8 +15,11 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@SQLDelete(sql = "UPDATE credit SET deleted = true WHERE contract_number=?")
+@Table(name = "credit")
+@SQLDelete(sql = "UPDATE {h-schema}credit SET deleted = true WHERE contract_number=?")
 @SQLRestriction(value = "deleted = false")
 public class Credit {
     private UUID customerId;

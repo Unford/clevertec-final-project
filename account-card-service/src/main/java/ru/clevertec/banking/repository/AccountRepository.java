@@ -15,4 +15,6 @@ public interface AccountRepository extends PagingAndSortingRepository<Account, S
     void deleteAccountByIban(String iban);
 
     boolean existsAccountByIban(String iban);
+
+    void deleteAll();
 }

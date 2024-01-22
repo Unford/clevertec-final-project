@@ -7,7 +7,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableRabbit
 public class CreditServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(CreditServiceApplication.class, args);

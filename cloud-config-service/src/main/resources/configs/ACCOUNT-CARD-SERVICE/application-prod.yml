@@ -1,0 +1,50 @@
+spring:
+  datasource:
+    url: {PROD_DB_URL}
+    username: ${PROD_DB_USERNAME}
+    password: ${PROD_DB_PASSWORD}
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: ${DEFAULT_SCHEMA}
+  data:
+    redis:
+      password: ${PROD_REDIS_PASSWORD}
+      host: ${PROD_REDIS_HOST}
+      port: ${PROD_REDIS_PORT}
+      database: ${PROD_REDIS_DATABASE}
+  liquibase:
+    default-schema: ${DEFAULT_SCHEMA}
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    liquibase-schema: ${DEFAULT_SCHEMA}
+  rabbitmq:
+    listener:
+      simple:
+        acknowledge-mode: auto
+        prefetch: 1
+    port: ${PROD_RABBIT_PORT}
+    host: ${PROD_RABBIT_HOST}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+clevertec:
+  rabbit:
+    consumer:
+      queue:
+        account-queue: ${PROD_ACCOUNT_QUEUE_NAME}
+        card-queue: ${PROD_CARD_QUEUE_NAME}
+  feign:
+    service:
+      currency-client: ${PROD_CURRENCY_SERVICE}
+      currency-get-path: ${PROD_CURRENCY_GET_PATH}
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
+
+eureka:
+  client:
+    service-url:
+      defaultZone : http://${PROD_EUREKA_HOST}:${PROD_EUREKA_PORT}/eureka/
