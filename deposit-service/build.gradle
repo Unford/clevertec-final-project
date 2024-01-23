@@ -27,6 +27,11 @@ dependencies {
 
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
+
+    implementation "org.springframework.cloud:spring-cloud-starter-bootstrap:${springCloudStarterBootstrapVersion}"
+    implementation "org.springframework.cloud:spring-cloud-starter-config:${springCloudStarterConfigVersion}"
+
+
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openapiStarterVersion}"
 
 

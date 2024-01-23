@@ -51,7 +51,7 @@ public class DepositService {
     @Transactional
     @CachePut(key = "#result.accInfo.accIban")
     public DepositResponse saveFromMessage(DepositMessagePayload payload) {
-        Deposit deposit = depositRepository.findByAccInfoAccIban(payload.getAccInfo().getAccIban())
+        Deposit deposit = depositRepository.findByAccInfoAccIbanWithDeleted(payload.getAccInfo().getAccIban())
                 .map(d -> depositMapper.updateDeposit(payload, d))
                 .orElseGet(() -> depositMapper.toDeposit(payload));
         return depositMapper.toDepositResponse(depositRepository.save(deposit));
