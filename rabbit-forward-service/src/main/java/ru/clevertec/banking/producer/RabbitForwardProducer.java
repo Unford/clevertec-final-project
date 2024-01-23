@@ -14,6 +14,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -26,6 +30,9 @@ public class RabbitForwardProducer {
     private final ApplicationContext context;
     @Value("${spring.rabbitmq.producer.config.forward-exchange}")
     private String forwardExchange;
+    @Value("spring.rabbitmq.producer.config.charsets-name")
+    private String charsetsName;
+
 
 
     public RabbitForwardProducer(@Qualifier("forwardTemplate") RabbitTemplate rabbitTemplate, ObjectMapper objectMapper,ApplicationContext context){
@@ -45,7 +52,14 @@ public class RabbitForwardProducer {
         messageProperties.setHeaders(getHeaders(message));
 
         Optional.of(message)
-                .map(String::getBytes)
+                .map(mess -> {
+                    try {
+                        return mess.getBytes(charsetsName);
+                    } catch (UnsupportedEncodingException e) {
+                        log.warn(e.getMessage());
+                        return mess.getBytes(StandardCharsets.UTF_8);
+                    }
+                })
                 .map(bytes -> new Message(bytes, messageProperties))
                 .ifPresent(msg ->
                     rabbitTemplate.send(forwardExchange, "routingKey", msg)
