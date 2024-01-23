@@ -6,7 +6,6 @@ import ru.clevertec.banking.dto.account.AccountRequest;
 import ru.clevertec.banking.dto.account.AccountRequestForUpdate;
 import ru.clevertec.banking.dto.account.AccountResponse;
 import ru.clevertec.banking.dto.account.AccountWithCardResponse;
-import ru.clevertec.banking.entity.Account;
 
 import java.util.List;
 import java.util.UUID;

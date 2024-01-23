@@ -1,0 +1,9 @@
+server:
+  port: 8715
+spring:
+  application:
+    name: RABBIT-FORWARD-SERVICE
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${PROD_EUREKA_HOST}:${EUREKA_PORT}/eureka/

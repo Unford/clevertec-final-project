@@ -13,4 +13,4 @@ include 'api-gateway'
 include 'cache-starter'
 include 'security-starter'
 include 'account-card-service'
-
+include 'rabbit-forward-service'

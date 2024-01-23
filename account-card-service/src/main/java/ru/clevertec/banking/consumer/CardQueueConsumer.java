@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import ru.clevertec.banking.dto.card.CardMessage;
 import ru.clevertec.banking.service.CardService;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class CardQueueConsumer {

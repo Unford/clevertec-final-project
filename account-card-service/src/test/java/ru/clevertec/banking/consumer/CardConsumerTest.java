@@ -84,7 +84,7 @@ public class CardConsumerTest {
                         .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)));
 
         Mockito.verify(cardQueueConsumer).readMessageFromQueue(Mockito.any());
-        Mockito.verify(cardService).save(Mockito.any());
+        Mockito.verify(cardService).saveOrUpdate(Mockito.any());
         assertThat(cardService.findByCardNumber("1234567890123456")).isNotNull();
     }
 

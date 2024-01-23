@@ -1,6 +1,5 @@
 package ru.clevertec.banking.repository;
 
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -25,7 +24,6 @@ public interface CreditRepository extends PagingAndSortingRepository<Credit, Str
 
     void deleteAll();
 
-    @Query(value = "SELECT c.* FROM credit c WHERE c.contract_number = ?1", nativeQuery = true)
+    @Query(value = "SELECT c.* FROM {h-schema}credit c WHERE c.contract_number = ?1", nativeQuery = true)
     Optional<Credit> findCreditByContractNumberWithDeleted(String contractNumber);
-
 }

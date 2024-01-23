@@ -1,0 +1,22 @@
+server:
+  port: 0
+spring:
+  rabbitmq:
+    addresses: amqp://${PROD_PRIMARY_DATA_USERNAME:admin}:${PROD_PRIMARY_DATA_PASSWORD:admin}@${PROD_PRIMARY_HOST:host.docker.internal}:${PROD_PRIMARY_DATA_PORT:5670} # адрес кролика, где загрузочные данные(Который Макс даст)
+    listener:
+      simple:
+        acknowledge-mode: auto
+        prefetch: 1
+    consumer:
+      config:
+        queue-name: ${PROD_PRIMARY_DATA_QUEUE:default}  #название очереди, с которой читаем первичные данные
+        exchange-name: ${PROD_PRIMARY_DATA_EXCHANGE:default} #название обменника, с первичными данными
+        key: routingKey
+    producer:
+      config:
+        forward-exchange: ${PROD_OUR_EXCHANGE:banking} #exchange нашего кролика - куда перенаправляем
+        addresses: amqp://${RABBIT_USERNAME:clevertec}:${RABBIT_PASSWORD:banking}@${PROD_RABBIT_HOST:rabbitmq}:${PROD_RABBIT_PORT:5672} #адрес нашего кролика, с которого потом в сервисах считываем
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${PROD_EUREKA_HOST}:${EUREKA_PORT}/eureka/

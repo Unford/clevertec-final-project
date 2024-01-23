@@ -1,0 +1,22 @@
+server:
+  port: 8715
+spring:
+  rabbitmq:
+    addresses: amqp://${DEV_PRIMARY_DATA_USERNAME:admin}:${DEV_PRIMARY_DATA_PASSWORD:admin}@localhost:${DEV_PRIMARY_DATA_PORT:5670} # адрес кролика, где загрузочные данные(Который Макс даст)
+    listener:
+      simple:
+        acknowledge-mode: auto
+        prefetch: 1
+    consumer:
+      config:
+        queue-name: ${DEV_PRIMARY_DATA_QUEUE:default}  #название очереди, с которой читаем первичные данные
+        exchange-name: ${DEV_PRIMARY_DATA_EXCHANGE:default} #название обменника, с первичными данными
+        key: routingKey
+    producer:
+      config:
+        forward-exchange: ${DEV_OUR_EXCHANGE:banking} #exchange нашего кролика - куда перенаправляем
+        addresses: amqp://${RABBIT_USERNAME:clevertec}:${RABBIT_PASSWORD:banking}@${DEV_RABBIT_HOST:rabbitmq}:${DEV_RABBIT_PORT:5672} #адрес нашего кролика, с которого потом в сервисах считываем
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${DEV_EUREKA_HOST}:${EUREKA_PORT}/eureka/

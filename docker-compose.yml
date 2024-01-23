@@ -229,6 +229,21 @@ services:
     networks:
       - clevertec-banking-net
 
+  rabbit-forward-service:
+    image: rabbit-forward-service:0.0.1
+    build:
+      context: ./rabbit-forward-service
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://eureka-server:8761/eureka/
+      SPRING_PROFILES_ACTIVE: prod
+    env_file:
+      - ./rabbit-forward-service/.env
+    ports:
+      - "8535:8535"
+    networks:
+      - clevertec-banking-net
 
 networks:
   clevertec-banking-net:

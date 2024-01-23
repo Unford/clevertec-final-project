@@ -6,7 +6,6 @@ import ru.clevertec.banking.dto.card.CardCurrencyResponse;
 import ru.clevertec.banking.dto.card.CardRequest;
 import ru.clevertec.banking.dto.card.CardRequestForUpdate;
 import ru.clevertec.banking.dto.card.CardResponse;
-import ru.clevertec.banking.entity.Card;
 
 import java.util.List;
 import java.util.UUID;

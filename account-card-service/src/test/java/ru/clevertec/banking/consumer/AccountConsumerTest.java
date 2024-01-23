@@ -75,7 +75,7 @@ public class AccountConsumerTest {
         waitMessage();
 
         Mockito.verify(accountQueueConsumer).readMessageFromQueue(Mockito.any());
-        Mockito.verify(accountService).save(Mockito.any());
+        Mockito.verify(accountService).saveOrUpdate(Mockito.any());
         assertThat(accountService.findByIban("1234567890123456789012345678")).isNotNull();
     }
 
