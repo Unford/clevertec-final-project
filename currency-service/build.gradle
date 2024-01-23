@@ -18,6 +18,9 @@ java {
 }
 
 dependencies {
+    implementation "org.springframework.cloud:spring-cloud-starter-bootstrap:${springCloudStarterBootstrapVersion}"
+    implementation "org.springframework.cloud:spring-cloud-starter-config:${springCloudStarterConfigVersion}"
+
 
     implementation 'ru.clevertec.banking:global-exception-starter:1.0.0'
     implementation 'ru.clevertec.banking:logging-starter:1.0.0'
