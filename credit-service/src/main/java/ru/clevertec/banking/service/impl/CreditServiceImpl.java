@@ -83,7 +83,7 @@ public class CreditServiceImpl implements CreditService {
                 .map(CreditRequest::contractNumber)
                 .map(repository::findCreditByContractNumberWithDeleted)
                 .flatMap(o -> o)
-                .ifPresentOrElse(cred -> repository.save(mapper.updateFromMessage(mapper.fromRequest(request), cred)),
+                .ifPresentOrElse(cred -> repository.save(mapper.updateFromMessage(request, cred)),
                         () -> repository.save(mapper.fromRequest(request)));
     }
 

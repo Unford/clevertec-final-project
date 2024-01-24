@@ -3,15 +3,12 @@ package ru.clevertec.banking.dto.account;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import ru.clevertec.banking.dto.validator.AccountValidation;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Map;
-import java.util.UUID;
 
 @AccountValidation
 public record AccountRequest(

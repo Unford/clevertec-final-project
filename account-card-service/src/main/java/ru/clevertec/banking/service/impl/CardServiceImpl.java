@@ -103,8 +103,8 @@ public class CardServiceImpl implements CardService {
                 .map(CardRequest::card_number)
                 .map(repository::findCardByCardNumberWithDeleted)
                 .flatMap(o -> o)
-                .ifPresentOrElse(card -> repository.save(mapper.updateFromMessage(mapper.fromRequest(request),card)),
-                        ()->repository.save(mapper.fromRequest(request)));
+                .ifPresentOrElse(card -> repository.save(mapper.updateFromMessage(request, card)),
+                        () -> repository.save(mapper.fromRequest(request)));
 
     }
 }
