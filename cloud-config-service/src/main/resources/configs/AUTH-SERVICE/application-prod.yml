@@ -19,30 +19,28 @@ spring:
     username: ${RABBIT_USERNAME}
     password: ${RABBIT_PASSWORD}
   datasource:
-    url: jdbc:postgresql://localhost:${PROD_DB_PORT}/${DB_NAME}?currentSchema=${DEFAULT_SCHEMA}
+    driver-class-name: org.postgresql.Driver
+    url: ${PROD_DB_URL}
     username: ${PROD_DB_USERNAME}
     password: ${PROD_DB_PASSWORD}
+  data:
+    redis:
+      password: ${PROD_REDIS_PASSWORD}
+      host: ${PROD_REDIS_HOST}
+      port: ${PROD_REDIS_PORT}
+      database: ${PROD_REDIS_DATABASE}
 
 eureka:
   client:
     service-url:
-      defaultZone: http://${PROD_EUREKA_HOST}:${EUREKA_PORT}/eureka/
+      defaultZone: http://${PROD_EUREKA_HOST}:${PROD_EUREKA_PORT}/eureka/
 
 clevertec:
   rabbit:
     config:
-      name-forward-exchange: ${RABBIT_AUTH_EXCHANGE}
-      queue-name: ${RABBIT_CUSTOMER_QUEUE}
-  feign:
-    client:
-      account-card:
-        name: ACCOUNT-CARD-SERVICE
-        path: ${ACCOUNT_CARD_PATH}
-      credit:
-        name: CREDIT-SERVICE
-        path: ${CREDIT_PATH}
-      deposit:
-        name: DEPOSIT-SERVICE
-        path: ${DEPOSIT_PATH}
-#logging:
-#  config: #мб уйдет в стартер
+      queue-name: ${RABBIT_AUTH_QUEUE}
+
+token:
+  secret-key: ${JWT_SECRET}
+  refresh-token-expiration-ms: 604800000 # 1 неделя в миллисекундах
+  token-expiration-ms: 604800000 # 2 минуты = 120000 в миллисекундах

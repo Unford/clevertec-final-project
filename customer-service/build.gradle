@@ -28,6 +28,8 @@ dependencies {
     implementation "net.lbruun.springboot:preliquibase-spring-boot-starter:${preLiquibaseStarterVersion}"
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openapiStarterVersion}"
+    implementation "org.springframework.cloud:spring-cloud-starter-bootstrap:${springCloudStarterBootstrapVersion}"
+    implementation "org.springframework.cloud:spring-cloud-starter-config:${springCloudStarterConfigVersion}"
 
     implementation 'ru.clevertec.banking:global-exception-starter:1.0.0'
     implementation 'ru.clevertec.banking:logging-starter:1.0.0'

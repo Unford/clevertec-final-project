@@ -1,0 +1,28 @@
+server:
+  port: ${PORT:0}
+spring:
+  cache:
+    redis:
+      time-to-live: 3h
+      key-prefix: "${spring.application.name}:"
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+  liquibase:
+    default-schema: ${DEFAULT_SCHEMA}
+    change-log: db/changelog/db.changelog-master.xml
+    liquibase-schema: ${DEFAULT_SCHEMA}
+  jpa:
+    properties:
+      hibernate:
+        default_schema: ${DEFAULT_SCHEMA}
+    hibernate:
+      ddl-auto: validate
+  web:
+    resources:
+      add-mappings: false
