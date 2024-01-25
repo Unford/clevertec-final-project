@@ -80,7 +80,7 @@ public class CreditConsumerTest {
         waitMessage();
 
         Mockito.verify(creditConsumer).readMessageFromQueue(Mockito.any());
-        Mockito.verify(service).save(Mockito.any());
+        Mockito.verify(service).saveOrUpdate(Mockito.any());
         assertThat(service.findByContractNumber("11-0211234-2-0")).isNotNull();
     }
 

@@ -1,8 +1,10 @@
 package ru.clevertec.banking.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@CacheConfig(cacheNames = "card")
 public class CardServiceImpl implements CardService {
     private final CardRepository repository;
     private final CardMapper mapper;
@@ -48,7 +51,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    @CachePut(key = "#cardNumber")
+    @Cacheable(key = "#cardNumber")
     public CardCurrencyResponse findByCardNumber(String cardNumber) {
         return repository.findCardByCardNumber(cardNumber)
                 .map(card -> mapper.toCardWithBalance(card, balanceUtils.getBalance(card)))
@@ -98,6 +101,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     @Transactional
+    @CacheEvict(key = "#request.card_number()")
     public void saveOrUpdate(CardRequest request) {
         Optional.of(request)
                 .map(CardRequest::card_number)
