@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-account-table
+      author: Maks Laptsev
+      changes:
+        - createTable:
+            tableName: card
+            columns:
+              - column:
+                  name: card_number
+                  type: VARCHAR(30)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: iban
+                  type: VARCHAR(35)
+              - column:
+                  name: customer_id
+                  type: UUID
+              - column:
+                  name: customer_type
+                  type: VARCHAR(15)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cardholder
+                  type: VARCHAR(40)
+              - column:
+                  name: card_status
+                  type: VARCHAR(15)
+              - column:
+                  name: deleted
+                  type: BOOLEAN

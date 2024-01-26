@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: {PROD_DB_URL}
+    username: ${PROD_DB_USERNAME}
+    password: ${PROD_DB_PASSWORD}
+  liquibase:
+    default-schema: ${DEFAULT_SCHEMA}
+    change-log: db/changelog/db.changelog.yaml
+    liquibase-schema: ${DEFAULT_SCHEMA}
+  rabbitmq:
+    port: ${PROD_RABBIT_PORT}
+    host: ${PROD_RABBIT_HOST}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        default_schema: ${DEFAULT_SCHEMA}
+  data:
+    redis:
+      password: ${PROD_REDIS_PASSWORD}
+      host: ${PROD_REDIS_HOST}
+      port: ${PROD_REDIS_PORT}
+      database: ${PROD_REDIS_DATABASE}
+clevertec:
+  feign:
+    client:
+      customer:
+        name:  ${PROD_FEIGN_CUSTOMER_NAME}
+        path: ${PROD_FEIGN_CUSTOMER_PATH}
+  rabbit:
+    queue:
+      deposit: ${RABBIT_DEPOSIT_QUEUE}
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${PROD_EUREKA_HOST}:${PROD_EUREKA_PORT}/eureka/

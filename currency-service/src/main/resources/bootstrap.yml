@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: CURRENCY-SERVICE
+  cloud:
+    config:
+      fail-fast: true
+      discovery:
+        enabled: true
+        service-id: CLOUD-CONFIG-SERVICE
+      retry:
+        initial-interval: 2000
+        multiplier: 1.5
+        max-interval: 6000
+        max-attempts: 50
+      enabled: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${PROD_EUREKA_HOST}:${PROD_EUREKA_PORT}/eureka/
+    enabled: true

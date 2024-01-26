@@ -1,0 +1,46 @@
+spring:
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        default_schema: ${DEFAULT_SCHEMA}
+  liquibase:
+    change-log: classpath:db.changelog/db.changelog-master.xml
+    default-schema: ${DEFAULT_SCHEMA}
+    liquibase-schema: ${DEFAULT_SCHEMA}
+  rabbitmq:
+    listener:
+      simple:
+        acknowledge-mode: auto
+        prefetch: 1
+    port: ${PROD_RABBIT_PORT}
+    host: ${PROD_RABBIT_HOST}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${PROD_DB_URL}
+    username: ${PROD_DB_USERNAME}
+    password: ${PROD_DB_PASSWORD}
+  data:
+    redis:
+      password: ${PROD_REDIS_PASSWORD}
+      host: ${PROD_REDIS_HOST}
+      port: ${PROD_REDIS_PORT}
+      database: ${PROD_REDIS_DATABASE}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${PROD_EUREKA_HOST}:${PROD_EUREKA_PORT}/eureka/
+
+clevertec:
+  rabbit:
+    config:
+      queue-name: ${RABBIT_AUTH_QUEUE}
+
+token:
+  secret-key: ${JWT_SECRET}
+  refresh-token-expiration-ms: 604800000 # 1 неделя в миллисекундах
+  token-expiration-ms: 604800000 # 2 минуты = 120000 в миллисекундах

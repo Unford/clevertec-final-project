@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "customer_id": "1a72a05f-4b8f-43c5-a889-1ebc6d9dc729",
+    "customer_type": "LEGAL",
+    "acc_info": {
+      "acc_iban": "AABBCCCDDDDEEEEEEEEEEEEEEEE",
+      "acc_open_date": "01.01.2022",
+      "curr_amount": 1500.00,
+      "curr_amount_currency": "USD"
+    },
+    "dep_info": {
+      "rate": 0.02,
+      "term_val": 12,
+      "term_scale": "M",
+      "exp_date": "01.01.2023",
+      "dep_type": "REVOCABLE",
+      "auto_renew": true
+    }
+  }
+]

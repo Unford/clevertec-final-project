@@ -1,0 +1,16 @@
+[
+  {
+    "customer_id": "1a72a05f-4b8f-43c5-a889-1ebc6d9dc729",
+    "contractNumber": "11-0216444-2-0",
+    "contractStartDate": "30.03.2022",
+    "totalDebt": 8113.99,
+    "currentDebt": 361.99,
+    "currency": "BYN",
+    "repaymentDate": "16.01.2023",
+    "rate": 22.8,
+    "iban": "AABBCCCDDDDEEEEEEEEEEEEEEEE",
+    "possibleRepayment": true,
+    "isClosed": false,
+    "customer_type" : "LEGAL"
+  }
+]

@@ -1,0 +1,57 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=${AUTH_SERVICE_PATH}
+
+        - id: customer-service
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=${CUSTOMER_SERVICE_PATH}
+          filters:
+            - AuthenticationFilter
+
+        - id: currency-service
+          uri: lb://CURRENCY-SERVICE
+          predicates:
+            - Path=${CURRENCY_SERVICE_PATH}
+          filters:
+            - AuthenticationFilter
+
+        - id: deposit-service
+          uri: lb://DEPOSIT-SERVICE
+          predicates:
+            - Path=${DEPOSIT_SERVICE_PATH}
+          filters:
+            - AuthenticationFilter
+
+        - id: account-card-service
+          uri: lb://ACCOUNT-CARD-SERVICE
+          predicates:
+            - Path=${ACCOUNT_CARD_SERVICE_ACCOUNTS_PATH}
+          filters:
+          - AuthenticationFilter
+
+        - id: account-card-service
+          uri: lb://ACCOUNT-CARD-SERVICE
+          predicates:
+            - Path=${ACCOUNT_CARD_SERVICE_CARDS_PATH}
+          filters:
+            - AuthenticationFilter
+
+        - id: credit-service
+          uri: lb://CREDIT-SERVICE
+          predicates:
+            - Path=${CREDIT_SERVICE_PATH}
+          filters:
+            - AuthenticationFilter
+
+  application:
+    name: BANKING-GATEWAY
+
+token:
+  secret-key: ${JWT_SECRET}

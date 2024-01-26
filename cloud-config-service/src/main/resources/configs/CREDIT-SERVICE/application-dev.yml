@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DEV_HOST_DB_URL}:${DEV_DB_PORT}/${DB_NAME}?currentSchema=${DEFAULT_SCHEMA}
+    username: ${DEV_DB_USERNAME}
+    password: ${DEV_DB_PASSWORD}
+  liquibase:
+    enabled: true
+    default-schema: ${DEFAULT_SCHEMA}
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    liquibase-schema: ${DEFAULT_SCHEMA}
+  rabbitmq:
+    listener:
+      simple:
+        acknowledge-mode: auto
+        prefetch: 1
+    port: ${DEV_RABBIT_PORT}
+    host: ${DEV_RABBIT_HOST}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+clevertec:
+  rabbit:
+    consumer:
+      queue:
+        credit-queue: ${DEV_RABBITMQ_QUEUE_NAME}
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${DEV_EUREKA_HOST}:${DEV_EUREKA_PORT}/eureka/
+    enabled: true

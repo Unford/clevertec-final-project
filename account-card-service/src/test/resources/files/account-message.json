@@ -1,0 +1,17 @@
+{
+  "header": {
+    "message_type": "account_info"
+  },
+  "payload": {
+    "name": "Название счёта #13",
+    "iban": "1234567890123456789012345678",
+    "iban_readable": "1234 5678 9012 3456 7890 1234 5678",
+    "amount": 21001.00,
+    "currency_code": "933",
+    "open_date": "11.01.1995",
+    "main_acc": true,
+    "customer_id": "1a72a05f-4b8f-43c5-a889-1ebc6d9dc729",
+    "customer_type" : "LEGAL",
+    "rate": 0.01
+  }
+}

@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configs/{application}
+server:
+  port: 8888

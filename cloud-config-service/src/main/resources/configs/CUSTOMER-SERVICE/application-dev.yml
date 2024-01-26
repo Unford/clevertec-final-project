@@ -1,0 +1,53 @@
+spring:
+  liquibase:
+    change-log: classpath:db.changelog/db.changelog-master.xml
+    default-schema: ${DEFAULT_SCHEMA:customer}
+    liquibase-schema: ${DEFAULT_SCHEMA:customer}
+  rabbitmq:
+    listener:
+      simple:
+        acknowledge-mode: auto
+        prefetch: 1
+    port: ${DEV_RABBIT_PORT}
+    host: ${DEV_RABBIT_HOST}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: ${DEFAULT_SCHEMA:customer}
+        format_sql: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DEV_DB_HOST:localhost}:${DEV_DB_PORT:5432}/${DB_NAME:clevertec-banking}?currentSchema=${DEFAULT_SCHEMA:customer}
+    username: ${DEV_DB_USERNAME:postgres}
+    password: ${DEV_DB_USERNAME:postgres}
+  data:
+    redis:
+      password: ${DEV_REDIS_PASSWORD:changeMeLater}
+      host: ${DEV_REDIS_HOST:localhost}
+      port: ${DEV_REDIS_PORT:6379}
+      database: ${DEV_REDIS_DATABASE:1}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${DEV_EUREKA_HOST:localhost}:${DEV_EUREKA_PORT:8761}/eureka/
+
+clevertec:
+  rabbit:
+    config:
+      name-forward-exchange: ${RABBIT_AUTH_EXCHANGE}
+      queue-name: ${RABBIT_CUSTOMER_QUEUE}
+  feign:
+    client:
+      account-card:
+        name: ACCOUNT-CARD-SERVICE
+        path: ${ACCOUNT_CARD_PATH}
+      credit:
+        name: CREDIT-SERVICE
+        path: ${CREDIT_PATH}
+      deposit:
+        name: DEPOSIT-SERVICE
+        path: ${DEPOSIT_PATH}

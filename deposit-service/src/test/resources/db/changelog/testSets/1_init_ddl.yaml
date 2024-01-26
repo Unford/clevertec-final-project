@@ -1,0 +1,92 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1705236288529-1
+      author: vladimir_feshenko (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_deposits
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: customer_id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: customer_type
+                  type: VARCHAR(30)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: deleted
+                  type: BOOLEAN
+              - column:
+                  constraints:
+                    nullable: false
+                  name: acc_iban
+                  type: VARCHAR(50)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: acc_open_date
+                  type: DATE
+              - column:
+                  constraints:
+                    nullable: false
+                  name: curr_amount
+                  type: DECIMAL
+              - column:
+                  constraints:
+                    nullable: false
+                  name: curr_amount_currency
+                  type: VARCHAR(3)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: rate
+                  type: DECIMAL
+              - column:
+                  constraints:
+                    nullable: false
+                  name: term_val
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: term_scale
+                  type: VARCHAR(1)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: exp_date
+                  type: DATE
+              - column:
+                  constraints:
+                    nullable: false
+                  name: dep_type
+                  type: VARCHAR(30)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: auto_renew
+                  type: BOOLEAN
+            tableName: deposits
+  - changeSet:
+      id: 1705236288529-2
+      author: vladimir_feshenko (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: acc_iban
+            constraintName: uc_deposits_acc_iban
+            tableName: deposits
+

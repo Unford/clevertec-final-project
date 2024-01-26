@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert_into_credit
+      author: Maks Laptsev
+      changes:
+        - sql:
+            sql: "INSERT INTO credit (customer_id, contract_number, contract_start_date, total_debt, current_debt,
+             currency, repayment_date, rate, iban, possible_repayment, closed, customer_type, deleted)
+                  VALUES
+                  ('fbd6a92b-9e43-4c88-aa2b-6e1fe788d9c4', '11-0216133-2-0', '2000.01.10', 999999.00, 3020.00, 'BYN',
+                   '2025.05.16', 22.8, 'DE89370400440532013000234567', true, false, 'PHYSIC', false),
+                  ('1a72a05f-4b8f-43c5-a889-1ebc6d9dc729', '11-0216444-2-0', '2003.03.30', 7520.99, 456.99, 'BYN',
+                   '2003.01.16', 22.8, 'AABBCCCDDDDEEEEEEEEEEEEEEEEE', true, false, 'LEGAL', false),
+                  ('a3e8c29f-7c16-4a5d-b1c1-2d32f31a8d71', '11-0216333-2-0', '2012.05.11', 8113.99, 361.99, 'BYN',
+                   '2013.07.16', 22.8, 'FR1420041010050500013M026060', true, true, 'LEGAL', false),
+                  ('fbd6a92b-9e43-4c88-aa2b-6e1fe788d9c4', '11-0216671-1-0', '2023.01.11', 8888.99, 325.99, 'USD',
+                   '2026.01.16', 22.8, 'GB29NWBK60161331926819012345', true, false, 'LEGAL', false)
+                  "

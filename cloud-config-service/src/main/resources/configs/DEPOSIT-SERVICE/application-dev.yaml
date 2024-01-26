@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DEV_DB_HOST:localhost}:${DEV_DB_PORT:5432}/${DB_NAME:clevertec-banking}?currentSchema=${DEFAULT_SCHEMA:deposit}
+    username: ${DEV_DB_USERNAME:postgres}
+    password: ${DEV_DB_USERNAME:postgres}
+  liquibase:
+    default-schema: ${DEFAULT_SCHEMA:deposit}
+    change-log: db/changelog/db.changelog.yaml
+    liquibase-schema: ${DEFAULT_SCHEMA:deposit}
+  rabbitmq:
+    port: ${DEV_RABBIT_PORT:5672}
+    host: ${DEV_RABBIT_HOST:localhost}
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: ${DEFAULT_SCHEMA:deposit}
+        format_sql: true
+  data:
+    redis:
+      password: ${DEV_REDIS_PASSWORD:changeMeLater}
+      host: ${DEV_REDIS_HOST:localhost}
+      port: ${DEV_REDIS_PORT:6379}
+      database: ${DEV_REDIS_DATABASE:1}
+
+clevertec:
+  feign:
+    client:
+      customer:
+        name: ${DEV_FEIGN_CUSTOMER_NAME:CUSTOMER-SERVICE}
+        path: ${DEV_FEIGN_CUSTOMER_PATH:/api/v1/customers}
+  rabbit:
+    queue:
+      deposit: ${RABBIT_DEPOSIT_QUEUE:deposit}
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
+eureka:
+  client:
+    service-url:
+      defaultZone : http://${DEV_EUREKA_HOST:localhost}:${DEV_EUREKA_PORT:8761}/eureka/

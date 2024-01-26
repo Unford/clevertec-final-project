@@ -1,0 +1,46 @@
+spring:
+  liquibase:
+    change-log: classpath:db.changelog/db.changelog-master.xml
+    default-schema: ${DEFAULT_SCHEMA:auth}
+    liquibase-schema: ${DEFAULT_SCHEMA:auth}
+  rabbitmq:
+    listener:
+      simple:
+        acknowledge-mode: auto
+        prefetch: 1
+    port: ${DEV_RABBIT_PORT}
+    host: ${DEV_RABBIT_HOST}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: ${DEFAULT_SCHEMA:auth}
+        format_sql: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DEV_DB_HOST:localhost}:${DEV_DB_PORT:5432}/${DB_NAME:clevertec-banking}?currentSchema=${DEFAULT_SCHEMA:auth}
+    username: ${DEV_DB_USERNAME:postgres}
+    password: ${DEV_DB_USERNAME:postgres}
+  data:
+    redis:
+      password: ${DEV_REDIS_PASSWORD:changeMeLater}
+      host: ${DEV_REDIS_HOST:localhost}
+      port: ${DEV_REDIS_PORT:6379}
+      database: ${DEV_REDIS_DATABASE:1}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${DEV_EUREKA_HOST:localhost}:${DEV_EUREKA_PORT:8761}/eureka/
+
+clevertec:
+  rabbit:
+    config:
+      queue-name: ${RABBIT_AUTH_QUEUE}
+
+token:
+  secret-key: ${JWT_SECRET}
+  refresh-token-expiration-ms: 604800000 # 1 неделя в миллисекундах
+  token-expiration-ms: 604800000 # 2 минуты = 120000 в миллисекундах
