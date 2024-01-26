@@ -6,7 +6,8 @@ import ru.clevertec.banking.dto.CreditRequestForUpdate;
 import ru.clevertec.banking.dto.CreditResponse;
 import ru.clevertec.banking.entity.Credit;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface CreditMapper {
 
     @Mapping(target = "customer_id", source = "credit.customerId")
@@ -38,5 +39,9 @@ public interface CreditMapper {
     @Mapping(target = "closed", source = "response.isClosed")
     Credit fromResponse(CreditResponse response);
 
-    Credit updateFromMessage(Credit message, @MappingTarget() Credit credit);
+    @Mapping(target = "credit.customerId", source = "message.customer_id",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "credit.customerType", source = "message.customer_type",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Credit updateFromMessage(CreditRequest message, @MappingTarget Credit credit);
 }

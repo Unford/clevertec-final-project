@@ -1,8 +1,10 @@
 package ru.clevertec.banking.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -13,7 +15,6 @@ import ru.clevertec.banking.dto.account.AccountRequest;
 import ru.clevertec.banking.dto.account.AccountRequestForUpdate;
 import ru.clevertec.banking.dto.account.AccountResponse;
 import ru.clevertec.banking.dto.account.AccountWithCardResponse;
-import ru.clevertec.banking.dto.card.CardRequest;
 import ru.clevertec.banking.entity.Account;
 import ru.clevertec.banking.exception.ResourceCreateException;
 import ru.clevertec.banking.exception.RestApiServerException;
@@ -29,6 +30,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@CacheConfig(cacheNames = "account")
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository repository;
     private final AccountMapper mapper;
@@ -46,7 +48,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @CachePut(key = "#iban")
+    @Cacheable(key = "#iban")
     public AccountResponse findByIban(String iban) {
         return repository.findAccountByIban(iban)
                 .map(mapper::toResponse)
@@ -85,13 +87,14 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
+    @CacheEvict(key = "#request.iban()")
     public void saveOrUpdate(AccountRequest request) {
         Optional.of(request)
                 .map(AccountRequest::iban)
                 .map(repository::findAccountByIbanWithDeleted)
                 .flatMap(o -> o)
-                .ifPresentOrElse(acc -> repository.save(mapper.updateFromMessage(mapper.fromRequest(request),acc)),
-                        ()->repository.save(mapper.fromRequest(request)));
+                .ifPresentOrElse(acc -> repository.save(mapper.updateFromMessage(request, acc)),
+                        () -> repository.save(mapper.fromRequest(request)));
     }
 
     @Override

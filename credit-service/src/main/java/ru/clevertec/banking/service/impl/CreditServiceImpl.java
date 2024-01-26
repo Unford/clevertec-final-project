@@ -1,6 +1,7 @@
 package ru.clevertec.banking.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,7 @@ import java.util.UUID;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@CacheConfig(cacheNames = "credit")
 public class CreditServiceImpl implements CreditService {
     private final CreditRepository repository;
     private final CreditMapper mapper;
@@ -78,12 +80,13 @@ public class CreditServiceImpl implements CreditService {
 
     @Override
     @Transactional
+    @CacheEvict(key = "#request.contractNumber()")
     public void saveOrUpdate(CreditRequest request) {
         Optional.of(request)
                 .map(CreditRequest::contractNumber)
                 .map(repository::findCreditByContractNumberWithDeleted)
                 .flatMap(o -> o)
-                .ifPresentOrElse(cred -> repository.save(mapper.updateFromMessage(mapper.fromRequest(request), cred)),
+                .ifPresentOrElse(cred -> repository.save(mapper.updateFromMessage(request, cred)),
                         () -> repository.save(mapper.fromRequest(request)));
     }
 

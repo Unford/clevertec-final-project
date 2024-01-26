@@ -40,5 +40,17 @@ public interface CardMapper {
     @Mapping(target = "card_balance", source = "balance")
     CardCurrencyResponse toCardWithBalance(Card card, Balance balance);
 
-    Card updateFromMessage(Card message, @MappingTarget() Card card);
+    @Mapping(target = "card.cardNumber", source = "message.card_number",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "card.iban", source = "message.iban",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "card.customerId", source = "message.customer_id",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "card.customerType", source = "message.customer_type",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "card.cardholder", source = "message.cardholder",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "card.cardStatus", source = "message.card_status",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Card updateFromMessage(CardRequest message, @MappingTarget Card card);
 }

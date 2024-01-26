@@ -35,6 +35,7 @@ public interface CustomerMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "customerType", expression = "java(updateCustomerType(source, target))")
+    @Mapping(target = "id", ignore = true)
     Customer partialUpdate(CustomerMessagePayload source, @MappingTarget Customer target);
 
     default CustomerType updateCustomerType(CustomerMessagePayload source, @MappingTarget Customer target) {

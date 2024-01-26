@@ -52,5 +52,23 @@ public interface AccountMapper {
     @Mapping(target = "customerType", source = "response.customer_type")
     Account fromResponse(AccountResponse response);
 
-    Account updateFromMessage(Account message, @MappingTarget() Account account);
+    @Mapping(target = "account.name", source = "message.name",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "account.iban", source = "message.iban",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "account.amount", source = "message.amount",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "account.currencyCode", source = "message.currency_code",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "account.openDate", source = "message.open_date",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "account.mainAcc", source = "message.main_acc",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "account.customerId", source = "message.customer_id",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "account.customerType", source = "message.customer_type",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "account.rate", source = "message.rate",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Account updateFromMessage(AccountRequest message, @MappingTarget Account account);
 }

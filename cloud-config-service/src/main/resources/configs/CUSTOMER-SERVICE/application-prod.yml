@@ -1,4 +1,10 @@
 spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: ${DEFAULT_SCHEMA}
   liquibase:
     change-log: classpath:db.changelog/db.changelog-master.xml
     default-schema: ${DEFAULT_SCHEMA}
@@ -8,19 +14,26 @@ spring:
       simple:
         acknowledge-mode: auto
         prefetch: 1
-    port: ${DEV_RABBIT_PORT}
-    host: ${DEV_RABBIT_HOST}
+    port: ${PROD_RABBIT_PORT}
+    host: ${PROD_RABBIT_HOST}
     username: ${RABBIT_USERNAME}
     password: ${RABBIT_PASSWORD}
   datasource:
-    url: jdbc:postgresql://localhost:${DEV_DB_PORT}/${DB_NAME}?currentSchema=${DEFAULT_SCHEMA}
-    username: ${DEV_DB_USERNAME}
-    password: ${DEV_DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    url: ${PROD_DB_URL}
+    username: ${PROD_DB_USERNAME}
+    password: ${PROD_DB_PASSWORD}
+  data:
+    redis:
+      password: ${PROD_REDIS_PASSWORD}
+      host: ${PROD_REDIS_HOST}
+      port: ${PROD_REDIS_PORT}
+      database: ${PROD_REDIS_DATABASE}
 
 eureka:
   client:
     service-url:
-      defaultZone: http://${DEV_EUREKA_HOST}:${EUREKA_PORT}/eureka/
+      defaultZone: http://${PROD_EUREKA_HOST}:${PROD_EUREKA_PORT}/eureka/
 
 clevertec:
   rabbit:
@@ -38,5 +51,3 @@ clevertec:
       deposit:
         name: DEPOSIT-SERVICE
         path: ${DEPOSIT_PATH}
-#logging:
-#  config: #мб уйдет в стартер

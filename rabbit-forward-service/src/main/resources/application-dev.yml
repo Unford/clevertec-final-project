@@ -16,6 +16,7 @@ spring:
       config:
         forward-exchange: ${DEV_OUR_EXCHANGE:banking} #exchange нашего кролика - куда перенаправляем
         addresses: amqp://${RABBIT_USERNAME:clevertec}:${RABBIT_PASSWORD:banking}@${DEV_RABBIT_HOST:rabbitmq}:${DEV_RABBIT_PORT:5672} #адрес нашего кролика, с которого потом в сервисах считываем
+        charsets-name: ${DEV_CHARSETS_NAME:UTF8}
 eureka:
   client:
     service-url:

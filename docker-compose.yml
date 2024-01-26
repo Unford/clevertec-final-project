@@ -69,6 +69,7 @@ services:
       - service-db
       - eureka-server
       - api-gateway
+      - redis-cache
     ports:
       - "9191:9191"
     environment:

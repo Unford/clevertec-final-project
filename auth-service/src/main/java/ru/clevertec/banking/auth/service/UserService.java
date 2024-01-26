@@ -1,6 +1,9 @@
 package ru.clevertec.banking.auth.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.banking.advice.exception.ResourceNotFoundException;
@@ -14,11 +17,13 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@CacheConfig(cacheNames = "users")
 public class UserService {
 
     private final UserCredentialsRepository userRepository;
     private final UserMapper userMapper;
 
+    @Cacheable(key = "#email")
     public UserCredentialsDto getByEmail(String email) {
         return userRepository.findByEmail(email)
                              .map(userMapper::toDto)
@@ -27,6 +32,7 @@ public class UserService {
     }
 
     @Transactional
+    @CachePut(key = "#result.email")
     public UserCredentialsDto save(UserCredentialsDto user) {
         return Optional.of(user)
                        .map(userMapper::toEntity)
