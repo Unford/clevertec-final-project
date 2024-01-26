@@ -6,3 +6,11 @@
 - Далее в gradle, в корневной папке Tasks сборщика присутствует пакет custom_build. Там есть задача `publishStartersAndBootJarInServices`. Эту задачу необходимо запустить для сбора boot Jars всех модулей, а также опубликовать стартеры локально.
 - Запустить [docker-compose.yml](docker-compose.yml) в корне проекта c помощью `docker-compose up -d`
  
+## Open API документация:
+### Документация доступна по следующим адресам:
+- http://localhost:8640/swagger-ui/index.html — Credit Service api-docs
+- http://localhost:8540/swagger-ui/index.html — Account-Card Service  api-docs
+- http://localhost:8083/swagger-ui/index.html — Currency Service api-docs
+- http://localhost:8085/swagger-ui/index.html — Deposit Service api-docs
+- http://localhost:8082/swagger-ui/index.html — Customer Service api-docs
+- http://localhost:9191/swagger-ui/index.html — Auth Service api-docs
